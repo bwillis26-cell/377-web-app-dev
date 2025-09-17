@@ -14,6 +14,31 @@ function doSubmit() {
     document.getElementById('output').innerHTML += firstName + ' ' + lastName + ' has submitted the form<br />' ;
 }
 
+function login(){
+    let username = document.getElementById('username').value;
+    let password = document.forms[0].elements['password'].value;
+
+    alert('Access denied for user ' + username + ' and password ' + password);
+}
+
+function register(){
+    var success = true;
+    var username = document.forms[0].elements['username'].value;
+    if (username == ''){
+        success = false;
+        alert('User name is required');
+    } 
+
+    var terms = document.forms[0].elements['agreement'].checked;
+    if (!terms){
+        success = false;
+        alert('You must agree to the terms of service!');
+    }
+
+    if (success){
+        alert('User account created successfully!')
+    }
+}
 
 
         </script>
@@ -21,19 +46,55 @@ function doSubmit() {
     <body>
         <h1>HTML Form Examples</h1>
         
+        <h2>Login Form</h2>
+
         <form>
+            Username: <input name="username" id="username" type="text" placeholder="Enter your username">
+            <br>
+            Password: <input name="password" id="password" type="password" placeholder="Enter your password">
+            <br>
+            <input value="Login" type="button" onclick="login()">
+        
+
+
+
+        
             <h2>Student Handbook Acknowledgement</h2>
 
             First Name: <input type="text" id="firstName" /><br />
             Last Name: <input type="text" id="lastName" /><br />
+            <br>
+
+            I am a ...
+            <br>
+            <input id="student" name="usertype" type="radio" value="Student">
+            <label for="student">Student</label>
+            <br>
+            <input id="teacher" name="usertype" type="radio" value="Teacher">
+            <label for="teacher">Teacher</label>
+            <br>
+            <br>
             School: 
             <select>
+                <option selected hidden="true">[Select Something]</option>
                 <option>Hanover High School</option>
                 <option>Hanover Middle School</option>
                 <option>Center School</option>
                 <option>Cedar School</option>        
-            </select><br />
-            I agree to the handbook policies<input type="checkbox" /><br />
+            </select>
+            <br>
+            <br>
+            Age: <input name="age" type="number" placeholder="Your age" min="1" max="100">
+            <br>
+            DOB <input name="dob" type="date" placeholder="Your date of birth">
+            <br>
+            
+            <input id="agreement" name="agreement" type="checkbox">
+            <label for="agreement">I agree to the terms of service...</label>
+
+            <br>
+            <input type="button" value="Register" onclick="register()">
+            <br>
             <input type="button" value="I Agree" onclick="doSubmit()" />
         </form>
         <div id="output"></div>
