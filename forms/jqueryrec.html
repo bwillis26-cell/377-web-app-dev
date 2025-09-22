@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script>
+    function useFormulas(){
+        var height = $('#height').val();
+        var width = $('#width').val();
+
+        var area = height * width;
+        var perimeter = (2 * height) + (2 * width)
+
+        $('#area').html(area);
+        $('#perimeter').html(perimeter);
+    }
+
+
+
+    </script>
+</head>
+<body>
+    <h1>Rectangle Formulas</h1>
+    
+    <form>
+        Height: <input type="text" id="height" placeholder="Enter a Height"><br>
+        Width: <input type="text" id="width" placeholder="Enter a Width"><br>
+
+        <button type="button" onclick="useFormulas()">Calculate Formulas</button>
+        <table>
+            <tr>
+                <th><h2>Perimeter</h2></th>
+                <th><h2>Area</h2></th>
+            </tr>
+            <tr>
+                <td><p id="perimeter"></p></td>
+                
+                <td><p id="area"></p></td>
+            </tr>
+            
+            
+            
+            
+
+
+
+    </form>
+</body>
+</html>

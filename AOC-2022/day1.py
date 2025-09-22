@@ -8,6 +8,7 @@ for line in lines:
     if line == "":
         # Line is blank
         if current > max_list[0]:
+            pass
 
           
 
