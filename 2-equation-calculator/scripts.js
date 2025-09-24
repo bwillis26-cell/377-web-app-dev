@@ -19,3 +19,16 @@ function calculateVelocity(){
 
 
 }
+
+function calculateGeometric(){
+    var startingval = $('#geoStart').val();
+    var endingval = $('#geoEnd').val();
+    var increment = $('#increment').val();
+
+    var sequenceLength = (endingval - startingval)/increment + 1
+
+    var total = startingval * (1 - increment**sequenceLength)/(1-increment)
+
+    $('#total').html('The sum is ' + total);
+
+}
