@@ -5,11 +5,9 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Page Title</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
-    <script src='main.js'></script>
+    <link rel='stylesheet' type='text/css' media='screen' href='styles.css'>
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="scripts.js"></script>
-    <script src="styles.css"></script>
 
 </head>
 <body>
@@ -17,18 +15,18 @@
     <form>
         <h2>Average Acceleration</h2>
 
-        Final Velocity<input type="text" id="vf"> <br>
-        Initial Velocity<input type="text" id="vi"> <br>
-        Time<input type="text" id="timeA"> <br>
+        <p>Final Velocity</p><input type="text" id="vf"> <br>
+        <p>Initial Velocity</p><input type="text" id="vi"> <br>
+        <p>Time</p><input type="text" id="timeA"> <br>
         <button type="button" onclick="calculateAccel()">Click to Calculate Acceleration</button> <br>
         
         <div id="accel"></div>
     
         <h2>Average Velocity</h2>
 
-        Start Distance<input type="text" id="di"> <br>
-        Ending Distance<input type="text" id="df"> <br>
-        time<input type="text" id="timeV"> <br>
+        <p>Start Distance</p><input type="text" id="di"> <br>
+        <p>Ending Distance</p><input type="text" id="df"> <br>
+        <p>Time</p><input type="text" id="timeV"> <br>
 
         <button type="button" onclick="calculateVelocity()">Click to Calculate Velocity</button> <br>
 
@@ -36,9 +34,9 @@
 
         <h2>Sum of a Geometric Sequence</h2>
 
-        Starting Value<input type="text" id="geoStart"> <br>
-        Ending Value<input type="text" id="geoEnd"> <br>
-        Increment<input type="text" id="increment"> <br>
+        <p>Starting Value</p><input type="text" id="geoStart"> <br>
+        <p>Ending Value</p><input type="text" id="geoEnd"> <br>
+        <p>Increment</p><input type="text" id="increment"> <br>
 
         <button type="button" onclick="calculateGeometric()">Click to Find the Sum of the Geometric Sequence</button> <br>
 
