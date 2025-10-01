@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SVG Lesson 4</title>
+    </head>
+    <body style="background-color:blanchedalmond;">
+        <svg width="500" height="500"  style="border: solid 1px black;background-color:white;">
+            <g id="face">
+                <!--Head-->
+                <circle cx="100"
+                        cy="100"
+                        r="50"
+                        stroke="black"
+                        stroke-width="2"
+                        fill="yellow" />
+                <!--Eyes-->
+                <circle cx="85" cy="85" r="7" />
+                <circle cx="115" cy="85" r="7" />
+                <!--Mouth-->
+                <rect x="75" y="110" width="50" height="10" />
+            </g>
+
+            <!--This Re-uses that face and displays it with different colors and transformations-->
+            <use href="#face" transform="translate(50, 50)" fill="red" />
+            <use href="#face" transform="translate(100, 100)" fill="cyan" />
+            <use href="#face" transform="translate(150, 150)" fill="rebeccapurple" />
+            <use href="#face" transform="translate(200, 200)" fill="orange" />
+            <use href="#face" transform="translate(0, 200) scale(0.75)" fill="blue" />
+            <use href="#face" transform="translate(0, 250) scale(0.5)" fill="green" />
+            <use href="#face" transform="translate(0, 300) scale(0.25)" fill="grey" />
+        </svg>
+    </body>
+</html>
