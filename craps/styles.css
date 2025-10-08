@@ -9,3 +9,23 @@
     fill: #000000;
     visibility: hidden;
 }
+
+#puck{
+    fill: black;
+    stroke: white;
+}
+#point{
+    fill: white;
+    font-family: Arial, sans-serif;
+    font-size: 24pt;
+    text-anchor: middle;
+}
+#background{
+    fill: green;
+}
+#message{
+    text-anchor: middle;
+    font-family: Arial, sans-serif;
+    font-size: 18pt;
+    fill: red;
+}
