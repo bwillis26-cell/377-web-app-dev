@@ -40,10 +40,15 @@
             <circle id="puck" cx="250" cy="300" r="25" />
             <text id="point" x="250" y="311">X</text>
 
-            <text id="message" x="250" y="370">BACH</text>
+            <text id="message" x="250" y="370"></text>
         </svg>
-
-        <button onclick="rollDice()">Roll the Die!</button>
+        <div id="controls">
+            Winnings: <span id="winnings">$50</span>
+            <span class="spacer"></span>
+            Bet: <input type="text" id="bet" name="bet" size="5" />
+            <span class="spacer"></span>            
+            <button onclick="rollDice()">Roll the Die!</button>
+        </div>
         
     </body>
 </html>

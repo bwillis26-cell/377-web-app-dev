@@ -12,3 +12,37 @@ function testArray(){
 
     $('#average').html('Your average is: ' + average);
 }
+
+function Card(suit, rank, value) {
+    this.suit = suit;
+    this.rank = rank;
+    this.value = value;
+}
+
+
+var deck = [];
+
+
+function shuffleDeck() {
+    let suits = ["Hearts", "Diamonds", "Clubs", "Spades"]
+    for (let i = 0; i < 4; i++){
+        for (let rank = 1; rank < 14; rank++) {
+            console.log(rank + " of " + suits[i]);
+
+            //2nd parameter should translate Aces, Jacks, Queens, Kings into letters
+            let card = new Card(suits[i], rank, rank);
+
+            deck.push(card);
+
+
+        }
+    }
+    //Could borrow a function fro jquery to shuffle
+
+    console.log(deck);
+}
+
+function dealCard(){
+    let nextCard = deck.pop();
+    $('#card').html(nextCard);
+}
