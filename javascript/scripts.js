@@ -39,10 +39,12 @@ function shuffleDeck() {
     }
     //Could borrow a function fro jquery to shuffle
 
+    deck.sort(() => Math.random() - 0.5);
+
     console.log(deck);
 }
 
 function dealCard(){
     let nextCard = deck.pop();
-    $('#card').html(nextCard);
+    $('#card').html(nextCard.rank + " of " + nextCard.suit);
 }
