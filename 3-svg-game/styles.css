@@ -7,3 +7,13 @@
 .squareOdd{
     fill:tan;
 }
+.redCheckers{
+    stroke-width: 2px;
+    stroke: rgb(255, 0, 0);
+    stroke-dasharray: 4 1;
+}
+.blackCheckers{
+    stroke-width: 2px;
+    stroke: black;
+    stroke-dasharray: 4 1;
+}
