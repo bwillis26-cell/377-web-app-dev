@@ -3,11 +3,19 @@ var selectedPiece = ""
 var pieceSelected = false
 var xValue = 0
 var yValue = 0
+const SVGTOPMARGIN = 100
+const SVGLEFTMARGIN = 20
 $(document).ready(function() {
   // Your code here will run after the DOM is ready
-  $("#squareOdd").click(movePiece);
+  $(".squareOdd").click(movePiece);
 
 });
+
+var mouseX, mouseY;
+$(document).mousemove(function(e) {
+    mouseX = e.pageX;
+    mouseY = e.pageY;
+}).mouseover();
 
 function selectPiece(pieceID) {
     selectedPiece = pieceID;
@@ -34,8 +42,16 @@ function selectPiece(pieceID) {
     }
 }
 
-function movePiece() {
+function movePiece(e) {
+    console.log(e);
     var color = selectedPiece.charAt(0);
-    if ()
+    console.log("Current MouseX: " + mouseX + " Current MouseY: " + mouseY);
+    var currentX = Math.ceil((e.pageX - SVGLEFTMARGIN) / 60);
+    var currentY = Math.ceil((e.pageY - SVGTOPMARGIN) / 60);
+    console.log("Square Mouse X: " + currentX + " Square Mouse Y: " + currentY);
+    
+
+
+    
 }
 
