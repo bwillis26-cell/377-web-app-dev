@@ -5,6 +5,15 @@ var xValue = 0
 var yValue = 0
 const SVGTOPMARGIN = 100
 const SVGLEFTMARGIN = 20
+
+var board = [['x', 'r', 'x', 'r', 'x', 'r', 'x', 'r'], 
+            ['r', 'x', 'r', 'x', 'r', 'x', 'r', 'x'], 
+            ['x', 'r', 'x', 'r', 'x', 'r', 'x', 'r'], 
+            [' ', 'x', ' ', 'x', ' ', 'x', ' ', 'x'], 
+            ['x', ' ', 'x', ' ', 'x', ' ', 'x', ' '], 
+            ['b', 'x', 'b', 'x', 'b', 'x', 'b', 'x'], 
+            ['x', 'b', 'x', 'b', 'x', 'b', 'x', 'b'], 
+            ['b', 'x', 'b', 'x', 'b', 'x', 'b', 'x']];
 $(document).ready(function() {
   // Your code here will run after the DOM is ready
   $(".squareOdd").click(movePiece);
@@ -43,15 +52,24 @@ function selectPiece(pieceID) {
 }
 
 function movePiece(e) {
-    console.log(e);
+
     var color = selectedPiece.charAt(0);
-    console.log("Current MouseX: " + mouseX + " Current MouseY: " + mouseY);
-    var currentX = Math.ceil((e.pageX - SVGLEFTMARGIN) / 60);
-    var currentY = Math.ceil((e.pageY - SVGTOPMARGIN) / 60);
-    console.log("Square Mouse X: " + currentX + " Square Mouse Y: " + currentY);
+    var pieceX = $('#' + selectedPiece).attr('cx');
+    var pieceY = $('#' + selectedPiece).attr('cy');
     
-
-
+    var currentSquareX = Math.ceil((e.pageX - SVGLEFTMARGIN) / 60);
+    var currentSquareY = Math.ceil((e.pageY - SVGTOPMARGIN) / 60);
     
+    var circleX = (currentSquareX * 60) - 20;
+    var circleY = (currentSquareY * 60) - 20;
+    
+    if (pieceSelected) { 
+        if () { 
+            
+        }
+    // $('#' + selectedPiece).attr({ 'cx': circleX, 'cy': circleY});
+    // pieceSelected = false;
+
+    }
 }
 
