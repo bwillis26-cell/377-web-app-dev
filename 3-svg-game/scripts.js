@@ -1,16 +1,18 @@
 var turn = true
 var selectedPiece = ""
 var pieceSelected = false
-var xValue = 0
-var yValue = 0
+
 const SVGTOPMARGIN = 100
 const SVGLEFTMARGIN = 20
+
+var pieceX = 0;
+var pieceY = 0;
 
 var board = [['x', 'r', 'x', 'r', 'x', 'r', 'x', 'r'], 
             ['r', 'x', 'r', 'x', 'r', 'x', 'r', 'x'], 
             ['x', 'r', 'x', 'r', 'x', 'r', 'x', 'r'], 
-            [' ', 'x', ' ', 'x', ' ', 'x', ' ', 'x'], 
-            ['x', ' ', 'x', ' ', 'x', ' ', 'x', ' '], 
+            ['', 'x', '', 'x', '', 'x', '', 'x'], 
+            ['x', '', 'x', '', 'x', '', 'x', ''], 
             ['b', 'x', 'b', 'x', 'b', 'x', 'b', 'x'], 
             ['x', 'b', 'x', 'b', 'x', 'b', 'x', 'b'], 
             ['b', 'x', 'b', 'x', 'b', 'x', 'b', 'x']];
@@ -28,9 +30,11 @@ $(document).mousemove(function(e) {
 
 function selectPiece(pieceID) {
     selectedPiece = pieceID;
+    
     var color = pieceID.charAt(0)
-    xValue = $('#' + pieceID).attr('cx');
-    yValue = $('#' + pieceID).attr('cy');
+    pieceX = $('#' + pieceID).attr('cx');
+    pieceY = $('#' + pieceID).attr('cy');
+    
     if (turn) {
         if (color == "b") {
             turn = false;
@@ -54,8 +58,9 @@ function selectPiece(pieceID) {
 function movePiece(e) {
 
     var color = selectedPiece.charAt(0);
-    var pieceX = $('#' + selectedPiece).attr('cx');
-    var pieceY = $('#' + selectedPiece).attr('cy');
+    
+    var previousPieceX = Math.ceil((pieceX - 20) / 60)
+    var previousPieceY = Math.ceil((pieceY - 20) / 60)
     
     var currentSquareX = Math.ceil((e.pageX - SVGLEFTMARGIN) / 60);
     var currentSquareY = Math.ceil((e.pageY - SVGTOPMARGIN) / 60);
@@ -63,13 +68,26 @@ function movePiece(e) {
     var circleX = (currentSquareX * 60) - 20;
     var circleY = (currentSquareY * 60) - 20;
     
-    if (pieceSelected) { 
-        if () { 
-            
-        }
-    // $('#' + selectedPiece).attr({ 'cx': circleX, 'cy': circleY});
-    // pieceSelected = false;
+    var previousRow = board[previousPieceY - 1];
+    var previousSpot = previousRow[previousPieceX - 1];
 
+    var boardRow = board[currentSquareY - 1];
+    var boardSpot = boardRow[currentSquareX - 1];
+    if (pieceSelected) { 
+        if (boardSpot == '') { 
+            $('#' + selectedPiece).attr({ 'cx': circleX, 'cy': circleY});
+            pieceSelected = false;
+            boardRow[currentSquareX - 1] = color;
+            board[currentSquareY - 1] = boardRow;
+
+            previousRow[previousPieceX - 1] = '';
+            board[previousPieceY - 1] = previousRow;
+
+        } else {
+            console.log("That square is already occupied, choose another square.");
+        }
+
+        console.log(board);
     }
 }
 
