@@ -73,23 +73,42 @@ function movePiece(e) {
 
     var boardRow = board[currentSquareY - 1];
     var boardSpot = boardRow[currentSquareX - 1];
-    if (pieceSelected) { 
-        if ((color == 'b' && previousPieceY >= currentSquareY) || (color == 'r' && previousPieceY <= currentSquareY)) {
-            if ((previousPieceX + 1 == currentSquareX || previousPieceX - 1 == currentSquareX) && (previousPieceY + 1 == currentSquareY || previousPieceY - 1 == currentSquareY)) {
-                if (boardSpot == '') { 
+    if (pieceSelected) {
+        if (boardSpot == '') { 
+            if (previousPieceX + 1 == currentSquareX || previousPieceX - 1 == currentSquareX) {
+                if (previousSpot == 'b' && previousPieceY - 1 == currentSquareY)  {
                     $('#' + selectedPiece).attr({ 'cx': circleX, 'cy': circleY});
                     pieceSelected = false;
-                    boardRow[currentSquareX - 1] = color;
+                    boardRow[currentSquareX - 1] = previousSpot;
                     board[currentSquareY - 1] = boardRow;
 
                     previousRow[previousPieceX - 1] = '';
                     board[previousPieceY - 1] = previousRow;
 
-                } else {
-                    console.log("That square is already occupied, choose another square.");
+                } else if (previousSpot == 'r' && previousPieceY + 1 == currentSquareY) {
+                    $('#' + selectedPiece).attr({ 'cx': circleX, 'cy': circleY});
+                    pieceSelected = false;
+                    boardRow[currentSquareX - 1] = previousSpot;
+                    board[currentSquareY - 1] = boardRow;
+
+                    previousRow[previousPieceX - 1] = '';
+                    board[previousPieceY - 1] = previousRow;
+
+                } else if (previousSpot == 'bk' || previousSpot == 'rk') {
+                    $('#' + selectedPiece).attr({ 'cx': circleX, 'cy': circleY});
+                    pieceSelected = false;
+                    boardRow[currentSquareX - 1] = previousSpot;
+                    board[currentSquareY - 1] = boardRow;
+
+                    previousRow[previousPieceX - 1] = '';
+                    board[previousPieceY - 1] = previousRow;
+
                 }
             }
+        } else if ((turn) && (boardSpot[0] == 'r') && (currentSquareX != 1 && currentSquareX != 8) && (currentSquareY != 1 && currentSquareY != 8)) {
+            if (previousPieceX < currentSquareX) {
+                circleX += 60
+            } 
         }
     }
 }
-
