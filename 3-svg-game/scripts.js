@@ -74,20 +74,22 @@ function movePiece(e) {
     var boardRow = board[currentSquareY - 1];
     var boardSpot = boardRow[currentSquareX - 1];
     if (pieceSelected) { 
-        if (boardSpot == '') { 
-            $('#' + selectedPiece).attr({ 'cx': circleX, 'cy': circleY});
-            pieceSelected = false;
-            boardRow[currentSquareX - 1] = color;
-            board[currentSquareY - 1] = boardRow;
+        if ((color == 'b' && previousPieceY >= currentSquareY) || (color == 'r' && previousPieceY <= currentSquareY)) {
+            if ((previousPieceX + 1 == currentSquareX || previousPieceX - 1 == currentSquareX) && (previousPieceY + 1 == currentSquareY || previousPieceY - 1 == currentSquareY)) {
+                if (boardSpot == '') { 
+                    $('#' + selectedPiece).attr({ 'cx': circleX, 'cy': circleY});
+                    pieceSelected = false;
+                    boardRow[currentSquareX - 1] = color;
+                    board[currentSquareY - 1] = boardRow;
 
-            previousRow[previousPieceX - 1] = '';
-            board[previousPieceY - 1] = previousRow;
+                    previousRow[previousPieceX - 1] = '';
+                    board[previousPieceY - 1] = previousRow;
 
-        } else {
-            console.log("That square is already occupied, choose another square.");
+                } else {
+                    console.log("That square is already occupied, choose another square.");
+                }
+            }
         }
-
-        console.log(board);
     }
 }
 
