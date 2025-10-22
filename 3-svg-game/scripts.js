@@ -73,6 +73,8 @@ function movePiece(e) {
 
     var boardRow = board[currentSquareY - 1];
     var boardSpot = boardRow[currentSquareX - 1];
+
+    
     if (pieceSelected) {
         if (boardSpot == '') { 
             if (previousPieceX + 1 == currentSquareX || previousPieceX - 1 == currentSquareX) {
@@ -119,15 +121,55 @@ function movePiece(e) {
                 pieceSelected = false;
             }
         } else if ((turn) && (boardSpot[0] == 'r') && (currentSquareX != 1 && currentSquareX != 8) && (currentSquareY != 1 && currentSquareY != 8)) {
-            if (previousPieceX < currentSquareX) {
-                circleX += 60
-            } 
+            if (previousPieceY < currentSquareY) {
+                var nextBoardRow = board[currentSquareY];
+                circleY += 60;
+                if (previousPieceX < currentSquareX) {
+                    var nextBoardSpot = nextBoardRow[currentSquareX];
+                    if (nextBoardSpot == '') {
+                        circleX += 60;
+                    }
+                } else if (previousPieceX > currentSquareX) {
+                    var nextBoardSpot = nextBoardRow[currentSquareX - 2];
+                    if (nextBoardSpot == '') {
+                        circleX -= 60;
+                    }
+                }
+            } else if (previousPieceY > currentSquareY) {
+                var nextBoardRow = board[currentSquareY - 2];
+                circleY -= 60;
+                if (previousPieceX < currentSquareX) {
+                    var nextBoardSpot = nextBoardRow[currentSquareX];
+                    circleX += 60;
+                } else if (previousPieceX > currentSquareX) {
+                    var nextBoardSpot = nextBoardRow[currentSquareX - 2];
+                    circleX -= 60;
+                }
+            }
+
+        } else if ((!turn) && (boardSpot[0] == 'b') && (currentSquareX != 1 && currentSquareX != 8) && (currentSquareY != 1 && currentSquareY != 8)) {
+            if (previousPieceY < currentSquareY) {
+                var nextBoardRow = board[currentSquareY];
+                circleY += 60;
+                if (previousPieceX < currentSquareX) {
+                    var nextBoardSpot = nextBoardRow[currentSquareX];
+                    circleX += 60;
+                } else if (previousPieceX > currentSquareX) {
+                    var nextBoardSpot = nextBoardRow[currentSquareX - 2];
+                    circleX -= 60;
+                }
+            } else if (previousPieceY > currentSquareY) {
+                var nextBoardRow = board[currentSquareY - 2];
+                circleY -= 60;
+                if (previousPieceX < currentSquareX) {
+                    var nextBoardSpot = nextBoardRow[currentSquareX];
+                    circleX += 60;
+                } else if (previousPieceX > currentSquareX) {
+                    var nextBoardSpot = nextBoardRow[currentSquareX - 2];
+                    circleX -= 60;
+                }
+            }
         }
     }
 }
 
-function checkKing(x, y) {
-
-
-
-}
