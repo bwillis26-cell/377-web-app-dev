@@ -37,7 +37,7 @@ function selectPiece(pieceID) {
     
     if (turn) {
         if (color == "b") {
-            turn = false;
+            
             pieceSelected = true;
 
         } else {
@@ -46,7 +46,7 @@ function selectPiece(pieceID) {
 
     } else {
         if (color == "r") {
-            turn = true;
+            
             pieceSelected = true;
 
         } else {
@@ -81,6 +81,7 @@ function movePiece(e) {
                     pieceSelected = false;
                     boardRow[currentSquareX - 1] = previousSpot;
                     board[currentSquareY - 1] = boardRow;
+                    turn = false;
 
                     previousRow[previousPieceX - 1] = '';
                     board[previousPieceY - 1] = previousRow;
@@ -90,20 +91,32 @@ function movePiece(e) {
                     pieceSelected = false;
                     boardRow[currentSquareX - 1] = previousSpot;
                     board[currentSquareY - 1] = boardRow;
+                    turn = true;
 
                     previousRow[previousPieceX - 1] = '';
                     board[previousPieceY - 1] = previousRow;
 
-                } else if (previousSpot == 'bk' || previousSpot == 'rk') {
+                } else if (previousSpot == 'bk') {
                     $('#' + selectedPiece).attr({ 'cx': circleX, 'cy': circleY});
                     pieceSelected = false;
                     boardRow[currentSquareX - 1] = previousSpot;
                     board[currentSquareY - 1] = boardRow;
+                    turn = false;
 
                     previousRow[previousPieceX - 1] = '';
                     board[previousPieceY - 1] = previousRow;
 
+                } else if (previousSpot == 'rk') {
+                    $('#' + selectedPiece).attr({ 'cx': circleX, 'cy': circleY});
+                    pieceSelected = false;
+                    boardRow[currentSquareX - 1] = previousSpot;
+                    board[currentSquareY - 1] = boardRow;
+                    turn = true;
+
+                    previousRow[previousPieceX - 1] = '';
+                    board[previousPieceY - 1] = previousRow;
                 }
+                pieceSelected = false;
             }
         } else if ((turn) && (boardSpot[0] == 'r') && (currentSquareX != 1 && currentSquareX != 8) && (currentSquareY != 1 && currentSquareY != 8)) {
             if (previousPieceX < currentSquareX) {
@@ -111,4 +124,10 @@ function movePiece(e) {
             } 
         }
     }
+}
+
+function checkKing(x, y) {
+
+
+
 }
