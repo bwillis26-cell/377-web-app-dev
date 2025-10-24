@@ -284,4 +284,17 @@ function movePiece(e) {
             }
         }
     }
+    checkWin();
+}
+
+function checkWin() {
+    var blackCheck = $('.blackCheckers').css('visibility');
+    var redCheck = $('.redCheckers').css('visibility');
+    if (blackCheck == 'hidden') {
+        $('#win').html("Red wins!");
+    } else if (redCheck == 'hidden') {
+        $('#win').html("Black wins!");
+    } 
+
+    
 }
