@@ -1,6 +1,8 @@
 file = open('day2.txt', 'r')
 lines = file.readlines()
 
+
+
 score = 0  
 for line in lines:
     line = line.strip()
