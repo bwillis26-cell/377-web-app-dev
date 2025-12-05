@@ -79,26 +79,34 @@ for line in lines:
 totalAt = 0
 lengthGrid = len(grid)
 lengthRow = len(grid[0])
+
 while True:
+    
     for y in range(lengthGrid):
         for x in range(lengthRow): 
-            if grid[y][x] != ".":    
+            if grid[y][x] == "@":    
                 if count_neighbors(y, x) < 4:
                     totalAt += 1
                     grid[y][x] = "X"
-    for j in range(lengthGrid):
-        for i in range(lengthRow):
-            if grid[j][i] == "X":
-                grid[j][i] == "."
-    
+
     if totalAt == 0:
         break
     totalAt = 0
 
+    for j in range(lengthGrid):
+        for i in range(lengthRow):
+            if grid[j][i] == "X":
+                grid[j][i] == "."
+
+    
+    
+print(totalAt)
 totalP2 = 0
-for y in range(lengthGrid):
-    for x in range(lengthRow):
-        if grid[y][x] == "@":
+
+for k in range(lengthGrid):
+    print(grid[k])
+    for l in range(lengthRow):
+        if grid[k][l] == "@":
             totalP2 += 1
 
 print(totalP2)
