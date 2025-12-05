@@ -1,4 +1,4 @@
-file = open('day4-test.txt', 'r')
+file = open('day4.txt', 'r')
 lines = file.readlines()
 
 def count_neighbors(y, x):
@@ -79,37 +79,28 @@ for line in lines:
 totalAt = 0
 lengthGrid = len(grid)
 lengthRow = len(grid[0])
-
+sum = 0
 while True:
     
     for y in range(lengthGrid):
         for x in range(lengthRow): 
             if grid[y][x] == "@":    
+                print("Checked Row: " + str(y))
                 if count_neighbors(y, x) < 4:
                     totalAt += 1
-                    grid[y][x] = "X"
+                    grid[y][x] = "."
 
     if totalAt == 0:
         break
+    else:
+        sum += totalAt
+    print(totalAt)
     totalAt = 0
 
-    for j in range(lengthGrid):
-        for i in range(lengthRow):
-            if grid[j][i] == "X":
-                grid[j][i] == "."
 
     
     
-print(totalAt)
-totalP2 = 0
-
-for k in range(lengthGrid):
-    print(grid[k])
-    for l in range(lengthRow):
-        if grid[k][l] == "@":
-            totalP2 += 1
-
-print(totalP2)
+print(sum)
             
 
 
