@@ -1,4 +1,4 @@
-file = open('day5-test.txt', 'r')
+file = open('day5.txt', 'r')
 lines = file.readlines()
 
 ranges = []
@@ -18,8 +18,7 @@ for line in lines:
         nums.append(line)
 
 
-points.sort()
-
+points.sort(key=lambda x: (x[0],0 if x[1] == "s" else 1))
 
 sum = 0
 start = points[0][0]
@@ -38,6 +37,9 @@ for i in range(len(points)):
         if i < len(points) - 1:
             start = points[i + 1][0]
 
+
+# Too High: 357485433193296
+print(ranges)
 print(sum)
 
     
