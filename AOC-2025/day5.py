@@ -18,29 +18,32 @@ for line in lines:
         nums.append(line)
 
 
-points.sort(key=lambda x: (x[0],0 if x[1] == "s" else 1))
+points.sort(key=lambda x: (x[0],0 if x[1] == "S" else 1))
 
-sum = 0
-start = points[0][0]
-sCounter = 0
-for i in range(len(points)):
-    firstVal = points[i][0]
-    secondVal = points[i][1]
-    if secondVal == "S":
-        sCounter += 1
-    elif secondVal == "E":
-        sCounter -= 1
-        end = firstVal
-    if sCounter == 0:
-        num = end - start + 1
-        sum += num
-        if i < len(points) - 1:
-            start = points[i + 1][0]
+active = 0
+start = None
+count = 0
 
+i = 0
+while i < len(points):
+    pos = points[i][0]
+    kind = points[i][1]
+
+    if kind == "S":
+        if active == 0:
+            start = pos
+        active += 1
+    else:
+        active -= 1
+        if active == 0:
+            end = pos
+            count += end - start + 1
+    i += 1
 
 # Too High: 357485433193296
-print(ranges)
-print(sum)
+#           357485433193296
+#           357485433193284
+print(count)
 
     
 
