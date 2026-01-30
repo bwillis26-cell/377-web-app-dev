@@ -6,7 +6,7 @@ qr = qrcode.QRCode(
     border=10,
 )
 
-data = f"tel:{7818579670}" #'https://www.duckduckgo.com'
+data = f"tel:{}" #'https://www.duckduckgo.com'
 
 qr.add_data(data)
 qr.make(fit=True)
