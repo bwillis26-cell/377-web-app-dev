@@ -13,7 +13,21 @@
         {
             echo "Hello<br>"; 
         }
-        
+
+        $firstName = 'Will';
+        $lastName = 'Davidson';
+
+        $fullName = $firstName . ' ' . $lastName;
+        echo $fullName;
+
+        echo "<p>" . $fullName . " is in Web App Development</p>";
+        echo "<p>$fullName is in Web App Development</p>";
+
+        // Double quotes work with variables, single don't
+
+        echo '<p>$fullName is in Web App Development</p>';
+
+
         
         ?>
     
