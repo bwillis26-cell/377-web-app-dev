@@ -2,11 +2,41 @@
 CREATE TABLE `hmdb`.`movie` (
   `mov_id` INT NOT NULL AUTO_INCREMENT,
   `mov_title` VARCHAR(100) NOT NULL,
+  `mov_genre` VARCHAR(100) NOT NULL,
   `mov_rating` INT NULL,
   `mov_mpaa` VARCHAR(5) NULL,
   `mov_duration` INT NOT NULL,
-  `mov_release` DATETIME NULL,
+  `mov_release_year` INT NULL,
   PRIMARY KEY (`mov_id`));
+  
+  DROP TABLE movie;
+CREATE TABLE `hmdb`.`movie` (
+  `mov_id` INT NOT NULL AUTO_INCREMENT,
+  `mov_title` VARCHAR(100) NOT NULL,
+  `mov_genre` VARCHAR(100) NULL,
+  `mov_rating` DECIMAL(3,1) NULL,
+  `mov_mpaa` VARCHAR(5) NULL,
+  `mov_duration` INT NOT NULL,
+  `mov_release_year` INT NULL,
+  PRIMARY KEY (`mov_id`));
+  
+INSERT INTO movie (mov_title, mov_release_year, mov_duration, mov_rating) VALUES ('Devil in Ohio',2022,356,5.9);
+INSERT INTO movie (mov_title, mov_release_year, mov_duration, mov_rating) VALUES ('Blonde',2022,100,6.2);
+INSERT INTO movie (mov_title, mov_release_year, mov_duration, mov_rating) VALUES ('End of the Road,(II)', 2022,89,4.7);
+INSERT INTO movie (mov_title, mov_release_year, mov_duration, mov_rating) VALUES ('Glass Onion: A Knives Out Mystery',2022,139,8.1);
+INSERT INTO movie (mov_title, mov_release_year, mov_duration, mov_rating) VALUES ('Do Revenge',2022,118,6.4);
+INSERT INTO movie (mov_title, mov_release_year, mov_duration, mov_rating) VALUES ('I Came By',2022,110,6.1);
+INSERT INTO movie (mov_title, mov_release_year, mov_duration, mov_rating) VALUES ('No Limit',2022,118,5.8);
+INSERT INTO movie (mov_title, mov_release_year, mov_duration, mov_rating) VALUES ('The Lord of the Rings: The Fellowship of the Ring',2001,178,8.8);
+INSERT INTO movie (mov_title, mov_release_year, mov_duration, mov_rating) VALUES ('Echoes',2022,132,5.9);
+INSERT INTO movie (mov_title, mov_release_year, mov_duration, mov_rating) VALUES ('The Gray Man',2022,122,6.5);
+INSERT INTO movie (mov_title, mov_release_year, mov_duration, mov_rating) VALUES ('Me Time',2022,101,5);
+INSERT INTO movie (mov_title, mov_release_year, mov_duration, mov_rating) VALUES ('Love in the Villa',2022,114,5.3);
+INSERT INTO movie (mov_title, mov_release_year, mov_duration, mov_rating) VALUES ('Day Shift',2022,113,6.1);
+INSERT INTO movie (mov_title, mov_release_year, mov_duration, mov_rating) VALUES ('Guillermo del Toro''s Pinocchio',2022,114,1.0);
+
+select * from movie;
+  
 
 CREATE TABLE `hmdb`.`actor` (
   `act_id` INT NOT NULL AUTO_INCREMENT,
@@ -82,5 +112,7 @@ WHERE mov_mpaa IS NULL;
 DELETE FROM movie
 WHERE mov_id = 1
 ;
+
+SELECT * FROM movie;
 
 -- Delete doesn't reset ID, Truncate does reset ID
