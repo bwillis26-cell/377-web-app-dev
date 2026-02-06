@@ -1,16 +1,16 @@
+import math
+
 max = 0
-maxCheck = True
 start = 600851475143
+startSqrt =(int) (math.sqrt(start) + 1)
 
 
-for i in range(1, start):
-    if start % i == 0:
-        for j in range(1, i):
-            if i % j == 0:
-                maxCheck = False
-
-    if maxCheck:
+for i in range(3, startSqrt, 2):
+    while start % i == 0:
         max = i
+        start // i
+if start > 2:
+    max = start
 
 
 print(max)
