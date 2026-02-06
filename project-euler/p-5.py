@@ -6,5 +6,6 @@ while not check:
         if num % i != 0:
             check = False
             break
+        else:
+            check = True
     num += 1
-    print(num)
