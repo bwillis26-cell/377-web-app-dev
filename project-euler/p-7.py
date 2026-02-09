@@ -7,15 +7,13 @@ def isPrime(num):
         
     return True
 
-n = 600851475143
-maxPrime = -1
-i = 2
+count = 1
+i = 3
 
+while count <= 10001:
+    if isPrime(i):
+        count += 1
 
-while i < math.sqrt(n):
-    if n % i == 0 and isPrime(i):
-        maxPrime = i
+    i += 2
 
-    i+= 1
-
-print(maxPrime)
+print(i)
