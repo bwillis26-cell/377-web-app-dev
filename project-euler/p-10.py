@@ -17,13 +17,12 @@ def isPrime(num):
         
     return True
 
-count = 0
-i = 1
 
-while count < 10001:
-    i += 1
+max = 2000001
+sum = 0
+for i in range(1, max):
     if isPrime(i):
-        count += 1
+        sum += i
 
-print(count)
-print(i)
+
+print(sum)
