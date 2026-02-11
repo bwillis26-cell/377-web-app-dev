@@ -20,16 +20,16 @@ SQL;
 $result = $connection->query($sql);
 $row = $result->fetch_assoc();
 
-echo "<table><tr>";
+echo "<table border=1>";
 
-echo "<td>" . $row["mov_id"] . "</td>";
-echo "<td>" . $row["mov_title"] . "</td>";
-echo "<td>" . $row["mov_genre"] . "</td>";
-echo "<td>" . $row["mov_rating"] . "</td>";
-echo "<td>" . $row["mov_mpaa"] . "</td>";
-echo "<td>" . $row["mov_duration"] . "</td>";
-echo "<td>" . $row["mov_release_year"] . "</td>";
+echo "<tr><th>ID</th><td><input type='text' value='" . $row['mov_id'] . "'></input></td></tr>"; 
+echo "<tr><th>Title</th><td><input type='text' value='" . $row['mov_title'] . "'></input></td></tr>";
+echo "<tr><th>Duration</th><td><input type='text' value='" . $row['mov_duration'] . "'></input></td></tr>";
+echo "<tr><th>Release Year</th><td><input type='text' value='" . $row['mov_release_year'] . "'></input></td></tr>";
+echo "<tr><th>MPAA Rating</th><td><input type='text' value='" . $row['mov_mpaa'] . "'></input></td></tr>";
+echo "<tr><th>Star Rating</th><td><input type='text' value='" . $row['mov_rating'] . "'></input></td></tr>";
+echo "<tr><th>Genre</th><td><input type='text' value='" . $row['mov_genre'] . "'></input></td></tr>";
 
-echo "</tr></table>";
+echo "</table>";
 
 ?>
