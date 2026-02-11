@@ -27,7 +27,7 @@
         <h1>Hanover High School Indoor Track</h1>
 
         <!-- Section 2: Menu -->
-         <?php
+        <?php
             extract($_REQUEST);
 
             if (!isset($nav)) {

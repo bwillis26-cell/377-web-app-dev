@@ -1,15 +1,6 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "password";
-$dbname = "hmdb";
 
-$connection = new mysqli($servername, $username, $password, $dbname);
-if ($connection->connect_error) {
-    die("Connection failed: " . $connection->connect_error);
-}
-
-extract($_REQUEST);
+$connection = get_connection();
 
 $sql =<<<SQL
 SELECT *
@@ -17,8 +8,11 @@ FROM movie
 WHERE mov_id = $id
 SQL;
 
+
 $result = $connection->query($sql);
 $row = $result->fetch_assoc();
+
+echo "<a href='index.php'>Back to Full Database</a> ";
 
 echo "<table border=1>";
 
