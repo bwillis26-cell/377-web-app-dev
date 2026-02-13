@@ -6,13 +6,14 @@
  * Displays the details for a single movie. This page expects to be included within index.php.
  *************************************************************************************************/
 
+$connection = get_connection();
+
 $sql =<<<SQL
 SELECT *
   FROM movie
  WHERE mov_id = $id
 SQL;
 
-$connection = get_connection();
 
 // Run the query on the database
 $result = $connection->query($sql);
@@ -57,7 +58,7 @@ $row = $result->fetch_assoc();
     </div>
 
     <button type="submit" class="btn btn-primary">Save</button>
-    <a href="index.php?id=<?php echo $row["mov_id"]; ?>" class="btn btn-danger" role="button">Delete</a>
-    <a href="delete.php?id=" class="btn btn-secondary" role="button">Cancel</a>
+    <a href="delete.php?id=<?php echo $row["mov_id"]; ?>" class="btn btn-danger" role="button">Delete</a>
+    <a href="index.php?id=" class="btn btn-secondary" role="button">Cancel</a>
 
 </form>

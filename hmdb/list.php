@@ -27,6 +27,8 @@ for ($i = 0; $i < 26; $i++)
 
 ?>
 
+<a href='index.php?content=add' class='btn btn-primary'>Add</a>
+
 <table class="table table-bordered table-hover">
     <thead class="thead-dark">
         <tr>
