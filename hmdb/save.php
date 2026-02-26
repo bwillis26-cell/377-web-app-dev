@@ -16,10 +16,9 @@ $rating = $connection->real_escape_string($rating);
 $duration = $connection->real_escape_string($duration);
 $release_year = $connection->real_escape_string($release_year);
 
-if ($id == null || $id == 0 || !isset($id)) {
+if ($id != "") {
     $update =<<<SQL
-    INSERT INTO movie 
-    (mov_title, mov_genre, mov_rating, mov_mpaa, mov_duration, mov_release_year)
+    INSERT INTO movie (mov_title, mov_genre, mov_rating, mov_mpaa, mov_duration, mov_release_year)
     VALUES ('$title', '$genre', $rating, '$mpaa', $duration, $release_year)
     SQL;
 } else {
