@@ -1,3 +1,17 @@
+<?php 
+/**********************************************************
+ * index.php
+ * main page, holds other pages
+ * 
+ **********************************************************/
+
+include('library.php');
+
+
+
+
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -18,7 +32,7 @@
             <?php
                 if (!isset($content))
                 {
-                    $content = "gallery";
+                    $content = "review";
                 }
                 include("$content.php");
             ?>

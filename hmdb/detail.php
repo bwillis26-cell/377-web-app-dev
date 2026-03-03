@@ -14,7 +14,6 @@ $rating = "";
 $mpaa = "";
 $duration = "";
 $releaseYear = "";
-$visible = "visible";
 
 
 

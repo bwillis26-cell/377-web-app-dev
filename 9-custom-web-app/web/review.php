@@ -45,27 +45,36 @@ $connection = get_connection();
 if (!isset($filter))
 {
     $filter = '';
+    $sql =<<<SQL
+    SELECT *
+    FROM reviews
+    ORDER BY rev_last_name
+SQL;
 }
 else
 {
     $filter = $connection->real_escape_string($filter);
+    $sql =<<<SQL
+    SELECT *
+    FROM movie
+    WHERE rev_rating IN BETWEEN $filter AND ($filter + 1)
+    ORDER BY rev_last_name
+SQL;
 }
 
-$sql =<<<SQL
- SELECT *
-   FROM movie
-  WHERE rev_rating IN BETWEEN $filter AND ($filter + 1)
-  ORDER BY mov_title
-SQL;
+
 
 $recordCount = 0;
 $result = $connection->query($sql);
 while ($row = $result->fetch_assoc())
 {
     echo "<tr>";
-    echo "<td><a href='index.php?content=detail&id=". $row["mov_id"] . "'>" . $row["mov_title"] . "</a></td>";
-    echo "<td>" . $row["mov_duration"] . "</td>";
-    echo "<td>" . $row["mov_release_year"] . "</td>";
+    echo "<td>" . $row["rev_rating"] . "</td>";
+    echo "<td>" . $row["rev_last_name"] . "</td>";
+    echo "<td>" . $row["rev_first_name"] . "</td>";
+    echo "<td>" . $row["rev_type"] . "</td>";
+    echo "<td>" . $row["rev_time"] . "</td>";
+    echo "<td><a href='index.php?content=detail&id=". $row["rev_id"] . "'>" . $row["rev_description"] . "</a></td>";
     echo "</tr>";
 
     $recordCount++;
