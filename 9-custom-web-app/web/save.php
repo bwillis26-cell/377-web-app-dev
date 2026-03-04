@@ -19,6 +19,7 @@ $time = $connection->real_escape_string($time);
 $date = $connection->real_escape_string($date);
 $rating = $connection->real_escape_string($rating);
 
+$update = "";
 
 if ($id != "") {
     $update =<<<SQL

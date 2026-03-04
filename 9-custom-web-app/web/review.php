@@ -1,9 +1,9 @@
 <?php
 
 /*************************************************************************************************
- * list.php
+ * review.php
  *
- * Displays a list of movies. This page expects to be included within index.php.
+ * Displays a list of the reviews, you can add, edit, or delete reviews
  *************************************************************************************************/
 
 ?>
@@ -15,10 +15,10 @@
 <?php
 
 
-for ($rating = 0; $rating < 5; $rating++)
+for ($rating = 0; $rating <=c 5; $rating++)
 {
     
-    echo "<a href='index.php?content=review&filter=$rating'>$rating</a> ";
+    echo "<a href='index.php?content=review&filter=$rating'>$rating Stars</a> ";
 }
 
 ?>

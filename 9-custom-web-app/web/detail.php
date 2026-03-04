@@ -52,6 +52,7 @@ if (isset($id)) {
     $header = $first . " " . $last . "'s review:";
 } else {
     $header = "*** NEW REVIEW ***";
+    $id = "";
 }
 ?>
 
@@ -107,6 +108,6 @@ if (isset($id)) {
     <a href='delete.php?id=<?php echo $id; ?>' class='btn btn-danger' role='button' >Delete</a>
     <?php }?>
 
-    <a href="index.php?content=list" class="btn btn-secondary" role="button">Cancel</a>
+    <a href="index.php?content=review" class="btn btn-secondary" role="button">Cancel</a>
 
 </form>
