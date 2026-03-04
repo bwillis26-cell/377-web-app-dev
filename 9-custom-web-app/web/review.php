@@ -15,7 +15,7 @@
 <?php
 
 
-for ($rating = 0; $rating <=c 5; $rating++)
+for ($rating = 0; $rating <=5; $rating++)
 {
     
     echo "<a href='index.php?content=review&filter=$rating'>$rating Stars</a> ";
