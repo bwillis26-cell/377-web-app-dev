@@ -10,7 +10,7 @@
 
 <h2>Reviews <span id="record-count"></span></h2>
 
-<a href='index.php?content=review'>All</a>
+<a href='index.php?nav=review'>All</a>
 
 <?php
 
@@ -18,12 +18,12 @@
 for ($rating = 0; $rating <=5; $rating++)
 {
     
-    echo "<a href='index.php?content=review&filter=$rating'>$rating Stars</a> ";
+    echo "<a href='index.php?nav=review&filter=$rating'>$rating Stars</a> ";
 }
 
 ?>
 
-<a href='index.php?content=detail' class='btn btn-primary'>Add</a>
+<a href='index.php?nav=detail' class='btn btn-primary'>Add</a>
 
 <table class="table table-bordered table-hover">
     <thead class="thead-dark">
@@ -56,8 +56,8 @@ else
     $filter = $connection->real_escape_string($filter);
     $sql =<<<SQL
     SELECT *
-    FROM movie
-    WHERE rev_rating IN BETWEEN $filter AND ($filter + 1)
+    FROM reviews
+    WHERE rev_rating BETWEEN $filter AND ($filter + 1)
     ORDER BY rev_last_name
 SQL;
 }
@@ -74,10 +74,10 @@ while ($row = $result->fetch_assoc())
     echo "<td>" . $row["rev_first_name"] . "</td>";
     echo "<td>" . $row["rev_type"] . "</td>";
     echo "<td>" . $row["rev_time"] . "</td>";
-    echo "<td><a href='index.php?content=detail&id=". $row["rev_id"] . "'>" . $row["rev_description"] . "</a></td>";
+    echo "<td><a href='index.php?nav=detail&id=". $row["rev_id"] . "'>" . $row["rev_description"] . "</a></td>";
     echo "</tr>";
 
-    $recordCount++;
+    
 }
 
 ?>

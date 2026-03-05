@@ -3,7 +3,7 @@
  * delete.php
  * 
  * Deletes a whole movie from the database
- */
+ ************************/
 
 include("library.php");
 $connection = get_connection();

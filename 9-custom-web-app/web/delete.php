@@ -15,4 +15,4 @@ SQL;
 
 $connection->query($delete);
 
-header('Location: index.php?content=review');
+header('Location: index.php?nav=review');

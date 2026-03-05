@@ -21,14 +21,14 @@ $rating = $connection->real_escape_string($rating);
 
 $update = "";
 
-if ($id != "") {
+if ($id == "") {
     $update =<<<SQL
     INSERT INTO reviews (rev_first_name, rev_last_name, rev_email, rev_phone_number, rev_type, rev_description, rev_time, rev_rating, rev_date)
     VALUES ('$first', '$last', '$email', '$phone', '$type', '$description', $time, $rating, '$date')
     SQL;
 } else {
     $update =<<<SQL
-    UPDATE movie
+    UPDATE reviews
     SET rev_first_name = '$first',
     rev_last_name = '$last',
     rev_email = '$email',
@@ -40,7 +40,6 @@ if ($id != "") {
     rev_date = '$date'
     WHERE rev_id = $id
     SQL;
-
 }
 $connection->query($update);
-header('Location: index.php?content=review');
+header('Location: index.php?nav=review');

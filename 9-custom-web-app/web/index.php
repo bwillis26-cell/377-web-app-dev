@@ -30,11 +30,25 @@ include('library.php');
         <div class="container">
             <h1>Salty Canvas</h1>
             <?php
-                if (!isset($content))
-                {
-                    $content = "review";
-                }
-                include("$content.php");
+            extract($_REQUEST);
+
+            if (!isset($nav)) {
+                $nav = "gallery";
+            } 
+            
+            ?>
+            
+            <a href="index.php?nav=gallery"     <?php if ($nav == 'gallery')     print('class="selected"'); ?>>Home</a>
+            <a href="index.php?nav=review" <?php if ($nav == 'review') print('class="selected"'); ?>>Reviews</a>
+            <a href="index.php?nav=media"    <?php if ($nav == 'media')    print('class="selected"'); ?>>Contact Info</a>
+            
+
+            <?php
+                // if (!isset($nav))
+                // {
+                //     $nav = "review";
+                // }
+                include("$nav.php");
             ?>
         </div>
     </body>
