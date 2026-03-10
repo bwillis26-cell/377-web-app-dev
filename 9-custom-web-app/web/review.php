@@ -23,8 +23,8 @@ for ($rating = 0; $rating <=5; $rating++)
 
 ?>
 
-<a href='index.php?nav=detail' class='btn btn-primary'>Add</a>
-
+<a href='index.php?nav=detail' id='add'>Add</a>
+<br><br>
 <table class="table table-bordered table-hover">
     <thead class="thead-dark">
         <tr>
@@ -57,7 +57,7 @@ else
     $sql =<<<SQL
     SELECT *
     FROM reviews
-    WHERE rev_rating BETWEEN $filter AND ($filter + 1)
+    WHERE rev_rating = $filter
     ORDER BY rev_last_name
 SQL;
 }
@@ -65,9 +65,12 @@ SQL;
 
 
 $recordCount = 0;
+$totalStars = 0;
 $result = $connection->query($sql);
 while ($row = $result->fetch_assoc())
 {
+    $totalStars += $row["rev_rating"];
+    $recordCount++;
     echo "<tr>";
     echo "<td>" . $row["rev_rating"] . "</td>";
     echo "<td>" . $row["rev_last_name"] . "</td>";
@@ -89,7 +92,7 @@ while ($row = $result->fetch_assoc())
 
 $code =<<<JS
 <script>
-document.getElementById('record-count').innerHTML = '(' + $recordCount + ' records)';
+document.getElementById('record-count').innerHTML = '(' + ($totalStars / $recordCount) + ' stars)';
 </script>
 JS;
 

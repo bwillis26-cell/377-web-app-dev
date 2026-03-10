@@ -61,12 +61,12 @@ if (isset($id)) {
     <input type="hidden" class="form-control" name="id" value="<?php echo $id; ?>">
 
     <div class="mb-3">
-        <label for="title" class="form-label">First Name</label>
+        <label for="first_name" class="form-label">First Name</label>
         <input type="text" class="form-control" name="first" value="<?php echo $first; ?>">
     </div>
 
     <div class="mb-3">
-        <label for="genre" class="form-label">Last Name</label>
+        <label for="last_name" class="form-label">Last Name</label>
         <input type="text" class="form-control" name="last" value="<?php echo $last; ?>">
     </div>
 
@@ -76,7 +76,7 @@ if (isset($id)) {
     </div>
 
     <div class="mb-3">
-        <label for="mpaa" class="form-label">Email</label>
+        <label for="email" class="form-label">Email</label>
         <input type="text" class="form-control" name="email" value="<?php echo $email; ?>">
     </div>
 
@@ -86,19 +86,24 @@ if (isset($id)) {
     </div>
 
     <div class="mb-3">
-        <label for="release_year" class="form-label">Type of Canvas</label>
-        <input type="text" class="form-control" name="type" value="<?php echo $type; ?>">
+        <label for="type" class="form-label">Type of Canvas</label>
+        <!-- <input type="select" class="form-control" name="type" value="<?php echo $type; ?>"> -->
+         <select name="type" id="type">
+            <option value="Cushion">Cushion</option>
+            <option value="Bimini">Bimini</option>
+            <option value="Repair">Repair</option>
+        </select>
     </div>
     <div class="mb-3">
-        <label for="release_year" class="form-label">Time Taken</label>
+        <label for="time" class="form-label">Time Taken</label>
         <input type="text" class="form-control" name="time" value="<?php echo $time; ?>">
     </div>
     <div class="mb-3">
-        <label for="release_year" class="form-label">Date Completed</label>
+        <label for="date" class="form-label">Date Completed</label>
         <input type="text" class="form-control" name="date" value="<?php echo $date; ?>">
     </div>
     <div class="mb-3">
-        <label for="release_year" class="form-label">Description</label>
+        <label for="description" class="form-label">Description</label>
         <input type="text" class="form-control" name="description" value="<?php echo $description; ?>">
     </div>
 
