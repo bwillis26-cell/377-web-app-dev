@@ -7,7 +7,7 @@
  *************************************************************************************************/
 
 ?>
-
+<div class='header'>
 <h2>Reviews <span id="record-count"></span></h2>
 
 <a href='index.php?nav=review'>All</a>
@@ -23,7 +23,7 @@ for ($rating = 0; $rating <=5; $rating++)
 
 ?>
 
-<a href='index.php?nav=detail' id='add'>Add</a>
+<a href='index.php?nav=detail' id='add'>Add</a></div>
 <br><br>
 <table class="table table-bordered table-hover">
     <thead class="thead-dark">

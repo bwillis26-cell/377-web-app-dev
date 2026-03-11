@@ -55,7 +55,7 @@ if (isset($id)) {
     $id = "";
 }
 ?>
-
+<div class='detail'>
 <h2><?php echo $header; ?></h2>
 <form action="save.php" method="POST">
     <input type="hidden" class="form-control" name="id" value="<?php echo $id; ?>">
@@ -106,13 +106,14 @@ if (isset($id)) {
         <label for="description" class="form-label">Description</label>
         <input type="text" class="form-control" name="description" value="<?php echo $description; ?>">
     </div>
+    <br>
 
-    <button type="submit" class="btn btn-primary">Save</button>
+    <button type="submit" class="save">Save</button>
     <?php 
     if ($id != "") { ?>
-    <a href='delete.php?id=<?php echo $id; ?>' class='btn btn-danger' role='button' >Delete</a>
+    <a href='delete.php?id=<?php echo $id; ?>' class='delete' role='button' >Delete</a>
     <?php }?>
 
-    <a href="index.php?nav=review" class="btn btn-secondary" role="button">Cancel</a>
-
+    <a href="index.php?nav=review" class="cancel" role="button">Cancel</a>
+</div>
 </form>
