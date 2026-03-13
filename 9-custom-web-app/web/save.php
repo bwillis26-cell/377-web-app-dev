@@ -42,7 +42,26 @@ if ($first != "" && $last != "" && $email != "" && $phone != "" && $type != "" &
         SQL;
     }
     $connection->query($update);
+    $text = "";
+
+    $display =<<<JS
+    <script>
+    document.getElementById('invalid').innerHTML = '(' + $text + ')';
+    </script>
+    JS;
+
+echo $display;
 } else {
-    
+
+    $text = "Input all data fields correctly.";
+
+    $display =<<<JS
+    <script>
+    document.getElementById('invalid').innerHTML = '(' + $text + ')';
+    </script>
+    JS;
+
+echo $display;
+
 }
 header('Location: index.php?nav=review');

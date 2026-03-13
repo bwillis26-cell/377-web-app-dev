@@ -5,10 +5,11 @@
  *
  * Displays a list of the reviews, you can add, edit, or delete reviews
  *************************************************************************************************/
-
 ?>
 <div class='header'>
 <h2>Reviews <span id="record-count"></span></h2>
+
+<h2><span id='invalid'></span></h2>
 
 <a href='index.php?nav=review'>All</a>
 
