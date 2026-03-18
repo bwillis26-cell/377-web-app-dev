@@ -57,32 +57,35 @@ if (isset($id)) {
 ?>
 <div class='detail'>
 <h2><?php echo $header; ?></h2>
+
+<h3 id="results"></h3>
+
 <form action="save.php" method="POST">
-    <input type="hidden" class="form-control" name="id" value="<?php echo $id; ?>">
+    <input type="hidden" class="form-control" name="id" id="id" value="<?php echo $id; ?>">
 
     <div class="mb-3">
         <label for="first_name" class="form-label">First Name</label>
-        <input type="text" class="form-control" name="first" value="<?php echo $first; ?>">
+        <input type="text" class="form-control" name="first" id="first" value="<?php echo $first; ?>">
     </div>
 
     <div class="mb-3">
         <label for="last_name" class="form-label">Last Name</label>
-        <input type="text" class="form-control" name="last" value="<?php echo $last; ?>">
+        <input type="text" class="form-control" name="last" id="last" value="<?php echo $last; ?>">
     </div>
 
     <div class="mb-3">
         <label for="rating" class="form-label">Rating</label>
-        <input type="text" class="form-control" name="rating" value="<?php echo $rating; ?>">
+        <input type="text" class="form-control" name="rating" id="rating" value="<?php echo $rating; ?>">
     </div>
 
     <div class="mb-3">
         <label for="email" class="form-label">Email</label>
-        <input type="text" class="form-control" name="email" value="<?php echo $email; ?>">
+        <input type="text" class="form-control" name="email" id="email" value="<?php echo $email; ?>">
     </div>
 
     <div class="mb-3">
         <label for="duration" class="form-label">Phone Number</label>
-        <input type="text" class="form-control" name="phone" value="<?php echo $phone; ?>">
+        <input type="text" class="form-control" name="phone" id="phone" value="<?php echo $phone; ?>">
     </div>
 
     <div class="mb-3">
@@ -96,19 +99,19 @@ if (isset($id)) {
     </div>
     <div class="mb-3">
         <label for="time" class="form-label">Time Taken</label>
-        <input type="text" class="form-control" name="time" value="<?php echo $time; ?>">
+        <input type="text" class="form-control" name="time" id="time" value="<?php echo $time; ?>">
     </div>
     <div class="mb-3">
         <label for="date" class="form-label">Date Completed</label>
-        <input type="text" class="form-control" name="date" value="<?php echo $date; ?>">
+        <input type="text" class="form-control" name="date" id="date" value="<?php echo $date; ?>">
     </div>
     <div class="mb-3">
         <label for="description" class="form-label">Description</label>
-        <input type="text" class="form-control" name="description" value="<?php echo $description; ?>">
+        <input type="text" class="form-control" name="description" id="description" value="<?php echo $description; ?>">
     </div>
     <br>
 
-    <button type="submit" onclick="save()" class="save">Save</button>
+    <button type="button" onclick="save()" class="save">Save</button>
     <?php 
     if ($id != "") { ?>
     <a href='delete.php?id=<?php echo $id; ?>' class='delete' role='button' >Delete</a>
@@ -120,7 +123,22 @@ if (isset($id)) {
 
 <script>
     function save() {
-        
+        var settings = {
+            'async': true,
+            'url': 'save.php?id=' + $('#id').val() + '&first=' + $('#first').val(),
+            'method': 'POST',
+            'headers': {
+                'Cache-Control': 'no-cache'
+            }
+        };
+
+        $('#loginButton').prop('disabled', true);
+
+        $.ajax(settings).done(function(response) {
+            $('#results').html('Player saved successfully!');
+        }).fail(function() {
+           $('#results').html('Error saving player.')
+        })
     }
 
 

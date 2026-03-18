@@ -41,27 +41,13 @@ if ($first != "" && $last != "" && $email != "" && $phone != "" && $type != "" &
         WHERE rev_id = $id
         SQL;
     }
-    $connection->query($update);
-    $text = "";
+} 
 
-    $display =<<<JS
-    <script>
-    document.getElementById('invalid').innerHTML = '(' + $text + ')';
-    </script>
-    JS;
 
-echo $display;
+if ($connection->query($update)) {
+    http_response_code(200);
 } else {
-
-    $text = "Input all data fields correctly.";
-
-    $display =<<<JS
-    <script>
-    document.getElementById('invalid').innerHTML = '(' + $text + ')';
-    </script>
-    JS;
-
-echo $display;
-
+    http_response_code(400);
 }
+
 header('Location: index.php?nav=review');
