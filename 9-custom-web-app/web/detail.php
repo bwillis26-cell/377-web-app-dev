@@ -108,7 +108,7 @@ if (isset($id)) {
     </div>
     <br>
 
-    <button type="submit" class="save">Save</button>
+    <button type="submit" onclick="save()" class="save">Save</button>
     <?php 
     if ($id != "") { ?>
     <a href='delete.php?id=<?php echo $id; ?>' class='delete' role='button' >Delete</a>
@@ -117,3 +117,12 @@ if (isset($id)) {
     <a href="index.php?nav=review" class="cancel" role="button">Cancel</a>
 </div>
 </form>
+
+<script>
+    function save() {
+        
+    }
+
+
+
+</script>

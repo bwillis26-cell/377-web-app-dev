@@ -12,7 +12,8 @@ CREATE TABLE `salty_canvas`.`reviews` (
   PRIMARY KEY (`rev_id`));
 
 
-('John','Smith','john.smith1@email.com','555-1001','Service','Great customer service and quick response.',930,4.5,'2026-03-01'),
+INSERT INTO reviews (rev_first_name, rev_last_name, rev_email, rev_phone_number, rev_type, rev_description, rev_time, rev_rating, rev_date)
+VALUES ('John','Smith','john.smith1@email.com','555-1001','Service','Great customer service and quick response.',930,4.5,'2026-03-01'),
 ('Emma','Johnson','emma.johnson2@email.com','555-1002','Product','The product quality exceeded expectations.',1045,5.0,'2026-03-01'),
 ('Liam','Williams','liam.williams3@email.com','555-1003','Delivery','Delivery was delayed but handled professionally.',1430,3.5,'2026-03-01'),
 ('Olivia','Brown','olivia.brown4@email.com','555-1004','Service','Friendly staff and clean environment.',1215,4.8,'2026-03-01'),
