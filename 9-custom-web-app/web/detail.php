@@ -58,8 +58,6 @@ if (isset($id)) {
 <div class='detail'>
 <h2><?php echo $header; ?></h2>
 
-<h3 id="results"></h3>
-
 <form action="save.php" method="POST">
     <input type="hidden" class="form-control" name="id" id="id" value="<?php echo $id; ?>">
 
@@ -144,10 +142,12 @@ if (isset($id)) {
         $.ajax(settings).done(function(response) {
             // console.log(response);
             $('#results').html('Player saved successfully!');
+            showAlert('success', 'Success!', 'Player saved successfully!');
             $('#results').removeClass('text-danger');
             $('#results').addClass('text-success');
         }).fail(function() {
-            $('#results').html('Error saving player.')
+            $('#results').html('Error saving player.');
+            showAlert('danger', 'Error!', 'Error saving player.');
             $('#results').addClass('text-danger');
             $('#results').removeClass('text-success');
         })
