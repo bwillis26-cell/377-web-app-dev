@@ -20,34 +20,34 @@ $date = $connection->real_escape_string($date);
 $rating = $connection->real_escape_string($rating);
 
 $update = "";
-if ($first != "" && $last != "" && $email != "" && $phone != "" && $type != "" && $description != "" && $date != "" && $time != "" && $rating != "") {
-    if ($id == "") {
-        $update =<<<SQL
-        INSERT INTO reviews (rev_first_name, rev_last_name, rev_email, rev_phone_number, rev_type, rev_description, rev_time, rev_rating, rev_date)
-        VALUES ('$first', '$last', '$email', '$phone', '$type', '$description', $time, $rating, '$date')
-        SQL;
-    } else {
-        $update =<<<SQL
-        UPDATE reviews
-        SET rev_first_name = '$first',
-        rev_last_name = '$last',
-        rev_email = '$email',
-        rev_phone_number = '$phone',
-        rev_type = '$type',
-        rev_description = '$description',
-        rev_time = $time,
-        rev_rating = $rating,
-        rev_date = '$date'
-        WHERE rev_id = $id
-        SQL;
-    }
-} 
-
-
-if ($connection->query($update)) {
-    http_response_code(200);
+if ($id == "") {
+    $update =<<<SQL
+    INSERT INTO reviews (rev_first_name, rev_last_name, rev_email, rev_phone_number, rev_type, rev_description, rev_time, rev_rating, rev_date)
+    VALUES ('$first', '$last', '$email', '$phone', '$type', '$description', $time, $rating, '$date')
+    SQL;
 } else {
-    http_response_code(400);
+    $update =<<<SQL
+    UPDATE reviews
+    SET rev_first_name = '$first',
+    rev_last_name = '$last',
+    rev_email = '$email',
+    rev_phone_number = '$phone',
+    rev_type = '$type',
+    rev_description = '$description',
+    rev_time = $time,
+    rev_rating = $rating,
+    rev_date = '$date'
+    WHERE rev_id = $id
+    SQL;
 }
 
-header('Location: index.php?nav=review');
+
+try {
+    if ($connection->query($update)) {
+        http_response_code(200);
+    } else {
+        http_response_code(400);
+    }
+} catch(Exception $e) {
+    http_response_code(400);
+}

@@ -125,19 +125,31 @@ if (isset($id)) {
     function save() {
         var settings = {
             'async': true,
-            'url': 'save.php?id=' + $('#id').val() + '&first=' + $('#first').val(),
+            'url': 'save.php?id='           + $('#id').val() +
+                            '&first='       + $('#first').val() + 
+                            '&last='        + $('#last').val() +
+                            '&rating='      + $('#rating').val() +
+                            '&email='       + $('#email').val() +
+                            '&phone='       + $('#phone').val() +
+                            '&type='        + $('#type').val() + 
+                            '&time='        + $('#time').val() +
+                            '&date='        + $('#date').val() + 
+                            '&description=' + $('#description').val(),
             'method': 'POST',
             'headers': {
                 'Cache-Control': 'no-cache'
             }
         };
 
-        $('#loginButton').prop('disabled', true);
-
         $.ajax(settings).done(function(response) {
+            // console.log(response);
             $('#results').html('Player saved successfully!');
+            $('#results').removeClass('text-danger');
+            $('#results').addClass('text-success');
         }).fail(function() {
-           $('#results').html('Error saving player.')
+            $('#results').html('Error saving player.')
+            $('#results').addClass('text-danger');
+            $('#results').removeClass('text-success');
         })
     }
 
