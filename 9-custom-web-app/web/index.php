@@ -34,7 +34,7 @@ include('library.php');
                 $('#alert').fadeIn();
             }
         </script>
-        <title>Salty Canvas</title>
+        <title>Salty Stitch Canvas</title>
     </head>
 
     <body>
@@ -43,7 +43,7 @@ include('library.php');
             <strong id="alertTitle">Success!</strong> <span id="alertMessage">Success message.</span>
         </div>
         <div class="container">
-            <h1 class='title'>Salty Canvas</h1>
+            <h1 class='title'>Salty Stitch Canvas</h1>
             <?php
             extract($_REQUEST);
 
