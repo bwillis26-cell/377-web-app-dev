@@ -140,11 +140,14 @@ if (isset($id)) {
         };
 
         $.ajax(settings).done(function(response) {
-            // console.log(response);
+            console.log(response);
             $('#results').html('Player saved successfully!');
             showAlert('success', 'Success!', 'Player saved successfully!');
             $('#results').removeClass('text-danger');
             $('#results').addClass('text-success');
+            if ($('#id').val() == "") {
+                $('#id').val(response);
+            }
         }).fail(function() {
             $('#results').html('Error saving player.');
             showAlert('danger', 'Error!', 'Error saving player.');

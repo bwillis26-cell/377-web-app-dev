@@ -44,7 +44,11 @@ if ($id == "") {
 
 try {
     if ($connection->query($update)) {
-        http_response_code(200);
+        // http_response_code(200);
+        $id = $connection->insert_id;
+        print($id);
+
+
     } else {
         http_response_code(400);
     }
