@@ -9,7 +9,48 @@
 <div class='header'>
 <h2>Reviews <span id="record-count"></span></h2>
 
-<h2><span id='invalid'></span></h2>
+<table id="main" class="stripe hover row-border compact"></table>
+
+<?php 
+
+$sql =<<<SQL
+SELECT *
+FROM reviews
+ORDER BY rev_last_name
+SQL;
+
+$connection = get_connection();
+
+
+$row = [];
+$result = $connection->query($sql);
+while ($row = $result->fetch_assoc()) {
+    $rows[] = $row;
+}
+
+echo ('<script>');
+echo ('var data = ' . json_encode($rows, JSON_PARTIAL_OUTPUT_ON_ERROR) . ';');
+echo ('</script>');
+
+?>
+
+<script>
+    var dataTable = $('#main').DataTable({
+        data: data,
+        columns: [
+            { title: "Rating", data: "rev_rating" },
+            { title: "Last Name", data: "rev_last_name" },
+            { title: "First Name", data: "rev_first_name" },
+            { title: "Work Done", data: "rev_type" },
+            { title: "Hours Taken", data: "rev_time" },
+            { title: "Description", data: "rev_description" }
+        ]
+    });
+
+</script>
+
+
+<hr>
 
 <a href='index.php?nav=review'>All</a>
 

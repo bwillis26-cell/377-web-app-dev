@@ -1,6 +1,6 @@
-#add {
+/* #add {
     background-color: lightblue;
-}
+} */
 .alert-position {
     display: none;
     position: fixed;
@@ -10,7 +10,7 @@
     width: 500px;
     z-index: 10000;
 }
-a {
+/* a {
     text-decoration: none;
     color: white;
     background-color: lightblue;
@@ -81,4 +81,4 @@ table, tr, th, td {
 input {
     border-radius: 5px;
     border-width: 1px;
-}
+} */
