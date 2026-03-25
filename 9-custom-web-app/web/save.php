@@ -18,12 +18,13 @@ $description = $connection->real_escape_string($description);
 $time = $connection->real_escape_string($time);
 $date = $connection->real_escape_string($date);
 $rating = $connection->real_escape_string($rating);
+$compDate = $connection->real_escape_string($compDate);
 
 $update = "";
 if ($id == "") {
     $update =<<<SQL
-    INSERT INTO reviews (rev_first_name, rev_last_name, rev_email, rev_phone_number, rev_type, rev_description, rev_time, rev_rating, rev_date)
-    VALUES ('$first', '$last', '$email', '$phone', '$type', '$description', $time, $rating, '$date')
+    INSERT INTO reviews (rev_first_name, rev_last_name, rev_email, rev_phone_number, rev_type, rev_description, rev_time, rev_rating, rev_date, rev_comp_date)
+    VALUES ('$first', '$last', '$email', '$phone', '$type', '$description', $time, $rating, '$date', '$compDate')
     SQL;
 } else {
     $update =<<<SQL
@@ -36,7 +37,8 @@ if ($id == "") {
     rev_description = '$description',
     rev_time = $time,
     rev_rating = $rating,
-    rev_date = '$date'
+    rev_date = '$date',
+    rev_comp_date = '$compDate'
     WHERE rev_id = $id
     SQL;
 }

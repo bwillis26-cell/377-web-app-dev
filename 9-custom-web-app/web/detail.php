@@ -17,6 +17,7 @@ $description = "";
 $time = "";
 $date = "";
 $rating = "";
+$compDate = "";
 
 $header = "";
 
@@ -46,17 +47,14 @@ if (isset($id)) {
     $description = $row['rev_description'];
     $time = $row['rev_time'];
     $date = $row['rev_date'];
-    $rating = $row['rev_rating'];
-
-
-    $header = $first . " " . $last . "'s review:";
+    $rating = $row['rev_rating'];   
+    $compDate = $row['rev_comp_date'];
 } else {
-    $header = "*** NEW REVIEW ***";
     $id = "";
 }
 ?>
 <div class='detail'>
-<h2 id="header"><?php echo $header; ?></h2>
+<h2 id="header"><?php echo isset($first) ? $first != "" ? $first . " " . $last . "'s review:" : "*** NEW REVIEW ***" : "*** NEW REVIEW ***"; ?></h2>
 
 <form action="save.php" method="POST">
     <input type="hidden" class="form-control" name="id" id="id" value="<?php echo $id; ?>">
@@ -107,6 +105,10 @@ if (isset($id)) {
         <label for="description" class="form-label">Description</label>
         <input type="text" class="form-control" name="description" id="description" value="<?php echo $description; ?>">
     </div>
+    <div class="mb-3">
+        <label for="compDate" class="form-label">Date Completed</label>
+        <input type="text" class="form-control" name="compDate" id="compDate" value="<?php echo $compDate; ?>">
+    </div>
     <br>
 
     <button type="button" onclick="save()" class="save">Save</button>
@@ -132,7 +134,8 @@ if (isset($id)) {
                             '&type='        + $('#type').val() + 
                             '&time='        + $('#time').val() +
                             '&date='        + $('#date').val() + 
-                            '&description=' + $('#description').val(),
+                            '&description=' + $('#description').val() +
+                            '&compDate='    + $('#compDate').val(),
             'method': 'POST',
             'headers': {
                 'Cache-Control': 'no-cache'

@@ -38,9 +38,12 @@ echo ('</script>');
     var dataTable = $('#main').DataTable({
         data: data,
         columns: [
+            { title: "Name", data: "rev_last_name", render: function(data, type, row) {
+                return '<a href="index.php?nav=detail&id=' + row.rev_id + '">' + data + ', ' + row.rev_first_name + '</a>';
+            }},
+            // { title: "First Name", data: "rev_first_name" },
             { title: "Rating", data: "rev_rating" },
-            { title: "Last Name", data: "rev_last_name" },
-            { title: "First Name", data: "rev_first_name" },
+            { title: "Date Completed", data: "rev_comp_date", render: },
             { title: "Work Done", data: "rev_type" },
             { title: "Hours Taken", data: "rev_time" },
             { title: "Description", data: "rev_description" }
