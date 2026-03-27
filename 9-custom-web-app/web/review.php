@@ -43,7 +43,10 @@ echo ('</script>');
             }},
             // { title: "First Name", data: "rev_first_name" },
             { title: "Rating", data: "rev_rating" },
-            { title: "Date Completed", data: "rev_comp_date", render: },
+            { title: "Date Completed", data: "rev_comp_date", render: function(data, type, row) {
+                var date = new Date(data);
+                return date.toLocaleDateString();
+            }},
             { title: "Work Done", data: "rev_type" },
             { title: "Hours Taken", data: "rev_time" },
             { title: "Description", data: "rev_description" }
