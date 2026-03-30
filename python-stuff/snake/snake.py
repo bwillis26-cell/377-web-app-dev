@@ -1,7 +1,10 @@
 import pygame
 import time
 import random
- 
+from playsound3 import playsound
+
+pygame.mixer.pre_init(44100, -16, 2, 512)
+
 pygame.init()
 
 white = (255, 255, 255)
@@ -25,6 +28,10 @@ snake_speed = 15
 font_style = pygame.font.SysFont("bahnschrift", 25)
 score_font = pygame.font.SysFont("comicsansms", 35)
  
+# Create the sound variables and load the sound files
+eat_sound = pygame.mixer.Sound('eating.mp3')
+game_over_sound = pygame.mixer.Sound('game_over.mp3')
+skull = pygame.image.load('skull.png')  # Load the skull image for the game over screen
  
 def Your_score(score):
     value = score_font.render("Your Score: " + str(score), True, yellow)
@@ -57,11 +64,18 @@ def gameLoop():
  
     foodx = round(random.randrange(0, dis_width - snake_block) / 10.0) * 10.0
     foody = round(random.randrange(0, dis_height - snake_block) / 10.0) * 10.0
- 
+
     while not game_over:
- 
+        i = 0
         while game_close == True:
+            i += 1
             dis.fill(blue)
+            if i == 1:  # Play the game over sound only once when the game is over
+                game_over_sound.play(loops=0)  # Play the game over sound when the snake collides with itself or the wall
+            skull_x = (dis_width - skull.get_width()) / 2
+            skull_y = (dis_height - skull.get_height()) / 2 + 50
+            skull_rect = skull.get_rect(center=(skull_x + skull.get_width() / 2, skull_y + skull.get_height() / 2))
+            dis.blit(skull, (skull_x, skull_y))  # Display the skull image on the game over screen
             message("You Lost! Press C-Play Again or Q-Quit", red)
             Your_score(Length_of_snake - 1)
             pygame.display.update()
@@ -117,6 +131,8 @@ def gameLoop():
             foodx = round(random.randrange(0, dis_width - snake_block) / 10.0) * 10.0
             foody = round(random.randrange(0, dis_height - snake_block) / 10.0) * 10.0
             Length_of_snake += 1
+            eat_sound.play(loops=0)  # Play the eat sound when the snake eats the food
+
  
         clock.tick(snake_speed)
  
