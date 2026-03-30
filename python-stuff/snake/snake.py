@@ -29,8 +29,8 @@ font_style = pygame.font.SysFont("bahnschrift", 25)
 score_font = pygame.font.SysFont("comicsansms", 35)
  
 # Create the sound variables and load the sound files
-eat_sound = pygame.mixer.Sound('eating.mp3')
-game_over_sound = pygame.mixer.Sound('game_over.mp3')
+eat_sound = pygame.mixer.Sound('eating.mp3') # Source: pixabay.com, free for commercial use, no attribution required
+game_over_sound = pygame.mixer.Sound('game_over.mp3') #Source: pixabay.com, free for commercial use, no attribution required
 skull = pygame.image.load('skull.png')  # Load the skull image for the game over screen
  
 def Your_score(score):
@@ -75,7 +75,7 @@ def gameLoop():
             skull_x = (dis_width - skull.get_width()) / 2
             skull_y = (dis_height - skull.get_height()) / 2 + 50
             skull_rect = skull.get_rect(center=(skull_x + skull.get_width() / 2, skull_y + skull.get_height() / 2))
-            dis.blit(skull, (skull_x, skull_y))  # Display the skull image on the game over screen
+            dis.blit(skull, (skull_x, skull_y))  # Display the skull image on the game over screen    Source: Canva AI
             message("You Lost! Press C-Play Again or Q-Quit", red)
             Your_score(Length_of_snake - 1)
             pygame.display.update()
