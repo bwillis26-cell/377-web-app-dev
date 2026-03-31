@@ -385,8 +385,35 @@ public class SecretText
      * the arraylist and find these points.
      * @formatter:on
      */
+
     Picture result = new Picture(pic);
-    // TODO: Complete the code here.
+    Pixel[][] pixels = result.getPixels2D();
+    
+    // Find min and max row and col
+    int minRow = Integer.MAX_VALUE;
+    int maxRow = Integer.MIN_VALUE;
+    int minCol = Integer.MAX_VALUE;
+    int maxCol = Integer.MIN_VALUE;
+    
+    for (Point p : points) {
+      if (p.getRow() < minRow) minRow = p.getRow();
+      if (p.getRow() > maxRow) maxRow = p.getRow();
+      if (p.getCol() < minCol) minCol = p.getCol();
+      if (p.getCol() > maxCol) maxCol = p.getCol();
+    }
+    
+    // Draw top and bottom lines
+    for (int col = minCol; col <= maxCol; col++) {
+      pixels[minRow][col].setColor(Color.RED);
+      pixels[maxRow][col].setColor(Color.RED);
+    }
+    
+    // Draw left and right lines
+    for (int row = minRow; row <= maxRow; row++) {
+      pixels[row][minCol].setColor(Color.RED);
+      pixels[row][maxCol].setColor(Color.RED);
+    }
+    
     return result;
   }
 
