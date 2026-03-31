@@ -2,10 +2,30 @@ import pygame
 import time
 import random
 from playsound3 import playsound
+import pygame_menu
+
+def set_color(choice):
+    global color_choice
+    if choice == 'Blue':
+        color_choice = blue
+    elif choice == 'Green':
+        color_choice = green
+    elif choice == 'Red':
+        color_choice = red
+    elif choice == 'Yellow':
+        color_choice = yellow
 
 pygame.mixer.pre_init(44100, -16, 2, 512)
 
 pygame.init()
+
+
+
+menu = pygame_menu.Menu('Welcome', 400, 300, theme=pygame_menu.themes.THEME_GREEN)
+
+menu.add.selector('Background Color :', [('Blue', 'Blue'), ('Green', 'Green'), ('Red', 'Red'), ('Yellow', 'Yellow')], onchange=set_color())
+# menu.add.button('Play', start_the_game)
+# menu.add.button('Quit', pygame_menu.events.EXIT)
 
 white = (255, 255, 255)
 yellow = (255, 255, 102)
@@ -17,9 +37,12 @@ blue = (50, 153, 213)
 dis_width = 600
 dis_height = 400
 
-dis = pygame.display.set_mode((dis_width, dis_height))
+surface = pygame.display.set_mode((dis_width, dis_height))
 pygame.display.set_caption('Snake Game by Edureka')
  
+menu.mainloop(surface)  # Display the menu and wait for the user to make a selection
+
+
 clock = pygame.time.Clock()
  
 snake_block = 10
@@ -32,21 +55,27 @@ score_font = pygame.font.SysFont("comicsansms", 35)
 eat_sound = pygame.mixer.Sound('eating.mp3') # Source: pixabay.com, free for commercial use, no attribution required
 game_over_sound = pygame.mixer.Sound('game_over.mp3') #Source: pixabay.com, free for commercial use, no attribution required
 skull = pygame.image.load('skull.png')  # Load the skull image for the game over screen
- 
+
+color_choice = blue  # Set the default background color to blue
+
+
+
+
+
 def Your_score(score):
     value = score_font.render("Your Score: " + str(score), True, yellow)
-    dis.blit(value, [0, 0])
+    surface.blit(value, [0, 0])
  
  
  
 def our_snake(snake_block, snake_list):
     for x in snake_list:
-        pygame.draw.rect(dis, black, [x[0], x[1], snake_block, snake_block])
+        pygame.draw.rect(surface, black, [x[0], x[1], snake_block, snake_block])
  
  
 def message(msg, color):
     mesg = font_style.render(msg, True, color)
-    dis.blit(mesg, [dis_width / 6, dis_height / 3])
+    surface.blit(mesg, [dis_width / 6, dis_height / 3])
  
  
 def gameLoop():
@@ -69,13 +98,13 @@ def gameLoop():
         i = 0
         while game_close == True:
             i += 1
-            dis.fill(blue)
+            surface.fill(blue)
             if i == 1:  # Play the game over sound only once when the game is over
                 game_over_sound.play(loops=0)  # Play the game over sound when the snake collides with itself or the wall
             skull_x = (dis_width - skull.get_width()) / 2
             skull_y = (dis_height - skull.get_height()) / 2 + 50
             skull_rect = skull.get_rect(center=(skull_x + skull.get_width() / 2, skull_y + skull.get_height() / 2))
-            dis.blit(skull, (skull_x, skull_y))  # Display the skull image on the game over screen    Source: Canva AI
+            surface.blit(skull, (skull_x, skull_y))  # Display the skull image on the game over screen    Source: Canva AI
             message("You Lost! Press C-Play Again or Q-Quit", red)
             Your_score(Length_of_snake - 1)
             pygame.display.update()
@@ -109,8 +138,8 @@ def gameLoop():
             game_close = True
         x1 += x1_change
         y1 += y1_change
-        dis.fill(blue)
-        pygame.draw.rect(dis, green, [foodx, foody, snake_block, snake_block])
+        surface.fill(color_choice)
+        pygame.draw.rect(surface, green, [foodx, foody, snake_block, snake_block])
         snake_Head = []
         snake_Head.append(x1)
         snake_Head.append(y1)
