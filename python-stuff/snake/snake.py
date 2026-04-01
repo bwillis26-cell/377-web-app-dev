@@ -2,30 +2,13 @@ import pygame
 import time
 import random
 from playsound3 import playsound
-import pygame_menu
+# import pygame_menu
 
-def set_color(choice):
-    global color_choice
-    if choice == 'Blue':
-        color_choice = blue
-    elif choice == 'Green':
-        color_choice = green
-    elif choice == 'Red':
-        color_choice = red
-    elif choice == 'Yellow':
-        color_choice = yellow
 
 pygame.mixer.pre_init(44100, -16, 2, 512)
 
 pygame.init()
 
-
-
-menu = pygame_menu.Menu('Welcome', 400, 300, theme=pygame_menu.themes.THEME_GREEN)
-
-menu.add.selector('Background Color :', [('Blue', 'Blue'), ('Green', 'Green'), ('Red', 'Red'), ('Yellow', 'Yellow')], onchange=set_color())
-# menu.add.button('Play', start_the_game)
-# menu.add.button('Quit', pygame_menu.events.EXIT)
 
 white = (255, 255, 255)
 yellow = (255, 255, 102)
@@ -39,15 +22,13 @@ dis_height = 400
 
 surface = pygame.display.set_mode((dis_width, dis_height))
 pygame.display.set_caption('Snake Game by Edureka')
- 
-menu.mainloop(surface)  # Display the menu and wait for the user to make a selection
 
 
 clock = pygame.time.Clock()
  
 snake_block = 10
 snake_speed = 15
- 
+
 font_style = pygame.font.SysFont("bahnschrift", 25)
 score_font = pygame.font.SysFont("comicsansms", 35)
  
@@ -56,29 +37,46 @@ eat_sound = pygame.mixer.Sound('eating.mp3') # Source: pixabay.com, free for com
 game_over_sound = pygame.mixer.Sound('game_over.mp3') #Source: pixabay.com, free for commercial use, no attribution required
 skull = pygame.image.load('skull.png')  # Load the skull image for the game over screen
 
-color_choice = blue  # Set the default background color to blue
+high_score = 0  # Initialize the high score variable
+
+# Initialize the RGB values for the random background color
+r = 50 
+g = 50
+b = 50
 
 
 
+def random_color():
+    global r, g, b
+    r += random.randint(-10, 10)
+    g += random.randint(-10, 10)
+    b += random.randint(-10, 10)
+    r = max(50, min(205, r))
+    g = max(50, min(205, g))
+    b = max(50, min(205, b))
+    return (r, g, b)
 
+def update_high_score(score):
+    global high_score
+    if int(score) > high_score:
+        high_score = score
+    value = score_font.render("High Score: " + str(high_score), True, yellow)
+    surface.blit(value, [dis_width - 250, 0])
 
 def Your_score(score):
     value = score_font.render("Your Score: " + str(score), True, yellow)
     surface.blit(value, [0, 0])
  
- 
- 
 def our_snake(snake_block, snake_list):
     for x in snake_list:
         pygame.draw.rect(surface, black, [x[0], x[1], snake_block, snake_block])
  
- 
 def message(msg, color):
     mesg = font_style.render(msg, True, color)
     surface.blit(mesg, [dis_width / 6, dis_height / 3])
- 
- 
+
 def gameLoop():
+    global snake_speed
     game_over = False
     game_close = False
  
@@ -138,7 +136,8 @@ def gameLoop():
             game_close = True
         x1 += x1_change
         y1 += y1_change
-        surface.fill(color_choice)
+
+        surface.fill(random_color())  # Change the background color to a random color each frame
         pygame.draw.rect(surface, green, [foodx, foody, snake_block, snake_block])
         snake_Head = []
         snake_Head.append(x1)
@@ -153,6 +152,7 @@ def gameLoop():
  
         our_snake(snake_block, snake_List)
         Your_score(Length_of_snake - 1)
+        update_high_score(Length_of_snake - 1)
  
         pygame.display.update()
  
@@ -162,7 +162,17 @@ def gameLoop():
             Length_of_snake += 1
             eat_sound.play(loops=0)  # Play the eat sound when the snake eats the food
 
- 
+
+
+        # Increase the snake speed as the score increases, with a maximum speed limit to keep the game playable
+        if (Length_of_snake - 1) > 30:
+            snake_speed = 30  
+        elif (Length_of_snake - 1) > 20:
+            snake_speed = 25
+        elif (Length_of_snake - 1) > 10:
+            snake_speed = 20
+        else: 
+            snake_speed = 15
         clock.tick(snake_speed)
  
     pygame.quit()
