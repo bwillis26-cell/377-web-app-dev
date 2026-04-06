@@ -43,6 +43,14 @@ public class SecretText
     // Picture copy = testClearLow(beach);
     // copy.explore();
 
+    // Test hideText and revealText
+    String secretMessage = "HELLO WORLD";
+    Picture hiddenPic = hideText(beach, secretMessage);
+    hiddenPic.explore(); // Should look almost the same as beach
+    String revealedMessage = revealText(hiddenPic);
+    System.out.println("Original message: " + secretMessage);
+    System.out.println("Revealed message: " + revealedMessage);
+
   }
 
   /**
@@ -555,6 +563,20 @@ public class SecretText
     Pixel[][] pixels = newPic.getPixels2D();
     Color leftColor = null;
     // TODO: Complete the code here.
+    ArrayList<Integer> eCode = encodeString(topSecretTextMessage);
+    int counter = 0;
+    for (int row = 0; row < pixels.length && counter < eCode.size(); row++)
+    {
+      for (int col = 0; col < pixels[0].length && counter < eCode.size(); col++)
+      {
+        int code = eCode.get(counter);
+        int[] bits = getBitPairs(code);
+        Color hideColor = new Color(bits[0] * 64, bits[1] * 64, bits[2] * 64);
+        setLow(pixels[row][col], hideColor);
+        counter++;
+      }
+    }
+    
     return newPic;
   }
 
@@ -593,6 +615,19 @@ public class SecretText
     Color leftColor = null;
     ArrayList<Integer> codes = new ArrayList<Integer>();
     // TODO: Complete the code here.
+    for (int row = 0; row < pixels.length; row++)
+    {
+      for (int col = 0; col < pixels[0].length; col++)
+      {
+        Color color = pixels[row][col].getColor();
+        int code = (color.getRed() % 4) + ((color.getGreen() % 4) * 4) + ((color.getBlue() % 4) * 16);
+        if (code == 0)
+        {
+          return decodeString(codes);
+        }
+        codes.add(code);
+      }
+    }
     return decodeString(codes);
   }
 

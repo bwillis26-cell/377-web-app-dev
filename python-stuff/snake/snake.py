@@ -45,7 +45,7 @@ g = 50
 b = 50
 
 
-
+# Function to generate a random color by slightly changing the RGB values
 def random_color():
     global r, g, b
     r += random.randint(-10, 10)
@@ -56,6 +56,7 @@ def random_color():
     b = max(50, min(205, b))
     return (r, g, b)
 
+# Function to update the high score if the current score is greater than the high score
 def update_high_score(score):
     global high_score
     if int(score) > high_score:
@@ -95,7 +96,7 @@ def gameLoop():
     while not game_over:
         i = 0
         while game_close == True:
-            i += 1
+            i += 1 # Allows the game over sound to play once and prevents it from repeating
             surface.fill(blue)
             if i == 1:  # Play the game over sound only once when the game is over
                 game_over_sound.play(loops=0)  # Play the game over sound when the snake collides with itself or the wall
