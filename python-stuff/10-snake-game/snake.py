@@ -1,3 +1,13 @@
+"""
+Added a high score feature that updates during the rounds
+Added a rainbow background that changes randomly
+Added sounds for eating and game over
+Added a game over screen with a skull image
+"""
+
+
+
+
 import pygame
 import time
 import random
