@@ -5,20 +5,15 @@ Added sounds for eating and game over
 Added a game over screen with a skull image
 """
 
-
-
-
 import pygame
 import time
 import random
 from playsound3 import playsound
 # import pygame_menu
 
-
 pygame.mixer.pre_init(44100, -16, 2, 512)
 
 pygame.init()
-
 
 white = (255, 255, 255)
 yellow = (255, 255, 102)

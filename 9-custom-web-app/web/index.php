@@ -7,9 +7,6 @@
 
 include('library.php');
 
-
-
-
 ?>
 
 <!DOCTYPE html>
