@@ -26,6 +26,6 @@
             include("$nav.php");
             ?>
         </div>
-        <script type="text/python" src="brython.py"></script>
+        <script type="text/python" src="chess.py"></script>
     </body>
 </html>
