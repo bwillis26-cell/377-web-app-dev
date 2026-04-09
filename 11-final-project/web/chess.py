@@ -1,4 +1,4 @@
-from browser import document, html
+from browser import document, html, svg
 
 class Piece:
 
@@ -17,87 +17,84 @@ class Piece:
 
 class Board:
     def __init__(self):
-        self.board = [[None for _ in range(8)] for _ in range(8)]
-        self.setup_board()
+        self.pieces = []
+        self.create_pieces()
 
-    def setup_board(self):
-        # Set up pawns
+    def create_pieces(self):
+        # Create pawns
         for col in range(8):
-            self.board[1][col] = Piece('black', 'pawn', 1, col)
-            self.board[6][col] = Piece('white', 'pawn', 6, col)
+            self.pieces.append(Piece("white", "pawn", 6, col))
+            self.pieces.append(Piece("black", "pawn", 1, col))
 
-        # Set up rooks
-        self.board[0][0] = self.board[0][7] = Piece('black', 'rook', 0, 0)
-        self.board[7][0] = self.board[7][7] = Piece('white', 'rook', 7, 0)
+        # Create rooks
+        self.pieces.append(Piece("white", "rook", 7, 0))
+        self.pieces.append(Piece("white", "rook", 7, 7))
+        self.pieces.append(Piece("black", "rook", 0, 0))
+        self.pieces.append(Piece("black", "rook", 0, 7))
 
-        # Set up knights
-        self.board[0][1] = self.board[0][6] = Piece('black', 'knight', 0, 1)
-        self.board[7][1] = self.board[7][6] = Piece('white', 'knight', 7, 1)
+        # Create knights
+        self.pieces.append(Piece("white", "knight", 7, 1))
+        self.pieces.append(Piece("white", "knight", 7, 6))
+        self.pieces.append(Piece("black", "knight", 0, 1))
+        self.pieces.append(Piece("black", "knight", 0, 6))
 
-        # Set up bishops
-        self.board[0][2] = self.board[0][5] = Piece('black', 'bishop', 0, 2)
-        self.board[7][2] = self.board[7][5] = Piece('white', 'bishop', 7, 2)
+        # Create bishops
+        self.pieces.append(Piece("white", "bishop", 7, 2))
+        self.pieces.append(Piece("white", "bishop", 7, 5))
+        self.pieces.append(Piece("black", "bishop", 0, 2))
+        self.pieces.append(Piece("black", "bishop", 0, 5))
 
-        # Set up queens
-        self.board[0][3] = Piece('black', 'queen', 0, 3)
-        self.board[7][3] = Piece('white', 'queen', 7, 3)
+        # Create queens
+        self.pieces.append(Piece("white", "queen", 7, 3))
+        self.pieces.append(Piece("black", "queen", 0, 3))
 
-        # Set up kings
-        self.board[0][4] = Piece('black', 'king', 0, 4)
-        self.board[7][4] = Piece('white', 'king', 7, 4)
+        # Create kings
+        self.pieces.append(Piece("white", "king", 7, 4))
+        self.pieces.append(Piece("black", "king", 0, 4))
 
-    def __str__(self):
-        board_str = ""
-        for row in self.board:
-            for piece in row:
-                if piece is None:
-                    board_str += ". "
-                elif piece.color == 'white':
-                    board_str += piece.name[0].upper() + " "
-                else:
-                    board_str += piece.name[0].lower() + " "
-            board_str += "\n"
-        return board_str
-    
-    def move_piece(self, from_row, from_col, to_row, to_col):
-        piece = self.board[from_row][from_col]
-        if piece is None:
-            print("No piece at the source position.")
-            return False
-        if self.board[to_row][to_col] is not None:
-            print("Destination position is occupied.")
-            return False
-        self.board[to_row][to_col] = piece
-        self.board[from_row][from_col] = None
-        piece.row = to_row
-        piece.col = to_col
-        return True
-    
-    def is_valid_move(self, from_row, from_col, to_row, to_col):
-        piece = self.board[from_row][from_col]
-        if piece is None:
-            return False
-        # Implement specific move rules for each piece type here
-        # For simplicity, we will just allow any move for now
-        return True
-    
-    def draw_square_colors(self):
-        for row in range(8):
-            for col in range(8):
-                if (row + col) % 2 == 0:
-                    print("White square at ({}, {})".format(row, col))
-                else:
-                    print("Black square at ({}, {})".format(row, col))
+    def get_pieces(self):
+        return self.pieces
+    def move_piece(self, piece, new_row, new_col):
+        piece.row = new_row
+        piece.col = new_col
 
 board = html.TABLE()
 for row in range(8):
     tr = html.TR()
+    tr.style.height = "50px"
+
     for col in range(8):
         td = html.TD()
+        td.style.width = "50px"
         if (row + col) % 2 == 0:
             td.style.backgroundColor = "#e68a00"
         else:
             td.style.backgroundColor = "#ffd699"
+        if (row, col) in [(piece.get_position()) for piece in Board().pieces]:
+            piece = next(piece for piece in Board().pieces if piece.get_position() == (row, col))
+            if (piece.get_name() == "pawn"):
+                td.html = "<img src='chess-svg/bpawn2-b.svg' width=40 height=40>" if piece.get_color() == "black" else "<img src='chess-svg/bpawn2-w.svg' width=40 height=40>"
+            elif (piece.get_name() == "rook"):
+                td.html = "<img src='chess-svg/rook-b.svg' width=40 height=40>" if piece.get_color() == "black" else "<img src='chess-svg/rook-w.svg' width=40 height=40>"
+            elif (piece.get_name() == "knight"):
+                td.html = "<img src='chess-svg/knight-b.svg' width=40 height=40>" if piece.get_color() == "black" else "<img src='chess-svg/knight-w.svg' width=40 height=40>"
+            elif (piece.get_name() == "queen"):
+                td.html = "<img src='chess-svg/queen-b.svg' width=40 height=40>" if piece.get_color() == "black" else "<img src='chess-svg/queen-w.svg' width=40 height=40>"
+            elif (piece.get_name() == "king"):
+                td.html = "<img src='chess-svg/nrking-b.svg' width=40 height=40>" if piece.get_color() == "black" else "<img src='chess-svg/nrking-w.svg' width=40 height=40>"
+            elif (piece.get_name() == "bishop"):
+                td.html = "<img src='chess-svg/bishop-b.svg' width=40 height=40>" if piece.get_color() == "black" else "<img src='chess-svg/bishop-w.svg' width=40 height=40>"
+            else:
+                td.text = ""
+        # if (row, col) in [(piece.get_position()) for piece in Board().pieces]:
+        #     piece = next(piece for piece in Board().pieces if piece.get_position() == (row, col))
+        #     if (piece.get_name() == "knight"):
+        #         td.text = "N" if piece.get_color() == "white" else "n"
+        #     elif (piece.get_name() == "king"):
+        #         td.svg = html.SVG(width=40, height=40)
+        #     else:
+        #         td.text = ""
+        
         tr <= td
     board <= tr
 document <= board
