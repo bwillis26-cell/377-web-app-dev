@@ -54,9 +54,19 @@ class Board:
 
     def get_pieces(self):
         return self.pieces
-    def move_piece(self, piece, new_row, new_col):
-        piece.row = new_row
-        piece.col = new_col
+
+def selectPiece(piece_id):
+        color = ""
+        if piece_id.endswith("w"):
+            color = "white"
+        else:
+            color = "black"
+        name = piece_id[:-1]
+        print(f"Selected piece: {color} {name}")
+
+        
+
+
 
 board = html.TABLE()
 for row in range(8):
@@ -73,27 +83,19 @@ for row in range(8):
         if (row, col) in [(piece.get_position()) for piece in Board().pieces]:
             piece = next(piece for piece in Board().pieces if piece.get_position() == (row, col))
             if (piece.get_name() == "pawn"):
-                td.html = "<img src='chess-svg/bpawn2-b.svg' width=40 height=40>" if piece.get_color() == "black" else "<img src='chess-svg/bpawn2-w.svg' width=40 height=40>"
+                td.html = "<img src='chess-svg/bpawn2-b.svg' width=40 height=40 id='pawnb' onClick='selectPiece(this.id)'>" if piece.get_color() == "black" else "<img src='chess-svg/bpawn2-w.svg' width=40 height=40 id='pawnw' onClick='selectPiece(this.id)'>"
             elif (piece.get_name() == "rook"):
-                td.html = "<img src='chess-svg/rook-b.svg' width=40 height=40>" if piece.get_color() == "black" else "<img src='chess-svg/rook-w.svg' width=40 height=40>"
+                td.html = "<img src='chess-svg/rook-b.svg' width=40 height=40 id='rookb' onClick='selectPiece(this.id)'>" if piece.get_color() == "black" else "<img src='chess-svg/rook-w.svg' width=40 height=40 id='rookw' onClick='selectPiece(this.id)'>"
             elif (piece.get_name() == "knight"):
-                td.html = "<img src='chess-svg/knight-b.svg' width=40 height=40>" if piece.get_color() == "black" else "<img src='chess-svg/knight-w.svg' width=40 height=40>"
+                td.html = "<img src='chess-svg/knight-b.svg' width=40 height=40 id='knightb' onClick='selectPiece(this.id)'>" if piece.get_color() == "black" else "<img src='chess-svg/knight-w.svg' width=40 height=40 id='knightw' onClick='selectPiece(this.id)'>"
             elif (piece.get_name() == "queen"):
-                td.html = "<img src='chess-svg/queen-b.svg' width=40 height=40>" if piece.get_color() == "black" else "<img src='chess-svg/queen-w.svg' width=40 height=40>"
+                td.html = "<img src='chess-svg/queen-b.svg' width=40 height=40 id='queenb' onClick='selectPiece(this.id)'>" if piece.get_color() == "black" else "<img src='chess-svg/queen-w.svg' width=40 height=40 id='queenw' onClick='selectPiece(this.id)'>"
             elif (piece.get_name() == "king"):
-                td.html = "<img src='chess-svg/nrking-b.svg' width=40 height=40>" if piece.get_color() == "black" else "<img src='chess-svg/nrking-w.svg' width=40 height=40>"
+                td.html = "<img src='chess-svg/nrking-b.svg' width=40 height=40 id='kingb' onClick='selectPiece(this.id)'>" if piece.get_color() == "black" else "<img src='chess-svg/nrking-w.svg' width=40 height=40 id='kingw' onClick='selectPiece(this.id)'>"
             elif (piece.get_name() == "bishop"):
-                td.html = "<img src='chess-svg/bishop-b.svg' width=40 height=40>" if piece.get_color() == "black" else "<img src='chess-svg/bishop-w.svg' width=40 height=40>"
+                td.html = "<img src='chess-svg/bishop-b.svg' width=40 height=40 id='bishopb' onClick='selectPiece(this.id)'>" if piece.get_color() == "black" else "<img src='chess-svg/bishop-w.svg' width=40 height=40 id='bishopw' onClick='selectPiece(this.id)'>"
             else:
                 td.text = ""
-        # if (row, col) in [(piece.get_position()) for piece in Board().pieces]:
-        #     piece = next(piece for piece in Board().pieces if piece.get_position() == (row, col))
-        #     if (piece.get_name() == "knight"):
-        #         td.text = "N" if piece.get_color() == "white" else "n"
-        #     elif (piece.get_name() == "king"):
-        #         td.svg = html.SVG(width=40, height=40)
-        #     else:
-        #         td.text = ""
         
         tr <= td
     board <= tr
