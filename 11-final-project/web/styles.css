@@ -1,0 +1,68 @@
+.pawnb {
+    background-image: url("chess-svg/bpawn2-b.svg");
+    background-size: cover;
+}
+.pawnw {
+    background-image: url("chess-svg/bpawn2-w.svg");
+    background-size: cover;
+}
+.rookb {
+    background-image: url("chess-svg/rook-b.svg");
+    background-size: cover;
+}
+.rookw {
+    background-image: url("chess-svg/rook-w.svg");
+    background-size: cover;
+}
+.knightb {
+    background-image: url("chess-svg/knight-b.svg");
+    background-size: cover;
+}
+.knightw {
+    background-image: url("chess-svg/knight-w.svg");
+    background-size: cover;
+}
+.queenb {
+    background-image: url("chess-svg/queen-b.svg");
+    background-size: cover;
+}
+.queenw {
+    background-image: url("chess-svg/queen-w.svg");
+    background-size: cover;
+}
+.kingb {
+    background-image: url("chess-svg/nrking-b.svg");
+    background-size: cover;
+}
+.kingw {
+    background-image: url("chess-svg/nrking-w.svg");
+    background-size: cover;
+}
+.bishopb {
+    background-image: url("chess-svg/bishop-b.svg");
+    background-size: cover;
+}
+.bishopw {
+    background-image: url("chess-svg/bishop-w.svg");
+    background-size: cover;
+}
+.rookb:hover, .knightb:hover, .queenb:hover, .kingb:hover, .bishopb:hover, .pawnb:hover {
+    background-color: rgba(255, 0, 0, 0.5);
+}
+.rookw:hover, .knightw:hover, .queenw:hover, .kingw:hover, .bishopw:hover, .pawnw:hover {
+    background-color: rgba(255, 0, 0, 0.5);
+}
+.rookb:active, .knightb:active, .queenb:active, .kingb:active, .bishopb:active, .pawnb:active {
+    background-color: rgba(0, 255, 0, 0.5);
+}
+.rookw:active, .knightw:active, .queenw:active, .kingw:active, .bishopw:active, .pawnw:active {
+    background-color: rgba(0, 255, 0, 0.5);
+}
+.rookb, .knightb, .queenb, .kingb, .bishopb, .pawnb, .rookw, .knightw, .queenw, .kingw, .bishopw, .pawnw {
+    border: none;
+    padding: 5px;
+    margin: 0;
+    width: 40px;
+    height: 40px;
+    background-color: transparent;
+}
