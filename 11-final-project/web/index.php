@@ -25,7 +25,7 @@
             }
             include("$nav.php");
             ?>
+            <script type="text/python" src="chess.py"></script>
         </div>
-        <script type="text/python" src="chess.py"></script>
     </body>
 </html>

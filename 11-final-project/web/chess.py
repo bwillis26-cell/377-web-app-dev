@@ -1,4 +1,7 @@
 from browser import document, html, svg
+from browser.template import Template
+
+boardArr = [[None for _ in range(8)] for _ in range(8)]
 
 class Piece:
 
@@ -55,14 +58,15 @@ class Board:
     def get_pieces(self):
         return self.pieces
 
-def selectPiece(piece_id):
-    color = ""
-    if piece_id.endswith("w"):
-        color = "white"
-    else:
-        color = "black"
-    name = piece_id[:-1]
-    print(f"Selected piece: {color} {name}")
+def displayLegalMoves(id):
+    global boardArr
+    if (id.startswith("pawn")):
+        pass
+
+def selectPiece(event, element):
+    elementID = element.data.id
+    displayLegalMoves(elementID)
+    
 
 
 
@@ -83,6 +87,7 @@ bk = 0
 
 
 board = html.TABLE()
+
 for row in range(8):
     tr = html.TR()
     tr.style.height = "50px"
@@ -97,65 +102,82 @@ for row in range(8):
         if (row, col) in [(piece.get_position()) for piece in Board().pieces]:
             piece = next(piece for piece in Board().pieces if piece.get_position() == (row, col))
             if (piece.get_name() == "pawn"):
-                td.html = "<button class='pawnb' id='pawnb" + str(bp) + "'>" if piece.get_color() == "black" else "<button class='pawnw' id='pawnw" + str(wp) + "'>"
-                # td.html = "<img src='chess-svg/bpawn2-b.svg' width=40 height=40 id='pawnb" + str(bp) + "'>" if piece.get_color() == "black" else "<img src='chess-svg/bpawn2-w.svg' width=40 height=40 id='pawnw" + str(wp) + "'>"
-                # document["pawnb" + str(bp)].bind("click", selectPiece("pawnb" + str(bp))) if piece.get_color() == "black" else document["pawnw" + str(wp)].bind("click", selectPiece("pawnw" + str(wp)))
+                td.html = "<div draggable='true' id='pawnb" + str(bp) + "'><button class='pawnb' b-on='click:selectPiece'></button></div>" if piece.get_color() == "black" else "<div draggable='true' id='pawnw" + str(wp) + "'><button class='pawnw' b-on='click:selectPiece'></button></div>"
+                boardArr[row][col] = piece
                 bp += 1 if piece.get_color() == "black" else 0
                 wp += 1 if piece.get_color() == "white" else 0
             elif (piece.get_name() == "rook"):
-                td.html = "<button class='rookb' id='rookb" + str(br) + "'>" if piece.get_color() == "black" else "<button class='rookw' id='rookw" + str(wr) + "'>"
-                # td.html = "<img src='chess-svg/rook-b.svg' width=40 height=40 id='rookb" + str(br) + "'>" if piece.get_color() == "black" else "<img src='chess-svg/rook-w.svg' width=40 height=40 id='rookw" + str(wr) + "'>"
-                # document["rookb" + str(br)].bind("click", selectPiece("rookb" + str(br))) if piece.get_color() == "black" else document["rookw" + str(wr)].bind("click", selectPiece("rookw" + str(wr)))
+                td.html = "<div draggable='true' id='rookb" + str(br) + "'><button class='rookb' b-on='click:selectPiece'></button></div>" if piece.get_color() == "black" else "<div draggable='true' id='rookw" + str(wr) + "'><button class='rookw' b-on='click:selectPiece'></button></div>"
+                boardArr[row][col] = piece
                 br += 1 if piece.get_color() == "black" else 0
                 wr += 1 if piece.get_color() == "white" else 0
             elif (piece.get_name() == "knight"):
-                td.html = "<button class='knightb' id='knightb" + str(bn) + "'>" if piece.get_color() == "black" else "<button class='knightw' id='knightw" + str(wn) + "'>"
-                # td.html = "<img src='chess-svg/knight-b.svg' width=40 height=40 id='knightb" + str(bn) + "'>" if piece.get_color() == "black" else "<img src='chess-svg/knight-w.svg' width=40 height=40 id='knightw" + str(wn) + "'>"
-                # document["knightb" + str(bn)].bind("click", selectPiece("knightb" + str(bn))) if piece.get_color() == "black" else document["knightw" + str(wn)].bind("click", selectPiece("knightw" + str(wn)))
+                td.html = "<div draggable='true' id='knightb" + str(bn) + "'><button class='knightb' b-on='click:selectPiece'></button></div>" if piece.get_color() == "black" else "<div draggable='true' id='knightw" + str(wn) + "'><button class='knightw' b-on='click:selectPiece'></button></div>"
+                boardArr[row][col] = piece
                 bn += 1 if piece.get_color() == "black" else 0
                 wn += 1 if piece.get_color() == "white" else 0
             elif (piece.get_name() == "queen"):
-                td.html = "<button class='queenb' id='queenb" + str(bq) + "'>" if piece.get_color() == "black" else "<button class='queenw' id='queenw" + str(wq) + "'>"
+                td.html = "<div draggable='true' id='queenb" + str(bq) + "'><button class='queenb' b-on='click:selectPiece'></button></div>" if piece.get_color() == "black" else "<div draggable='true' id='queenw" + str(wq) + "'><button class='queenw' b-on='click:selectPiece'></button></div>"
+                boardArr[row][col] = piece
                 # td.html = "<img src='chess-svg/queen-b.svg' width=40 height=40 id='queenb" + str(bq) + "'>" if piece.get_color() == "black" else "<img src='chess-svg/queen-w.svg' width=40 height=40 id='queenw" + str(wq) + "'>"
                 # document["queenb" + str(bq)].bind("click", selectPiece("queenb" + str(bq))) if piece.get_color() == "black" else document["queenw" + str(wq)].bind("click", selectPiece("queenw" + str(wq)))
                 bq += 1 if piece.get_color() == "black" else 0
                 wq += 1 if piece.get_color() == "white" else 0
             elif (piece.get_name() == "king"):
-                td.html = "<button class='kingb' id='kingb" + str(bk) + "'>" if piece.get_color() == "black" else "<button class='kingw' id='kingw" + str(wk) + "'>"
-                # td.html = "<img src='chess-svg/nrking-b.svg' width=40 height=40 id='kingb" + str(bk) + "'>" if piece.get_color() == "black" else "<img src='chess-svg/nrking-w.svg' width=40 height=40 id='kingw" + str(wk) + "'>"
-                # document["kingb" + str(bk)].bind("click", selectPiece("kingb" + str(bk))) if piece.get_color() == "black" else document["kingw" + str(wk)].bind("click", selectPiece("kingw" + str(wk)))
+                td.html = "<div draggable='true' id='kingb" + str(bk) + "'><button class='kingb' b-on='click:selectPiece'></button></div>" if piece.get_color() == "black" else "<div draggable='true' id='kingw" + str(wk) + "'><button class='kingw' b-on='click:selectPiece'></button></div>"
+                boardArr[row][col] = piece
                 bk += 1 if piece.get_color() == "black" else 0
                 wk += 1 if piece.get_color() == "white" else 0
             elif (piece.get_name() == "bishop"):
-                td.html = "<button class='bishopb' id='bishopb" + str(bb) + "'>" if piece.get_color() == "black" else "<button class='bishopw' id='bishopw" + str(wb) + "'>"
-                # td.html = "<img src='chess-svg/bishop-b.svg' width=40 height=40 id='bishopb" + str(bb) + "'>" if piece.get_color() == "black" else "<img src='chess-svg/bishop-w.svg' width=40 height=40 id='bishopw" + str(wb) + "'>"
-                # document["bishopb" + str(bb)].bind("click", selectPiece("bishopb" + str(bb))) if piece.get_color() == "black" else document["bishopw" + str(wb)].bind("click", selectPiece("bishopw" + str(wb)))
+                td.html = "<div draggable='true' id='bishopb" + str(bb) + "'><button class='bishopb' b-on='click:selectPiece'></button></div>" if piece.get_color() == "black" else "<div draggable='true' id='bishopw" + str(wb) + "'><button class='bishopw' b-on='click:selectPiece'></button></div>"
+                boardArr[row][col] = piece
                 bb += 1 if piece.get_color() == "black" else 0
                 wb += 1 if piece.get_color() == "white" else 0
             else:
-                td.text = ""
+                td.html = "<div droppable='true'><button class='empty'></button></div>"
+                boardArr[row][col] = None
+        else:
+            td.html = "<div droppable='true'><button class='empty'></button></div>"
+            boardArr[row][col] = None
             
         
         tr <= td
     board <= tr
 document <= board
 
-document["rookb0"].bind("click", selectPiece("rookb0"))
-document["rookb1"].bind("click", selectPiece("rookb1"))
-document["rookw0"].bind("click", selectPiece("rookw0"))
-document["rookw1"].bind("click", selectPiece("rookw1"))
-document["knightb0"].bind("click", selectPiece("knightb0"))
-document["knightb1"].bind("click", selectPiece("knightb1"))
-document["knightw0"].bind("click", selectPiece("knightw0"))
-document["knightw1"].bind("click", selectPiece("knightw1"))
-document["bishopb0"].bind("click", selectPiece("bishopb0"))
-document["bishopb1"].bind("click", selectPiece("bishopb1"))
-document["bishopw0"].bind("click", selectPiece("bishopw0"))
-document["bishopw1"].bind("click", selectPiece("bishopw1"))
-document["queenb0"].bind("click", selectPiece("queenb0"))
-document["queenw0"].bind("click", selectPiece("queenw0"))
-document["kingb0"].bind("click", selectPiece("kingb0"))
-document["kingw0"].bind("click", selectPiece("kingw0"))
+# document["rookb0"].bind("click", selectPiece("rookb0"))
+# document["rookb1"].bind("click", selectPiece("rookb1"))
+# document["rookw0"].bind("click", selectPiece("rookw0"))
+# document["rookw1"].bind("click", selectPiece("rookw1"))
+# document["knightb0"].bind("click", selectPiece("knightb0"))
+# document["knightb1"].bind("click", selectPiece("knightb1"))
+# document["knightw0"].bind("click", selectPiece("knightw0"))
+# document["knightw1"].bind("click", selectPiece("knightw1"))
+# document["bishopb0"].bind("click", selectPiece("bishopb0"))
+# document["bishopb1"].bind("click", selectPiece("bishopb1"))
+# document["bishopw0"].bind("click", selectPiece("bishopw0"))
+# document["bishopw1"].bind("click", selectPiece("bishopw1"))
+# document["queenb0"].bind("click", selectPiece("queenb0"))
+# document["queenw0"].bind("click", selectPiece("queenw0"))
+# document["kingb0"].bind("click", selectPiece("kingb0"))
+# document["kingw0"].bind("click", selectPiece("kingw0"))
+# for i in range(8):
+#     document["pawnb" + str(i)].bind("click", selectPiece("pawnb" + str(i)))
+#     document["pawnw" + str(i)].bind("click", selectPiece("pawnw" + str(i)))
+
+
+for i in range(2):
+    Template("rookb" + str(i), [selectPiece]).render(id="rookb" + str(i))
+    Template("rookw" + str(i), [selectPiece]).render(id="rookw" + str(i))
+    Template("knightb" + str(i), [selectPiece]).render(id="knightb" + str(i))
+    Template("knightw" + str(i), [selectPiece]).render(id="knightw" + str(i))
+    Template("bishopb" + str(i), [selectPiece]).render(id="bishopb" + str(i))
+    Template("bishopw" + str(i), [selectPiece]).render(id="bishopw" + str(i))
+
+Template("queenb0", [selectPiece]).render(id="queenb0")
+Template("queenw0", [selectPiece]).render(id="queenw0")
+Template("kingb0", [selectPiece]).render(id="kingb0")
+Template("kingw0", [selectPiece]).render(id="kingw0")
 for i in range(8):
-    document["pawnb" + str(i)].bind("click", selectPiece("pawnb" + str(i)))
-    document["pawnw" + str(i)].bind("click", selectPiece("pawnw" + str(i)))
+    Template("pawnb" + str(i), [selectPiece]).render(id="pawnb" + str(i))
+    Template("pawnw" + str(i), [selectPiece]).render(id="pawnw" + str(i))
