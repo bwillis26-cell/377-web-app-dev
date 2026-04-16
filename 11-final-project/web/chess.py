@@ -60,8 +60,37 @@ class Board:
 
 def displayLegalMoves(id):
     global boardArr
-    if (id.startswith("pawn")):
-        pass
+    currPiece = None
+    for row in boardArr:
+        for piece in row:
+            if piece is not None and id in document[piece.get_name() + piece.get_color()[0] + str(boardArr.index(row)) + str(row.index(piece))].id:
+                currPiece = piece
+                break
+    if currPiece is not None:
+        legalMoves = []
+        if currPiece.get_name() == "pawn":
+            direction = -1 if currPiece.get_color() == "white" else 1
+            nextRow = currPiece.get_position()[0] + direction
+            if 0 <= nextRow < 8 and boardArr[nextRow][currPiece.get_position()[1]] is None:
+                legalMoves.append((nextRow, currPiece.get_position()[1]))
+        elif currPiece.get_name() == "rook":
+            for i in range(8):
+                if i != currPiece.get_position()[0] and boardArr[i][currPiece.get_position()[1]] is None:
+                    legalMoves.append((i, currPiece.get_position()[1]))
+                if i != currPiece.get_position()[1] and boardArr[currPiece.get_position()[0]][i] is None:
+                    legalMoves.append((currPiece.get_position()[0], i))
+        elif currPiece.get_name() == "knight":
+            knightMoves = [(2, 1), (2, -1), (-2, 1), (-2, -1), (1, 2), (1, -2), (-1, 2), (-1, -2)]
+            for move in knightMoves:
+                nextRow = currPiece.get_position()[0] + move[0]
+                nextCol = currPiece.get_position()[1] + move[1]
+                if 0 <= nextRow < 8 and 0 <= nextCol < 8 and boardArr[nextRow][nextCol] is None:
+                    legalMoves.append((nextRow, nextCol))
+        # Add logic for other pieces (bishop, queen, king) here
+
+        for move in legalMoves:
+            document["r" + str(move[0] * 8 + move[1])].style.display = "block"
+    
 
 def selectPiece(event, element):
     elementID = element.data.id
@@ -83,6 +112,7 @@ bb = 0
 wk = 0
 bk = 0
 
+squareCount = 0
 
 
 
@@ -102,45 +132,49 @@ for row in range(8):
         if (row, col) in [(piece.get_position()) for piece in Board().pieces]:
             piece = next(piece for piece in Board().pieces if piece.get_position() == (row, col))
             if (piece.get_name() == "pawn"):
-                td.html = "<div draggable='true' id='pawnb" + str(bp) + "'><button class='pawnb' b-on='click:selectPiece'></button></div>" if piece.get_color() == "black" else "<div draggable='true' id='pawnw" + str(wp) + "'><button class='pawnw' b-on='click:selectPiece'></button></div>"
+                td.html = "<div id='pawnb" + str(bp) + "'><button class='pawnb' b-on='click:selectPiece'></button>" if piece.get_color() == "black" else "<div id='pawnw" + str(wp) + "'><button class='pawnw' b-on='click:selectPiece'></button>"
+                
                 boardArr[row][col] = piece
                 bp += 1 if piece.get_color() == "black" else 0
                 wp += 1 if piece.get_color() == "white" else 0
             elif (piece.get_name() == "rook"):
-                td.html = "<div draggable='true' id='rookb" + str(br) + "'><button class='rookb' b-on='click:selectPiece'></button></div>" if piece.get_color() == "black" else "<div draggable='true' id='rookw" + str(wr) + "'><button class='rookw' b-on='click:selectPiece'></button></div>"
+                td.html = "<div id='rookb" + str(br) + "'><button class='rookb' b-on='click:selectPiece'></button>" if piece.get_color() == "black" else "<div id='rookw" + str(wr) + "'><button class='rookw' b-on='click:selectPiece'></button>"
                 boardArr[row][col] = piece
                 br += 1 if piece.get_color() == "black" else 0
                 wr += 1 if piece.get_color() == "white" else 0
             elif (piece.get_name() == "knight"):
-                td.html = "<div draggable='true' id='knightb" + str(bn) + "'><button class='knightb' b-on='click:selectPiece'></button></div>" if piece.get_color() == "black" else "<div draggable='true' id='knightw" + str(wn) + "'><button class='knightw' b-on='click:selectPiece'></button></div>"
+                td.html = "<div id='knightb" + str(bn) + "'><button class='knightb' b-on='click:selectPiece'></button>" if piece.get_color() == "black" else "<div id='knightw" + str(wn) + "'><button class='knightw' b-on='click:selectPiece'></button>"
                 boardArr[row][col] = piece
                 bn += 1 if piece.get_color() == "black" else 0
                 wn += 1 if piece.get_color() == "white" else 0
             elif (piece.get_name() == "queen"):
-                td.html = "<div draggable='true' id='queenb" + str(bq) + "'><button class='queenb' b-on='click:selectPiece'></button></div>" if piece.get_color() == "black" else "<div draggable='true' id='queenw" + str(wq) + "'><button class='queenw' b-on='click:selectPiece'></button></div>"
+                td.html = "<div id='queenb" + str(bq) + "'><button class='queenb' b-on='click:selectPiece'></button>" if piece.get_color() == "black" else "<div id='queenw" + str(wq) + "'><button class='queenw' b-on='click:selectPiece'></button>"
                 boardArr[row][col] = piece
                 # td.html = "<img src='chess-svg/queen-b.svg' width=40 height=40 id='queenb" + str(bq) + "'>" if piece.get_color() == "black" else "<img src='chess-svg/queen-w.svg' width=40 height=40 id='queenw" + str(wq) + "'>"
                 # document["queenb" + str(bq)].bind("click", selectPiece("queenb" + str(bq))) if piece.get_color() == "black" else document["queenw" + str(wq)].bind("click", selectPiece("queenw" + str(wq)))
                 bq += 1 if piece.get_color() == "black" else 0
                 wq += 1 if piece.get_color() == "white" else 0
             elif (piece.get_name() == "king"):
-                td.html = "<div draggable='true' id='kingb" + str(bk) + "'><button class='kingb' b-on='click:selectPiece'></button></div>" if piece.get_color() == "black" else "<div draggable='true' id='kingw" + str(wk) + "'><button class='kingw' b-on='click:selectPiece'></button></div>"
+                td.html = "<div id='kingb" + str(bk) + "'><button class='kingb' b-on='click:selectPiece'></button>" if piece.get_color() == "black" else "<div id='kingw" + str(wk) + "'><button class='kingw' b-on='click:selectPiece'></button>"
                 boardArr[row][col] = piece
                 bk += 1 if piece.get_color() == "black" else 0
                 wk += 1 if piece.get_color() == "white" else 0
             elif (piece.get_name() == "bishop"):
-                td.html = "<div draggable='true' id='bishopb" + str(bb) + "'><button class='bishopb' b-on='click:selectPiece'></button></div>" if piece.get_color() == "black" else "<div draggable='true' id='bishopw" + str(wb) + "'><button class='bishopw' b-on='click:selectPiece'></button></div>"
+                td.html = "<div id='bishopb" + str(bb) + "'><button class='bishopb' b-on='click:selectPiece'></button>" if piece.get_color() == "black" else "<div id='bishopw" + str(wb) + "'><button class='bishopw' b-on='click:selectPiece'></button>"
                 boardArr[row][col] = piece
                 bb += 1 if piece.get_color() == "black" else 0
                 wb += 1 if piece.get_color() == "white" else 0
             else:
-                td.html = "<div droppable='true'><button class='empty'></button></div>"
+                td.html = "<div>"
                 boardArr[row][col] = None
         else:
-            td.html = "<div droppable='true'><button class='empty'></button></div>"
+            td.html = ""
             boardArr[row][col] = None
-            
-        
+        # td.html = "<circle cx='25' cy='25' r='20' fill='red' id='r" + str(squareCount) + "' style='display:none;' ></circle>" + td.html 
+        td.html =  td.html + "<svg width='50' height='50' style='display:none; id='r" + str(squareCount) + "'><circle cx='25' cy='25' r='10' fill='red' ></circle></svg></div>"    
+   
+        squareCount += 1
+
         tr <= td
     board <= tr
 document <= board
