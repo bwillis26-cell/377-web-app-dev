@@ -1,7 +1,6 @@
 from browser import document, html, svg
 from browser.template import Template
 
-boardArr = [[None for _ in range(8)] for _ in range(8)]
 
 class Piece:
 
@@ -59,40 +58,197 @@ class Board:
         return self.pieces
 
 def displayLegalMoves(id):
-    global boardArr
+    currArr = board.get_pieces()
     currPiece = None
-    for row in boardArr:
-        for piece in row:
-            if piece is not None and id in document[piece.get_name() + piece.get_color()[0] + str(boardArr.index(row)) + str(row.index(piece))].id:
-                currPiece = piece
-                break
-    if currPiece is not None:
+    for piece in currArr:
+        if (piece != None and "r" + str(piece.get_position()[0] * 8 + piece.get_position()[1]) == id):
+            currPiece = piece
+            break
+
+    #Track Legal Moves for Pawn
+
+    if (currPiece != None):
         legalMoves = []
-        if currPiece.get_name() == "pawn":
-            direction = -1 if currPiece.get_color() == "white" else 1
-            nextRow = currPiece.get_position()[0] + direction
-            if 0 <= nextRow < 8 and boardArr[nextRow][currPiece.get_position()[1]] is None:
-                legalMoves.append((nextRow, currPiece.get_position()[1]))
-        elif currPiece.get_name() == "rook":
-            for i in range(8):
-                if i != currPiece.get_position()[0] and boardArr[i][currPiece.get_position()[1]] is None:
+        if (currPiece.get_name() == "pawn"):
+            if (currPiece.get_color() == "white"):
+                if (currPiece.get_position()[0] > 0 and currArr[currPiece.get_position()[0] - 1][currPiece.get_position()[1]] == None):
+                    legalMoves.append((currPiece.get_position()[0] - 1, currPiece.get_position()[1]))
+                if (currPiece.get_position()[0] == 6 and currArr[currPiece.get_position()[0] - 2][currPiece.get_position()[1]] == None):
+                    legalMoves.append((currPiece.get_position()[0] - 2, currPiece.get_position()[1]))
+                if (currPiece.get_position()[0] > 0 and currPiece.get_position()[1] > 0 and currArr[currPiece.get_position()[0] - 1][currPiece.get_position()[1] - 1] != None and currArr[currPiece.get_position()[0] - 1][currPiece.get_position()[1] - 1].get_color() == "black"):
+                    legalMoves.append((currPiece.get_position()[0] - 1, currPiece.get_position()[1] - 1))
+                if (currPiece.get_position()[0] > 0 and currPiece.get_position()[1] < 7 and currArr[currPiece.get_position()[0] - 1][currPiece.get_position()[1] + 1] != None and currArr[currPiece.get_position()[0] - 1][currPiece.get_position()[1] + 1].get_color() == "black"):
+                    legalMoves.append((currPiece.get_position()[0] - 1, currPiece.get_position()[1] + 1))
+            else:
+                if (currPiece.get_position()[0] < 7 and currArr[currPiece.get_position()[0] + 1][currPiece.get_position()[1]] == None):
+                    legalMoves.append((currPiece.get_position()[0] + 1, currPiece.get_position()[1]))
+                if (currPiece.get_position()[0] == 1 and currArr[currPiece.get_position()[0] + 2][currPiece.get_position()[1]] == None):
+                    legalMoves.append((currPiece.get_position()[0] + 2, currPiece.get_position()[1]))
+                if (currPiece.get_position)()[0] < 7 and currPiece.get_position()[1] > 0 and currArr[currPiece.get_position()[0] + 1][currPiece.get_position()[1] - 1] != None and currArr[currPiece.get_position()[0] + 1][currPiece.get_position()[1] - 1].get_color() == "white":
+                    legalMoves.append((currPiece.get_position()[0] + 1, currPiece.get_position()[1] - 1))
+                if (currPiece.get_position()[0] < 7 and currPiece.get_position()[1] < 7 and currArr[currPiece.get_position()[0] + 1][currPiece.get_position()[1] + 1] != None and currArr[currPiece.get_position()[0] + 1][currPiece.get_position()[1] + 1].get_color() == "white"):
+                    legalMoves.append((currPiece.get_position()[0] + 1, currPiece.get_position()[1] + 1))
+
+    #Track Legal Moves for Rook
+        elif (currPiece.get_name() == "rook"):
+            for i in range(currPiece.get_position()[0] + 1, 8):
+                if (currArr[i][currPiece.get_position()[1]] == None):
                     legalMoves.append((i, currPiece.get_position()[1]))
-                if i != currPiece.get_position()[1] and boardArr[currPiece.get_position()[0]][i] is None:
-                    legalMoves.append((currPiece.get_position()[0], i))
-        elif currPiece.get_name() == "knight":
+                elif (currArr[i][currPiece.get_position()[1]].get_color() != currPiece.get_color()):
+                    legalMoves.append((i, currPiece.get_position()[1]))
+                    break
+                else:
+                    break
+            for i in range(currPiece.get_position()[0] - 1, -1, -1):
+                if (currArr[i][currPiece.get_position()[1]] == None):
+                    legalMoves.append((i, currPiece.get_position()[1]))
+                elif (currArr[i][currPiece.get_position()[1]].get_color() != currPiece.get_color()):
+                    legalMoves.append((i, currPiece.get_position()[1]))
+                    break
+                else:
+                    break
+            for j in range(currPiece.get_position()[1] + 1, 8):
+                if (currArr[currPiece.get_position()[0]][j] == None):
+                    legalMoves.append((currPiece.get_position()[0], j))
+                elif (currArr[currPiece.get_position()[0]][j].get_color() != currPiece.get_color()):
+                    legalMoves.append((currPiece.get_position()[0], j))
+                    break
+                else:
+                    break
+            for j in range(currPiece.get_position()[1] - 1, -1, -1):
+                if (currArr[currPiece.get_position()[0]][j] == None):
+                    legalMoves.append((currPiece.get_position()[0], j))
+                elif (currArr[currPiece.get_position()[0]][j].get_color() != currPiece.get_color()):
+                    legalMoves.append((currPiece.get_position()[0], j))
+                    break
+                else:
+                    break
+    #Track Legal Moves for Knight
+        elif (currPiece.get_name() == "knight"):
             knightMoves = [(2, 1), (2, -1), (-2, 1), (-2, -1), (1, 2), (1, -2), (-1, 2), (-1, -2)]
             for move in knightMoves:
-                nextRow = currPiece.get_position()[0] + move[0]
-                nextCol = currPiece.get_position()[1] + move[1]
-                if 0 <= nextRow < 8 and 0 <= nextCol < 8 and boardArr[nextRow][nextCol] is None:
-                    legalMoves.append((nextRow, nextCol))
-        # Add logic for other pieces (bishop, queen, king) here
-
+                newRow = currPiece.get_position()[0] + move[0]
+                newCol = currPiece.get_position()[1] + move[1]
+                if (newRow >= 0 and newRow < 8 and newCol >= 0 and newCol < 8):
+                    if (currArr[newRow][newCol] == None or currArr[newRow][newCol].get_color() != currPiece.get_color()):
+                        legalMoves.append((newRow, newCol))
+    #Track Legal Moves for Bishop
+        elif (currPiece.get_name() == "bishop"):
+            for i, j in zip(range(currPiece.get_position()[0] + 1, 8), range(currPiece.get_position()[1] + 1, 8)):
+                if (currArr[i][j] == None):
+                    legalMoves.append((i, j))
+                elif (currArr[i][j].get_color() != currPiece.get_color()):
+                    legalMoves.append((i, j))
+                    break
+                else:
+                    break
+            for i, j in zip(range(currPiece.get_position()[0] + 1, 8), range(currPiece.get_position()[1] - 1, -1, -1)):
+                if (currArr[i][j] == None):
+                    legalMoves.append((i, j))
+                elif (currArr[i][j].get_color() != currPiece.get_color()):
+                    legalMoves.append((i, j))
+                    break
+                else:
+                    break
+            for i, j in zip(range(currPiece.get_position()[0] - 1, -1, -1), range(currPiece.get_position()[1] + 1, 8)):
+                if (currArr[i][j] == None):
+                    legalMoves.append((i, j))
+                elif (currArr[i][j].get_color() != currPiece.get_color()):
+                    legalMoves.append((i, j))
+                    break
+                else:
+                    break
+            for i, j in zip(range(currPiece.get_position()[0] - 1, -1, -1), range(currPiece.get_position()[1] - 1, -1, -1)):
+                if (currArr[i][j] == None):
+                    legalMoves.append((i, j))
+                elif (currArr[i][j].get_color() != currPiece.get_color()):
+                    legalMoves.append((i, j))
+                    break
+                else:
+                    break
+    #Track Legal Moves for Queen
+        elif (currPiece.get_name() == "queen"):
+            for i in range(currPiece.get_position()[0] + 1, 8):
+                if (currArr[i][currPiece.get_position()[1]] == None):
+                    legalMoves.append((i, currPiece.get_position()[1]))
+                elif (currArr[i][currPiece.get_position()[1]].get_color() != currPiece.get_color()):
+                    legalMoves.append((i, currPiece.get_position()[1]))
+                    break
+                else:
+                    break
+            for i in range(currPiece.get_position()[0] - 1, -1, -1):
+                if (currArr[i][currPiece.get_position()[1]] == None):
+                    legalMoves.append((i, currPiece.get_position()[1]))
+                elif (currArr[i][currPiece.get_position()[1]].get_color() != currPiece.get_color()):
+                    legalMoves.append((i, currPiece.get_position()[1]))
+                    break
+                else:
+                    break
+            for j in range(currPiece.get_position()[1] + 1, 8):
+                if (currArr[currPiece.get_position()[0]][j] == None):
+                    legalMoves.append((currPiece.get_position()[0], j))
+                elif (currArr[currPiece.get_position()[0]][j].get_color() != currPiece.get_color()):
+                    legalMoves.append((currPiece.get_position()[0], j))
+                    break
+                else:
+                    break
+            for j in range(currPiece.get_position()[1] - 1, -1, -1):
+                if (currArr[currPiece.get_position()[0]][j] == None):
+                    legalMoves.append((currPiece.get_position()[0], j))
+                elif (currArr[currPiece.get_position()[0]][j].get_color() != currPiece.get_color()):
+                    legalMoves.append((currPiece.get_position()[0], j))
+                    break
+                else:
+                    break
+            for i, j in zip(range(currPiece.get_position()[0] + 1, 8), range(currPiece.get_position()[1] + 1, 8)):
+                if (currArr[i][j] == None):
+                    legalMoves.append((i, j))
+                elif (currArr[i][j].get_color() != currPiece.get_color()):
+                    legalMoves.append((i, j))
+                    break
+                else:
+                    break
+            for i, j in zip(range(currPiece.get_position()[0] + 1, 8), range(currPiece.get_position()[1] - 1, -1, -1)):              
+                if (currArr[i][j] == None):
+                    legalMoves.append((i, j))
+                elif (currArr[i][j].get_color() != currPiece.get_color()):
+                    legalMoves.append((i, j))
+                    break
+                else:
+                    break
+            for i, j in zip(range(currPiece.get_position()[0] - 1, -1, -1), range(currPiece.get_position()[1] + 1, 8)):
+                if (currArr[i][j] == None):
+                    legalMoves.append((i, j))
+                elif (currArr[i][j].get_color() != currPiece.get_color()):
+                    legalMoves.append((i, j))
+                    break
+                else:
+                    break
+            for i, j in zip(range(currPiece.get_position()[0] - 1, -1, -1), range(currPiece.get_position()[1] - 1, -1, -1)):
+                if (currArr[i][j] == None):
+                    legalMoves.append((i, j))
+                elif (currArr[i][j].get_color() != currPiece.get_color()):
+                    legalMoves.append((i, j))
+                    break
+                else:
+                    break
+    #Track Legal Moves for King
+        elif (currPiece.get_name() == "king"):
+            kingMoves = [(1, 0), (1, 1), (0, 1), (-1, 1), (-1, 0), (-1, -1), (0, -1), (1, -1)]
+            for move in kingMoves:
+                newRow = currPiece.get_position()[0] + move[0]
+                newCol = currPiece.get_position()[1] + move[1]
+                if (newRow >= 0 and newRow < 8 and newCol >= 0 and newCol < 8):
+                    if (currArr[newRow][newCol] == None or currArr[newRow][newCol].get_color() != currPiece.get_color()):
+                        legalMoves.append((newRow, newCol))
+    #Highlight Legal Moves
         for move in legalMoves:
+            print("Legal Move: " + str(move))
             document["r" + str(move[0] * 8 + move[1])].style.display = "block"
     
 
 def selectPiece(event, element):
+    print("Selected Piece: " + element.data.id)
     elementID = element.data.id
     displayLegalMoves(elementID)
     
@@ -134,42 +290,34 @@ for row in range(8):
             if (piece.get_name() == "pawn"):
                 td.html = "<div id='pawnb" + str(bp) + "'><button class='pawnb' b-on='click:selectPiece'></button>" if piece.get_color() == "black" else "<div id='pawnw" + str(wp) + "'><button class='pawnw' b-on='click:selectPiece'></button>"
                 
-                boardArr[row][col] = piece
                 bp += 1 if piece.get_color() == "black" else 0
                 wp += 1 if piece.get_color() == "white" else 0
             elif (piece.get_name() == "rook"):
                 td.html = "<div id='rookb" + str(br) + "'><button class='rookb' b-on='click:selectPiece'></button>" if piece.get_color() == "black" else "<div id='rookw" + str(wr) + "'><button class='rookw' b-on='click:selectPiece'></button>"
-                boardArr[row][col] = piece
                 br += 1 if piece.get_color() == "black" else 0
                 wr += 1 if piece.get_color() == "white" else 0
             elif (piece.get_name() == "knight"):
                 td.html = "<div id='knightb" + str(bn) + "'><button class='knightb' b-on='click:selectPiece'></button>" if piece.get_color() == "black" else "<div id='knightw" + str(wn) + "'><button class='knightw' b-on='click:selectPiece'></button>"
-                boardArr[row][col] = piece
                 bn += 1 if piece.get_color() == "black" else 0
                 wn += 1 if piece.get_color() == "white" else 0
             elif (piece.get_name() == "queen"):
                 td.html = "<div id='queenb" + str(bq) + "'><button class='queenb' b-on='click:selectPiece'></button>" if piece.get_color() == "black" else "<div id='queenw" + str(wq) + "'><button class='queenw' b-on='click:selectPiece'></button>"
-                boardArr[row][col] = piece
                 # td.html = "<img src='chess-svg/queen-b.svg' width=40 height=40 id='queenb" + str(bq) + "'>" if piece.get_color() == "black" else "<img src='chess-svg/queen-w.svg' width=40 height=40 id='queenw" + str(wq) + "'>"
                 # document["queenb" + str(bq)].bind("click", selectPiece("queenb" + str(bq))) if piece.get_color() == "black" else document["queenw" + str(wq)].bind("click", selectPiece("queenw" + str(wq)))
                 bq += 1 if piece.get_color() == "black" else 0
                 wq += 1 if piece.get_color() == "white" else 0
             elif (piece.get_name() == "king"):
                 td.html = "<div id='kingb" + str(bk) + "'><button class='kingb' b-on='click:selectPiece'></button>" if piece.get_color() == "black" else "<div id='kingw" + str(wk) + "'><button class='kingw' b-on='click:selectPiece'></button>"
-                boardArr[row][col] = piece
                 bk += 1 if piece.get_color() == "black" else 0
                 wk += 1 if piece.get_color() == "white" else 0
             elif (piece.get_name() == "bishop"):
                 td.html = "<div id='bishopb" + str(bb) + "'><button class='bishopb' b-on='click:selectPiece'></button>" if piece.get_color() == "black" else "<div id='bishopw" + str(wb) + "'><button class='bishopw' b-on='click:selectPiece'></button>"
-                boardArr[row][col] = piece
                 bb += 1 if piece.get_color() == "black" else 0
                 wb += 1 if piece.get_color() == "white" else 0
             else:
                 td.html = "<div>"
-                boardArr[row][col] = None
         else:
             td.html = ""
-            boardArr[row][col] = None
         # td.html = "<circle cx='25' cy='25' r='20' fill='red' id='r" + str(squareCount) + "' style='display:none;' ></circle>" + td.html 
         td.html =  td.html + "<svg width='50' height='50' style='display:none; id='r" + str(squareCount) + "'><circle cx='25' cy='25' r='10' fill='red' ></circle></svg></div>"    
    
