@@ -19,10 +19,10 @@ class Piece:
 
 currArr = [[Piece("black", "rook", 0, 0), Piece("black", "knight", 0, 1), Piece("black", "bishop", 0, 2), Piece("black", "queen", 0, 3), Piece("black", "king", 0, 4), Piece("black", "bishop", 0, 5), Piece("black", "knight", 0, 6), Piece("black", "rook", 0, 7),],
            [Piece("black", "pawn", 1, 0), Piece("black", "pawn", 1, 1), Piece("black", "pawn", 1, 2), Piece("black", "pawn", 1, 3), Piece("black", "pawn", 1, 4), Piece("black", "pawn", 1, 5), Piece("black", "pawn", 1, 6), Piece("black", "pawn", 1, 7)],
-           [Piece(None, None, 2, 0), Piece(None, None, 2, 1), Piece(None, None, 2, 2), Piece(None, None, 2, 3), Piece(None, None, 2, 4), Piece(None, None, 2, 5), Piece(None, None, 2, 6), Piece(None, None, 2, 7)],
-           [Piece(None, None, 3, 0), Piece(None, None, 3, 1), Piece(None, None, 3, 2), Piece(None, None, 3, 3), Piece(None, None, 3, 4), Piece(None, None, 3, 5), Piece(None, None, 3, 6), Piece(None, None, 3, 7)],
-           [Piece(None, None, 4, 0), Piece(None, None, 4, 1), Piece(None, None, 4, 2), Piece(None, None, 4, 3), Piece(None, None, 4, 4), Piece(None, None, 4, 5), Piece(None, None, 4, 6), Piece(None, None, 4, 7)],
-           [Piece(None, None, 5, 0), Piece(None, None, 5, 1), Piece(None, None, 5, 2), Piece(None, None, 5, 3), Piece(None, None, 5, 4), Piece(None, None, 5, 5), Piece(None, None, 5, 6), Piece(None, None, 5, 7)],
+           [Piece("None", "None", 2, 0), Piece("None", "None", 2, 1), Piece("None", "None", 2, 2), Piece("None", "None", 2, 3), Piece("None", "None", 2, 4), Piece("None", "None", 2, 5), Piece("None", "None", 2, 6), Piece("None", "None", 2, 7)],
+           [Piece("None", "None", 3, 0), Piece("None", "None", 3, 1), Piece("None", "None", 3, 2), Piece("None", "None", 3, 3), Piece("None", "None", 3, 4), Piece("None", "None", 3, 5), Piece("None", "None", 3, 6), Piece("None", "None", 3, 7)],
+           [Piece("None", "None", 4, 0), Piece("None", "None", 4, 1), Piece("None", "None", 4, 2), Piece("None", "None", 4, 3), Piece("None", "None", 4, 4), Piece("None", "None", 4, 5), Piece("None", "None", 4, 6), Piece("None", "None", 4, 7)],
+           [Piece("None", "None", 5, 0), Piece("None", "None", 5, 1), Piece("None", "None", 5, 2), Piece("None", "None", 5, 3), Piece("None", "None", 5, 4), Piece("None", "None", 5, 5), Piece("None", "None", 5, 6), Piece("None", "None", 5, 7)],
            [Piece("white", "pawn", 6, 0), Piece("white", "pawn", 6, 1), Piece("white", "pawn", 6, 2), Piece("white", "pawn", 6, 3), Piece("white", "pawn", 6, 4), Piece("white", "pawn", 6, 5), Piece("white", "pawn", 6, 6), Piece("white", "pawn", 6, 7)],
            [Piece("white", "rook", 7, 0), Piece("white", "knight", 7, 1), Piece("white", "bishop", 7, 2), Piece("white", "queen", 7, 3), Piece("white", "king", 7, 4), Piece("white", "bishop", 7, 5), Piece("white", "knight", 7, 6), Piece("white", "rook", 7, 7)]]
 
@@ -30,12 +30,15 @@ def displayLegalMoves(id):
     currPiece = None
     for row in currArr:
         for piece in row:
-            if (piece != None and "r" + str(piece.get_position()[0] * 8 + piece.get_position()[1]) == id):
+            # print("Checking piece at position " + str(piece.get_position()) + " with id " + str(piece.get_name()) + str(piece.get_position()[0] * 8 + piece.get_position()[1]) + " against selected id " + id)
+            currId = str(piece.get_name()) + str(piece.get_color()[0]) + str(piece.get_position()[0] * 8 + piece.get_position()[1])
+            print("Current Piece ID: " + currId + " | Selected ID: " + id)
+            if (currId == id):
                 currPiece = piece
                 break
 
     #Track Legal Moves for Pawn
-    print("Current Piece: " + currPiece.get_name() + " at position " + str(currPiece.get_position()))
+    # print("Current Piece: " + currPiece.get_name() + " at position " + str(currPiece.get_position()))
     if (currPiece != None):
     # print("Current Piece: " + currPiece.get_name() + " at position " + str(currPiece.get_position()))
         legalMoves = []
@@ -240,7 +243,7 @@ for row in range(8):
             td.style.backgroundColor = "#e68a00"
         else:
             td.style.backgroundColor = "#ffd699"
-        print("Current Square: (" + str(row) + ", " + str(col) + ")")
+        # print("Current Square: (" + str(row) + ", " + str(col) + ")")
         
         if (currArr[row][col] != None and currArr[row][col].get_name() != None):
             piece = currArr[row][col]
@@ -297,18 +300,55 @@ document <= board
 #     document["pawnw" + str(i)].bind("click", selectPiece("pawnw" + str(i)))
 
 
-for i in range(2):
-    Template("rookb" + str(i), [selectPiece]).render(id="rookb" + str(i))
-    Template("rookw" + str(i), [selectPiece]).render(id="rookw" + str(i))
-    Template("knightb" + str(i), [selectPiece]).render(id="knightb" + str(i))
-    Template("knightw" + str(i), [selectPiece]).render(id="knightw" + str(i))
-    Template("bishopb" + str(i), [selectPiece]).render(id="bishopb" + str(i))
-    Template("bishopw" + str(i), [selectPiece]).render(id="bishopw" + str(i))
+# for i in range(2):
+#     Template("rookb" + str(i), [selectPiece]).render(id="rookb" + str(i))
+#     Template("rookw" + str(i), [selectPiece]).render(id="rookw" + str(i))
+#     Template("knightb" + str(i), [selectPiece]).render(id="knightb" + str(i))
+#     Template("knightw" + str(i), [selectPiece]).render(id="knightw" + str(i))
+#     Template("bishopb" + str(i), [selectPiece]).render(id="bishopb" + str(i))
+#     Template("bishopw" + str(i), [selectPiece]).render(id="bishopw" + str(i))
 
-Template("queenb0", [selectPiece]).render(id="queenb0")
-Template("queenw0", [selectPiece]).render(id="queenw0")
-Template("kingb0", [selectPiece]).render(id="kingb0")
-Template("kingw0", [selectPiece]).render(id="kingw0")
-for i in range(8):
-    Template("pawnb" + str(i), [selectPiece]).render(id="pawnb" + str(i))
-    Template("pawnw" + str(i), [selectPiece]).render(id="pawnw" + str(i))
+# Template("queenb0", [selectPiece]).render(id="queenb0")
+# Template("queenw0", [selectPiece]).render(id="queenw0")
+# Template("kingb0", [selectPiece]).render(id="kingb0")
+# Template("kingw0", [selectPiece]).render(id="kingw0")
+# for i in range(8):
+#     Template("pawnb" + str(i), [selectPiece]).render(id="pawnb" + str(i))
+#     Template("pawnw" + str(i), [selectPiece]).render(id="pawnw" + str(i))
+
+Template("rookb0", [selectPiece]).render(id="rookb0")
+Template("knightb1", [selectPiece]).render(id="knightb1")
+Template("bishopb2", [selectPiece]).render(id="bishopb2")
+Template("queenb3", [selectPiece]).render(id="queenb3")
+Template("kingb4", [selectPiece]).render(id="kingb4")
+Template("bishopb5", [selectPiece]).render(id="bishopb5")
+Template("knightb6", [selectPiece]).render(id="knightb6")
+Template("rookb7", [selectPiece]).render(id="rookb7")
+
+Template("pawnb8", [selectPiece]).render(id="pawnb8")
+Template("pawnb9", [selectPiece]).render(id="pawnb9")
+Template("pawnb10", [selectPiece]).render(id="pawnb10")
+Template("pawnb11", [selectPiece]).render(id="pawnb11")
+Template("pawnb12", [selectPiece]).render(id="pawnb12")
+Template("pawnb13", [selectPiece]).render(id="pawnb13")
+Template("pawnb14", [selectPiece]).render(id="pawnb14")
+Template("pawnb15", [selectPiece]).render(id="pawnb15")
+
+Template("rookw56", [selectPiece]).render(id="rookw56")
+Template("knightw57", [selectPiece]).render(id="knightw57")
+Template("bishopw58", [selectPiece]).render(id="bishopw58")
+Template("queenw59", [selectPiece]).render(id="queenw59")
+Template("kingw60", [selectPiece]).render(id="kingw60")
+Template("bishopw61", [selectPiece]).render(id="bishopw61")
+Template("knightw62", [selectPiece]).render(id="knightw62")
+Template("rookw63", [selectPiece]).render(id="rookw63")
+
+Template("pawnw48", [selectPiece]).render(id="pawnw48")
+Template("pawnw49", [selectPiece]).render(id="pawnw49")
+Template("pawnw50", [selectPiece]).render(id="pawnw50")
+Template("pawnw51", [selectPiece]).render(id="pawnw51")
+Template("pawnw52", [selectPiece]).render(id="pawnw52")
+Template("pawnw53", [selectPiece]).render(id="pawnw53")
+Template("pawnw54", [selectPiece]).render(id="pawnw54")
+Template("pawnw55", [selectPiece]).render(id="pawnw55")
+
