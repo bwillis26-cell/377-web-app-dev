@@ -17,7 +17,7 @@ class Piece:
     def get_position(self):
         return (self.row, self.col)
 
-currArr = [[Piece("black", "rook", 0, 0), Piece("black", "knight", 0, 1), Piece("black", "bishop", 0, 2), Piece("black", "queen", 0, 3), Piece("black", "king", 0, 4), Piece("black", "bishop", 0, 5), Piece("black", "knight", 0, 6), Piece("black", "rook", 0, 7),],
+currArr1 = [[Piece("black", "rook", 0, 0), Piece("black", "knight", 0, 1), Piece("black", "bishop", 0, 2), Piece("black", "queen", 0, 3), Piece("black", "king", 0, 4), Piece("black", "bishop", 0, 5), Piece("black", "knight", 0, 6), Piece("black", "rook", 0, 7),],
            [Piece("black", "pawn", 1, 0), Piece("black", "pawn", 1, 1), Piece("black", "pawn", 1, 2), Piece("black", "pawn", 1, 3), Piece("black", "pawn", 1, 4), Piece("black", "pawn", 1, 5), Piece("black", "pawn", 1, 6), Piece("black", "pawn", 1, 7)],
            [Piece("None", "None", 2, 0), Piece("None", "None", 2, 1), Piece("None", "None", 2, 2), Piece("None", "None", 2, 3), Piece("None", "None", 2, 4), Piece("None", "None", 2, 5), Piece("None", "None", 2, 6), Piece("None", "None", 2, 7)],
            [Piece("None", "None", 3, 0), Piece("None", "None", 3, 1), Piece("None", "None", 3, 2), Piece("None", "None", 3, 3), Piece("None", "None", 3, 4), Piece("None", "None", 3, 5), Piece("None", "None", 3, 6), Piece("None", "None", 3, 7)],
@@ -26,16 +26,28 @@ currArr = [[Piece("black", "rook", 0, 0), Piece("black", "knight", 0, 1), Piece(
            [Piece("white", "pawn", 6, 0), Piece("white", "pawn", 6, 1), Piece("white", "pawn", 6, 2), Piece("white", "pawn", 6, 3), Piece("white", "pawn", 6, 4), Piece("white", "pawn", 6, 5), Piece("white", "pawn", 6, 6), Piece("white", "pawn", 6, 7)],
            [Piece("white", "rook", 7, 0), Piece("white", "knight", 7, 1), Piece("white", "bishop", 7, 2), Piece("white", "queen", 7, 3), Piece("white", "king", 7, 4), Piece("white", "bishop", 7, 5), Piece("white", "knight", 7, 6), Piece("white", "rook", 7, 7)]]
 
+currArr = [[Piece("black", "rook", 0, 0), Piece("black", "knight", 0, 1), Piece("black", "bishop", 0, 2), Piece("black", "queen", 0, 3), Piece("black", "king", 0, 4), Piece("black", "bishop", 0, 5), Piece("black", "knight", 0, 6), Piece("black", "rook", 0, 7),],
+           [Piece("black", "pawn", 1, 0), Piece("black", "pawn", 1, 1), Piece("black", "pawn", 1, 2), Piece("black", "pawn", 1, 3), Piece("black", "pawn", 1, 4), Piece("black", "pawn", 1, 5), Piece("black", "pawn", 1, 6), Piece("black", "pawn", 1, 7)],
+           [None, None, None, None, None, None, None, None],
+           [None, None, None, None, None, None, None, None],
+           [None, None, None, None, None, None, None, None],
+           [None, None, None, None, None, None, None, None],
+           [Piece("white", "pawn", 6, 0), Piece("white", "pawn", 6, 1), Piece("white", "pawn", 6, 2), Piece("white", "pawn", 6, 3), Piece("white", "pawn", 6, 4), Piece("white", "pawn", 6, 5), Piece("white", "pawn", 6, 6), Piece("white", "pawn", 6, 7)],
+           [Piece("white", "rook", 7, 0), Piece("white", "knight", 7, 1), Piece("white", "bishop", 7, 2), Piece("white", "queen", 7, 3), Piece("white", "king", 7, 4), Piece("white", "bishop", 7, 5), Piece("white", "knight", 7, 6), Piece("white", "rook", 7, 7)]]
+
+currPiece = None
+
 def displayLegalMoves(id):
-    currPiece = None
+    global currPiece
     for row in currArr:
         for piece in row:
-            # print("Checking piece at position " + str(piece.get_position()) + " with id " + str(piece.get_name()) + str(piece.get_position()[0] * 8 + piece.get_position()[1]) + " against selected id " + id)
-            currId = str(piece.get_name()) + str(piece.get_color()[0]) + str(piece.get_position()[0] * 8 + piece.get_position()[1])
-            print("Current Piece ID: " + currId + " | Selected ID: " + id)
-            if (currId == id):
-                currPiece = piece
-                break
+            if (piece != None):
+                # print("Checking piece at position " + str(piece.get_position()) + " with id " + str(piece.get_name()) + str(piece.get_position()[0] * 8 + piece.get_position()[1]) + " against selected id " + id)
+                currId = str(piece.get_name()) + str(piece.get_color()[0]) + str(piece.get_position()[0] * 8 + piece.get_position()[1])
+                print("Current Piece ID: " + currId + " | Selected ID: " + id)
+                if (currId == id):
+                    currPiece = piece
+                    break
 
     #Track Legal Moves for Pawn
     # print("Current Piece: " + currPiece.get_name() + " at position " + str(currPiece.get_position()))
@@ -217,7 +229,12 @@ def displayLegalMoves(id):
     #Highlight Legal Moves
         print("Legal Moves: " + str(legalMoves))
         for move in legalMoves:
+            print(str(move[0] * 8 + move[1]))
             document["r" + str(move[0] * 8 + move[1])].style.display = "block"
+        
+def legalMoveClicked(id):
+
+    pass
     
 
 def selectPiece(event, element):
@@ -271,8 +288,8 @@ for row in range(8):
         else:
             td.html = ""
         # td.html = "<circle cx='25' cy='25' r='20' fill='red' id='r" + str(squareCount) + "' style='display:none;' ></circle>" + td.html 
-        td.html =  td.html + "<svg width='50' height='50' style='display:none; id='r" + str(squareCount) + "'><circle cx='25' cy='25' r='10' fill='red' ></circle></svg></div>"    
-   
+        td.html =  td.html + "<svg width='50' height='50' style='display:none;' id='r" + str(squareCount) + "'><circle cx='25' cy='25' r='10' fill='red' onClick='legalMoveClicked(" + str(squareCount) + ")'></circle></svg></div>"    
+
         squareCount += 1
 
         tr <= td
