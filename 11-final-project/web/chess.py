@@ -4,11 +4,12 @@ from browser.template import Template
 
 class Piece:
 
-    def __init__(self, color, name, row, col):
+    def __init__(self, color, name, row, col, id):
         self.color = color
         self.name = name
         self.row = row
         self.col = col
+        self.id = id
 
     def get_color(self):
         return self.color
@@ -16,35 +17,33 @@ class Piece:
         return self.name
     def get_position(self):
         return (self.row, self.col)
+    def get_id(self):
+        return self.id
+    def set_row(self, row):
+        self.row = row
+    def set_col(self, col):
+        self.col = col
 
-currArr1 = [[Piece("black", "rook", 0, 0), Piece("black", "knight", 0, 1), Piece("black", "bishop", 0, 2), Piece("black", "queen", 0, 3), Piece("black", "king", 0, 4), Piece("black", "bishop", 0, 5), Piece("black", "knight", 0, 6), Piece("black", "rook", 0, 7),],
-           [Piece("black", "pawn", 1, 0), Piece("black", "pawn", 1, 1), Piece("black", "pawn", 1, 2), Piece("black", "pawn", 1, 3), Piece("black", "pawn", 1, 4), Piece("black", "pawn", 1, 5), Piece("black", "pawn", 1, 6), Piece("black", "pawn", 1, 7)],
-           [Piece("None", "None", 2, 0), Piece("None", "None", 2, 1), Piece("None", "None", 2, 2), Piece("None", "None", 2, 3), Piece("None", "None", 2, 4), Piece("None", "None", 2, 5), Piece("None", "None", 2, 6), Piece("None", "None", 2, 7)],
-           [Piece("None", "None", 3, 0), Piece("None", "None", 3, 1), Piece("None", "None", 3, 2), Piece("None", "None", 3, 3), Piece("None", "None", 3, 4), Piece("None", "None", 3, 5), Piece("None", "None", 3, 6), Piece("None", "None", 3, 7)],
-           [Piece("None", "None", 4, 0), Piece("None", "None", 4, 1), Piece("None", "None", 4, 2), Piece("None", "None", 4, 3), Piece("None", "None", 4, 4), Piece("None", "None", 4, 5), Piece("None", "None", 4, 6), Piece("None", "None", 4, 7)],
-           [Piece("None", "None", 5, 0), Piece("None", "None", 5, 1), Piece("None", "None", 5, 2), Piece("None", "None", 5, 3), Piece("None", "None", 5, 4), Piece("None", "None", 5, 5), Piece("None", "None", 5, 6), Piece("None", "None", 5, 7)],
-           [Piece("white", "pawn", 6, 0), Piece("white", "pawn", 6, 1), Piece("white", "pawn", 6, 2), Piece("white", "pawn", 6, 3), Piece("white", "pawn", 6, 4), Piece("white", "pawn", 6, 5), Piece("white", "pawn", 6, 6), Piece("white", "pawn", 6, 7)],
-           [Piece("white", "rook", 7, 0), Piece("white", "knight", 7, 1), Piece("white", "bishop", 7, 2), Piece("white", "queen", 7, 3), Piece("white", "king", 7, 4), Piece("white", "bishop", 7, 5), Piece("white", "knight", 7, 6), Piece("white", "rook", 7, 7)]]
-
-currArr = [[Piece("black", "rook", 0, 0), Piece("black", "knight", 0, 1), Piece("black", "bishop", 0, 2), Piece("black", "queen", 0, 3), Piece("black", "king", 0, 4), Piece("black", "bishop", 0, 5), Piece("black", "knight", 0, 6), Piece("black", "rook", 0, 7),],
-           [Piece("black", "pawn", 1, 0), Piece("black", "pawn", 1, 1), Piece("black", "pawn", 1, 2), Piece("black", "pawn", 1, 3), Piece("black", "pawn", 1, 4), Piece("black", "pawn", 1, 5), Piece("black", "pawn", 1, 6), Piece("black", "pawn", 1, 7)],
+currArr = [[Piece("black", "rook", 0, 0, "rookb0"), Piece("black", "knight", 0, 1, "knightb1"), Piece("black", "bishop", 0, 2, "bishopb2"), Piece("black", "queen", 0, 3, "queenb3"), Piece("black", "king", 0, 4, "kingb4"), Piece("black", "bishop", 0, 5, "bishopb5"), Piece("black", "knight", 0, 6, "knightb6"), Piece("black", "rook", 0, 7, "rookb7")],
+           [Piece("black", "pawn", 1, 0, "pawnb8"), Piece("black", "pawn", 1, 1, "pawnb9"), Piece("black", "pawn", 1, 2, "pawnb10"), Piece("black", "pawn", 1, 3, "pawnb11"), Piece("black", "pawn", 1, 4, "pawnb12"), Piece("black", "pawn", 1, 5, "pawnb13"), Piece("black", "pawn", 1, 6, "pawnb14"), Piece("black", "pawn", 1, 7, "pawnb15")],
            [None, None, None, None, None, None, None, None],
            [None, None, None, None, None, None, None, None],
            [None, None, None, None, None, None, None, None],
            [None, None, None, None, None, None, None, None],
-           [Piece("white", "pawn", 6, 0), Piece("white", "pawn", 6, 1), Piece("white", "pawn", 6, 2), Piece("white", "pawn", 6, 3), Piece("white", "pawn", 6, 4), Piece("white", "pawn", 6, 5), Piece("white", "pawn", 6, 6), Piece("white", "pawn", 6, 7)],
-           [Piece("white", "rook", 7, 0), Piece("white", "knight", 7, 1), Piece("white", "bishop", 7, 2), Piece("white", "queen", 7, 3), Piece("white", "king", 7, 4), Piece("white", "bishop", 7, 5), Piece("white", "knight", 7, 6), Piece("white", "rook", 7, 7)]]
+           [Piece("white", "pawn", 6, 0, "pawnw48"), Piece("white", "pawn", 6, 1, "pawnw49"), Piece("white", "pawn", 6, 2, "pawnw50"), Piece("white", "pawn", 6, 3, "pawnw51"), Piece("white", "pawn", 6, 4, "pawnw52"), Piece("white", "pawn", 6, 5, "pawnw53"), Piece("white", "pawn", 6, 6, "pawnw54"), Piece("white", "pawn", 6, 7, "pawnw55")],
+           [Piece("white", "rook", 7, 0, "rookw56"), Piece("white", "knight", 7, 1, "knightw57"), Piece("white", "bishop", 7, 2, "bishopw58"), Piece("white", "queen", 7, 3, "queenw59"), Piece("white", "king", 7, 4, "kingw60"), Piece("white", "bishop", 7, 5, "bishopw61"), Piece("white", "knight", 7, 6, "knightw62"), Piece("white", "rook", 7, 7, "rookw63")]]
 
 currPiece = None
+legalMoves = []
 
 def displayLegalMoves(id):
-    global currPiece
+    global currPiece, legalMoves
     for row in currArr:
         for piece in row:
             if (piece != None):
                 # print("Checking piece at position " + str(piece.get_position()) + " with id " + str(piece.get_name()) + str(piece.get_position()[0] * 8 + piece.get_position()[1]) + " against selected id " + id)
                 currId = str(piece.get_name()) + str(piece.get_color()[0]) + str(piece.get_position()[0] * 8 + piece.get_position()[1])
-                print("Current Piece ID: " + currId + " | Selected ID: " + id)
+                # print("Current Piece ID: " + currId + " | Selected ID: " + id)
                 if (currId == id):
                     currPiece = piece
                     break
@@ -227,15 +226,37 @@ def displayLegalMoves(id):
                     if (currArr[newRow][newCol] == None or currArr[newRow][newCol].get_color() != currPiece.get_color()):
                         legalMoves.append((newRow, newCol))
     #Highlight Legal Moves
-        print("Legal Moves: " + str(legalMoves))
         for move in legalMoves:
             print(str(move[0] * 8 + move[1]))
             document["r" + str(move[0] * 8 + move[1])].style.display = "block"
         
-def legalMoveClicked(id):
+def legalMoveClicked(event, element):
+    elementID = element.data.id
+    print("Legal Move Clicked: " + elementID[1:])
 
-    pass
-    
+    origRow = currPiece.get_position()[0]
+    origCol = currPiece.get_position()[1]
+
+    moveRow = int(elementID[1:]) // 8
+    moveCol = int(elementID[1:]) % 8
+
+    #Move Piece in currArr
+    print("Moving piece " + currPiece.get_name() + " from position " + str(currPiece.get_position()) + " to position (" + str(moveRow) + ", " + str(moveCol) + ")")
+
+
+    currArr[moveRow][moveCol] = currPiece
+    currArr[currPiece.get_position()[0]][currPiece.get_position()[1]] = None
+    currPiece.set_row(moveRow)
+    currPiece.set_col(moveCol)
+    #Update Board
+    origSquareNum = moveRow * 8 + moveCol
+    originalSquare = document[currPiece.get_id()]
+    originalSquare.html = "<div id='empty" + str(origSquareNum) + "'></div>"
+    newSquare = document[currPiece.get_id()]
+    newSquare.html = "<div id='" + currPiece.get_id() + "'><button class='" + currPiece.get_name() + currPiece.get_color()[0] + "' b-on='click:selectPiece'></button></div>"
+    Template(currPiece.get_id(), [selectPiece]).render(id=currPiece.get_id())
+
+
 
 def selectPiece(event, element):
     elementID = element.data.id
@@ -286,52 +307,16 @@ for row in range(8):
             else:
                 td.html = "<div>"
         else:
-            td.html = ""
+            td.html = "<div id='empty" + str(squareCount) + "'></div>"
         # td.html = "<circle cx='25' cy='25' r='20' fill='red' id='r" + str(squareCount) + "' style='display:none;' ></circle>" + td.html 
-        td.html =  td.html + "<svg width='50' height='50' style='display:none;' id='r" + str(squareCount) + "'><circle cx='25' cy='25' r='10' fill='red' onClick='legalMoveClicked(" + str(squareCount) + ")'></circle></svg></div>"    
+        # td.html =  td.html + "<svg width='50' height='50' style='display:none;' id='r" + str(squareCount) + "'><circle cx='25' cy='25' r='10' fill='red' onClick='legalMoveClicked(" + str(squareCount) + ")'></circle></svg></div>"
+        td.html = td.html + "<div class='legal-move' id='r" + str(squareCount) + "'><button class='legal-move-button' b-on='click:legalMoveClicked'></button></div>"
 
         squareCount += 1
 
         tr <= td
     board <= tr
 document <= board
-
-# document["rookb0"].bind("click", selectPiece("rookb0"))
-# document["rookb1"].bind("click", selectPiece("rookb1"))
-# document["rookw0"].bind("click", selectPiece("rookw0"))
-# document["rookw1"].bind("click", selectPiece("rookw1"))
-# document["knightb0"].bind("click", selectPiece("knightb0"))
-# document["knightb1"].bind("click", selectPiece("knightb1"))
-# document["knightw0"].bind("click", selectPiece("knightw0"))
-# document["knightw1"].bind("click", selectPiece("knightw1"))
-# document["bishopb0"].bind("click", selectPiece("bishopb0"))
-# document["bishopb1"].bind("click", selectPiece("bishopb1"))
-# document["bishopw0"].bind("click", selectPiece("bishopw0"))
-# document["bishopw1"].bind("click", selectPiece("bishopw1"))
-# document["queenb0"].bind("click", selectPiece("queenb0"))
-# document["queenw0"].bind("click", selectPiece("queenw0"))
-# document["kingb0"].bind("click", selectPiece("kingb0"))
-# document["kingw0"].bind("click", selectPiece("kingw0"))
-# for i in range(8):
-#     document["pawnb" + str(i)].bind("click", selectPiece("pawnb" + str(i)))
-#     document["pawnw" + str(i)].bind("click", selectPiece("pawnw" + str(i)))
-
-
-# for i in range(2):
-#     Template("rookb" + str(i), [selectPiece]).render(id="rookb" + str(i))
-#     Template("rookw" + str(i), [selectPiece]).render(id="rookw" + str(i))
-#     Template("knightb" + str(i), [selectPiece]).render(id="knightb" + str(i))
-#     Template("knightw" + str(i), [selectPiece]).render(id="knightw" + str(i))
-#     Template("bishopb" + str(i), [selectPiece]).render(id="bishopb" + str(i))
-#     Template("bishopw" + str(i), [selectPiece]).render(id="bishopw" + str(i))
-
-# Template("queenb0", [selectPiece]).render(id="queenb0")
-# Template("queenw0", [selectPiece]).render(id="queenw0")
-# Template("kingb0", [selectPiece]).render(id="kingb0")
-# Template("kingw0", [selectPiece]).render(id="kingw0")
-# for i in range(8):
-#     Template("pawnb" + str(i), [selectPiece]).render(id="pawnb" + str(i))
-#     Template("pawnw" + str(i), [selectPiece]).render(id="pawnw" + str(i))
 
 Template("rookb0", [selectPiece]).render(id="rookb0")
 Template("knightb1", [selectPiece]).render(id="knightb1")
@@ -369,3 +354,5 @@ Template("pawnw53", [selectPiece]).render(id="pawnw53")
 Template("pawnw54", [selectPiece]).render(id="pawnw54")
 Template("pawnw55", [selectPiece]).render(id="pawnw55")
 
+for i in range(64):
+    Template("r" + str(i), [legalMoveClicked]).render(id="r" + str(i))
