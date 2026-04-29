@@ -17,12 +17,18 @@ class Piece:
         return self.name
     def get_position(self):
         return (self.row, self.col)
+    def get_row(self):
+        return self.row
+    def get_col(self):
+        return self.col
     def get_id(self):
         return self.id
     def set_row(self, row):
         self.row = row
     def set_col(self, col):
         self.col = col
+    def set_id(self, id):
+        self.id = id
 
 currArr = [[Piece("black", "rook", 0, 0, "rookb0"), Piece("black", "knight", 0, 1, "knightb1"), Piece("black", "bishop", 0, 2, "bishopb2"), Piece("black", "queen", 0, 3, "queenb3"), Piece("black", "king", 0, 4, "kingb4"), Piece("black", "bishop", 0, 5, "bishopb5"), Piece("black", "knight", 0, 6, "knightb6"), Piece("black", "rook", 0, 7, "rookb7")],
            [Piece("black", "pawn", 1, 0, "pawnb8"), Piece("black", "pawn", 1, 1, "pawnb9"), Piece("black", "pawn", 1, 2, "pawnb10"), Piece("black", "pawn", 1, 3, "pawnb11"), Piece("black", "pawn", 1, 4, "pawnb12"), Piece("black", "pawn", 1, 5, "pawnb13"), Piece("black", "pawn", 1, 6, "pawnb14"), Piece("black", "pawn", 1, 7, "pawnb15")],
@@ -232,29 +238,38 @@ def displayLegalMoves(id):
         
 def legalMoveClicked(event, element):
     elementID = element.data.id
-    print("Legal Move Clicked: " + elementID[1:])
 
-    origRow = currPiece.get_position()[0]
-    origCol = currPiece.get_position()[1]
+    newSquareNum = int(elementID[1:])
+    newRow = newSquareNum // 8
+    newCol = newSquareNum % 8
 
-    moveRow = int(elementID[1:]) // 8
-    moveCol = int(elementID[1:]) % 8
+    print("Legal Move Clicked: " + str(newSquareNum))
+
+
+    oldSquareNum = currPiece.get_row() * 8 + currPiece.get_col()
+    oldRow = currPiece.get_row()
+    oldCol = currPiece.get_col()
 
     #Move Piece in currArr
-    print("Moving piece " + currPiece.get_name() + " from position " + str(currPiece.get_position()) + " to position (" + str(moveRow) + ", " + str(moveCol) + ")")
+    print("Moving piece " + currPiece.get_name() + " from position " + str(currPiece.get_position()) + " to position (" + str(newRow) + ", " + str(newCol) + ")")
 
 
-    currArr[moveRow][moveCol] = currPiece
-    currArr[currPiece.get_position()[0]][currPiece.get_position()[1]] = None
-    currPiece.set_row(moveRow)
-    currPiece.set_col(moveCol)
+    currArr[newRow][newCol] = currPiece
+    currArr[currPiece.get_row()][currPiece.get_col()] = None
+    currPiece.set_row(newRow)
+    currPiece.set_col(newCol)
     #Update Board
-    origSquareNum = moveRow * 8 + moveCol
+    oldSquareNum = oldRow * 8 + oldCol
     originalSquare = document[currPiece.get_id()]
-    originalSquare.html = "<div id='empty" + str(origSquareNum) + "'></div>"
-    newSquare = document[currPiece.get_id()]
-    newSquare.html = "<div id='" + currPiece.get_id() + "'><button class='" + currPiece.get_name() + currPiece.get_color()[0] + "' b-on='click:selectPiece'></button></div>"
+    document[originalSquare.id].id = "empty" + str(oldSquareNum)
+    document[originalSquare.id].innerHTML = ""
+    # originalSquare.html = "<div id='empty" + str(oldSquareNum) + "'></div>"
+    document["empty" + str(newSquareNum)].innerHTML = "<button class='" + currPiece.get_name() + currPiece.get_color()[0] + "' b-on='click:selectPiece'></button></div>"
+    document["empty" + str(newSquareNum)].id = currPiece.get_name() + currPiece.get_color()[0] + str(newSquareNum)
+    # newSquare.html = "<div id='" + currPiece.get_id() + "'><button class='" + currPiece.get_name() + currPiece.get_color()[0] + "' b-on='click:selectPiece'></button></div>"
+    currPiece.set_id(currPiece.get_name() + currPiece.get_color()[0] + str(newSquareNum))
     Template(currPiece.get_id(), [selectPiece]).render(id=currPiece.get_id())
+
 
 
 
@@ -277,7 +292,7 @@ for row in range(8):
     for col in range(8):
         td = html.TD()
         td.style.width = "50px"
-        if (row + col) % 2 == 0:
+        if (row + col) % 2 == 1:
             td.style.backgroundColor = "#e68a00"
         else:
             td.style.backgroundColor = "#ffd699"
