@@ -2,7 +2,7 @@ from browser import document, html, svg
 from browser.template import Template
 
 turn = True #True for white's turn, False for black
-
+prevMove = None
 class Piece:
 
     def __init__(self, color, name, row, col, id):
@@ -303,6 +303,10 @@ def isPawnBlocked(row, col):
             return True
     return False
 
+def enPassant():
+
+    pass
+
 def hideLegalMoves():
     for move in legalMoves:
         document["r" + str(move[0] * 8 + move[1])].style.display = "none"
@@ -314,10 +318,7 @@ def selectPiece(event, element):
     # print("Selected Piece: " + elementID)
     displayLegalMoves(elementID)
     
-
 squareCount = 0
-
-
 
 board = html.TABLE()
 
