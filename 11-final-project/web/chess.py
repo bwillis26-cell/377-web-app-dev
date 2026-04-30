@@ -1,6 +1,7 @@
 from browser import document, html, svg
 from browser.template import Template
 
+turn = True #True for white's turn, False for black
 
 class Piece:
 
@@ -43,7 +44,7 @@ currPiece = None
 legalMoves = []
 
 def displayLegalMoves(id):
-    global currPiece, legalMoves
+    global currPiece, legalMoves, turn
     for row in currArr:
         for piece in row:
             if (piece != None):
@@ -53,13 +54,14 @@ def displayLegalMoves(id):
                 if (currId == id):
                     currPiece = piece
                     break
-
+    hideLegalMoves()
     #Track Legal Moves for Pawn
     # print("Current Piece: " + currPiece.get_name() + " at position " + str(currPiece.get_position()))
-    if (currPiece != None):
+    if (currPiece != None and ((turn and currPiece.get_color() == "white") or (not turn and currPiece.get_color() == "black"))):
     # print("Current Piece: " + currPiece.get_name() + " at position " + str(currPiece.get_position()))
+        
         legalMoves = []
-        if (currPiece.get_name() == "pawn"):
+        if (currPiece.get_name() == "pawn" and not isPawnBlocked(currPiece.get_position()[0], currPiece.get_position()[1])):
             if (currPiece.get_color() == "white"):
                 if (currPiece.get_position()[0] > 0 and currArr[currPiece.get_position()[0] - 1][currPiece.get_position()[1]] == None):
                     legalMoves.append((currPiece.get_position()[0] - 1, currPiece.get_position()[1]))
@@ -237,6 +239,8 @@ def displayLegalMoves(id):
             document["r" + str(move[0] * 8 + move[1])].style.display = "block"
         
 def legalMoveClicked(event, element):
+    global turn
+
     elementID = element.data.id
 
     newSquareNum = int(elementID[1:])
@@ -253,23 +257,55 @@ def legalMoveClicked(event, element):
     #Move Piece in currArr
     print("Moving piece " + currPiece.get_name() + " from position " + str(currPiece.get_position()) + " to position (" + str(newRow) + ", " + str(newCol) + ")")
 
+    if (currArr[newRow][newCol] != None):
+        takenPiece = currArr[newRow][newCol]
+        takenPieceID = takenPiece.get_id()
+        currArr[newRow][newCol] = currPiece
+        currArr[currPiece.get_row()][currPiece.get_col()] = None
+        currPiece.set_row(newRow)
+        currPiece.set_col(newCol)
+        #Update Board
+        oldSquareNum = oldRow * 8 + oldCol
+        originalSquare = document[currPiece.get_id()]
+        document[originalSquare.id].id = "empty" + str(oldSquareNum)
+        document[originalSquare.id].innerHTML = ""
+        # originalSquare.html = "<div id='empty" + str(oldSquareNum) + "'></div>"
+        document[takenPieceID].innerHTML = "<button class='" + currPiece.get_name() + currPiece.get_color()[0] + "' b-on='click:selectPiece'></button></div>"
+        document[takenPieceID].id = currPiece.get_name() + currPiece.get_color()[0] + str(newSquareNum)
+        # newSquare.html = "<div id='" + currPiece.get_id() + "'><button class='" + currPiece.get_name() + currPiece.get_color()[0] + "' b-on='click:selectPiece'></button></div>"
+        currPiece.set_id(currPiece.get_name() + currPiece.get_color()[0] + str(newSquareNum))
+        Template(currPiece.get_id(), [selectPiece]).render(id=currPiece.get_id())
+    elif (currArr[newRow][newCol] == None):
+        currArr[newRow][newCol] = currPiece
+        currArr[currPiece.get_row()][currPiece.get_col()] = None
+        currPiece.set_row(newRow)
+        currPiece.set_col(newCol)
+        #Update Board
+        oldSquareNum = oldRow * 8 + oldCol
+        originalSquare = document[currPiece.get_id()]
+        document[originalSquare.id].id = "empty" + str(oldSquareNum)
+        document[originalSquare.id].innerHTML = ""
+        # originalSquare.html = "<div id='empty" + str(oldSquareNum) + "'></div>"
+        document["empty" + str(newSquareNum)].innerHTML = "<button class='" + currPiece.get_name() + currPiece.get_color()[0] + "' b-on='click:selectPiece'></button></div>"
+        document["empty" + str(newSquareNum)].id = currPiece.get_name() + currPiece.get_color()[0] + str(newSquareNum)
+        # newSquare.html = "<div id='" + currPiece.get_id() + "'><button class='" + currPiece.get_name() + currPiece.get_color()[0] + "' b-on='click:selectPiece'></button></div>"
+        currPiece.set_id(currPiece.get_name() + currPiece.get_color()[0] + str(newSquareNum))
+        Template(currPiece.get_id(), [selectPiece]).render(id=currPiece.get_id())
+    hideLegalMoves()
+    turn = not turn
 
-    currArr[newRow][newCol] = currPiece
-    currArr[currPiece.get_row()][currPiece.get_col()] = None
-    currPiece.set_row(newRow)
-    currPiece.set_col(newCol)
-    #Update Board
-    oldSquareNum = oldRow * 8 + oldCol
-    originalSquare = document[currPiece.get_id()]
-    document[originalSquare.id].id = "empty" + str(oldSquareNum)
-    document[originalSquare.id].innerHTML = ""
-    # originalSquare.html = "<div id='empty" + str(oldSquareNum) + "'></div>"
-    document["empty" + str(newSquareNum)].innerHTML = "<button class='" + currPiece.get_name() + currPiece.get_color()[0] + "' b-on='click:selectPiece'></button></div>"
-    document["empty" + str(newSquareNum)].id = currPiece.get_name() + currPiece.get_color()[0] + str(newSquareNum)
-    # newSquare.html = "<div id='" + currPiece.get_id() + "'><button class='" + currPiece.get_name() + currPiece.get_color()[0] + "' b-on='click:selectPiece'></button></div>"
-    currPiece.set_id(currPiece.get_name() + currPiece.get_color()[0] + str(newSquareNum))
-    Template(currPiece.get_id(), [selectPiece]).render(id=currPiece.get_id())
+def isPawnBlocked(row, col):
+    if (currPiece.get_color() == "white"):
+        if (row > 0 and currArr[row - 1][col] != None):
+            return True
+    else:
+        if (row < 7 and currArr[row + 1][col] != None):
+            return True
+    return False
 
+def hideLegalMoves():
+    for move in legalMoves:
+        document["r" + str(move[0] * 8 + move[1])].style.display = "none"
 
 
 
