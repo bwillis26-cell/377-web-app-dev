@@ -2,7 +2,12 @@ from browser import document, html, svg
 from browser.template import Template
 
 turn = True #True for white's turn, False for black
-prevMove = None
+moveCount = 0
+moves = []
+enPassantCheck = False
+
+# Class to represent a chess piece, with attributes for color, type, position, and HTML element ID.
+
 class Piece:
 
     def __init__(self, color, name, row, col, id):
@@ -31,6 +36,8 @@ class Piece:
     def set_id(self, id):
         self.id = id
 
+# Starting Board of the Chess Game represented as a 2D array of Piece objects, with None representing empty squares.
+
 currArr = [[Piece("black", "rook", 0, 0, "rookb0"), Piece("black", "knight", 0, 1, "knightb1"), Piece("black", "bishop", 0, 2, "bishopb2"), Piece("black", "queen", 0, 3, "queenb3"), Piece("black", "king", 0, 4, "kingb4"), Piece("black", "bishop", 0, 5, "bishopb5"), Piece("black", "knight", 0, 6, "knightb6"), Piece("black", "rook", 0, 7, "rookb7")],
            [Piece("black", "pawn", 1, 0, "pawnb8"), Piece("black", "pawn", 1, 1, "pawnb9"), Piece("black", "pawn", 1, 2, "pawnb10"), Piece("black", "pawn", 1, 3, "pawnb11"), Piece("black", "pawn", 1, 4, "pawnb12"), Piece("black", "pawn", 1, 5, "pawnb13"), Piece("black", "pawn", 1, 6, "pawnb14"), Piece("black", "pawn", 1, 7, "pawnb15")],
            [None, None, None, None, None, None, None, None],
@@ -43,8 +50,12 @@ currArr = [[Piece("black", "rook", 0, 0, "rookb0"), Piece("black", "knight", 0, 
 currPiece = None
 legalMoves = []
 
+
+# Displays the legal moves for a selected piece by checking the piece's type and position, 
+# and comparing it to the current state of the board in currArr.
+
 def displayLegalMoves(id):
-    global currPiece, legalMoves, turn
+    global currPiece, legalMoves, turn, moves, moveCount
     for row in currArr:
         for piece in row:
             if (piece != None):
@@ -61,7 +72,10 @@ def displayLegalMoves(id):
     # print("Current Piece: " + currPiece.get_name() + " at position " + str(currPiece.get_position()))
         
         legalMoves = []
+        
         if (currPiece.get_name() == "pawn" and not isPawnBlocked(currPiece.get_position()[0], currPiece.get_position()[1])):
+            if (moveCount > 0):
+                enPassant()
             if (currPiece.get_color() == "white"):
                 if (currPiece.get_position()[0] > 0 and currArr[currPiece.get_position()[0] - 1][currPiece.get_position()[1]] == None):
                     legalMoves.append((currPiece.get_position()[0] - 1, currPiece.get_position()[1]))
@@ -238,8 +252,14 @@ def displayLegalMoves(id):
             print(str(move[0] * 8 + move[1]))
             document["r" + str(move[0] * 8 + move[1])].style.display = "block"
         
+# Added to the =displayed moves to register what move the user wants to make
+# Resets legal moves shown, adds to moveCount, and keeps track of moves made
+
 def legalMoveClicked(event, element):
-    global turn
+    global turn, moveCount, moves, enPassantCheck
+
+    moveCount += 1
+
 
     elementID = element.data.id
 
@@ -247,17 +267,16 @@ def legalMoveClicked(event, element):
     newRow = newSquareNum // 8
     newCol = newSquareNum % 8
 
-    print("Legal Move Clicked: " + str(newSquareNum))
-
-
     oldSquareNum = currPiece.get_row() * 8 + currPiece.get_col()
     oldRow = currPiece.get_row()
     oldCol = currPiece.get_col()
 
+    moves.append((currPiece.get_name(), currPiece.get_color(), oldSquareNum, newSquareNum))
+
     #Move Piece in currArr
     print("Moving piece " + currPiece.get_name() + " from position " + str(currPiece.get_position()) + " to position (" + str(newRow) + ", " + str(newCol) + ")")
 
-    if (currArr[newRow][newCol] != None):
+    if (currArr[newRow][newCol] != None): # This is the check for taking a piece
         takenPiece = currArr[newRow][newCol]
         takenPieceID = takenPiece.get_id()
         currArr[newRow][newCol] = currPiece
@@ -275,7 +294,20 @@ def legalMoveClicked(event, element):
         # newSquare.html = "<div id='" + currPiece.get_id() + "'><button class='" + currPiece.get_name() + currPiece.get_color()[0] + "' b-on='click:selectPiece'></button></div>"
         currPiece.set_id(currPiece.get_name() + currPiece.get_color()[0] + str(newSquareNum))
         Template(currPiece.get_id(), [selectPiece]).render(id=currPiece.get_id())
-    elif (currArr[newRow][newCol] == None):
+    elif (currArr[newRow][newCol] == None): # Check for En Passant/Not Taking Piece
+        if (enPassantCheck): # En Passant Check
+            if (currPiece.get_color() == "white"):
+                takenPiece = currArr[newRow + 1][newCol]
+                takenPieceID = takenPiece.get_id()
+                currArr[newRow + 1][newCol] = None
+                document[takenPieceID].innerHTML = "<div id='empty" + str((newRow + 1) * 8 + newCol) + "'></div>"
+            else:
+                takenPiece = currArr[newRow - 1][newCol]
+                takenPieceID = takenPiece.get_id()
+                currArr[newRow - 1][newCol] = None
+                document[takenPieceID].innerHTML = "<div id='empty" + str((newRow - 1) * 8 + newCol) + "'></div>"
+            enPassantCheck = not enPassantCheck
+        
         currArr[newRow][newCol] = currPiece
         currArr[currPiece.get_row()][currPiece.get_col()] = None
         currPiece.set_row(newRow)
@@ -294,6 +326,9 @@ def legalMoveClicked(event, element):
     hideLegalMoves()
     turn = not turn
 
+# Checks if the square in front of a pawn is blocked
+# Needed because if a piece was in front on an unmoved pawn, the pawn could jump over it.
+
 def isPawnBlocked(row, col):
     if (currPiece.get_color() == "white"):
         if (row > 0 and currArr[row - 1][col] != None):
@@ -303,9 +338,27 @@ def isPawnBlocked(row, col):
             return True
     return False
 
-def enPassant():
 
-    pass
+# Checks if En Passant is possible and if so, adds the En Passant move to legalMoves 
+# and toggles the enPassantCheck variable to track whether the En Passant move is currently available. 
+# This function is called in displayLegalMoves when a pawn is selected, and checks the last move made to 
+# see if it was a two-square pawn advance that would allow for an En Passant capture on the next turn.
+
+def enPassant():
+    global legalMoves, moves, moveCount, enPassantCheck
+    lastMove = moves[moveCount - 1]
+    if (lastMove[0] == "pawn" and abs(lastMove[3] - lastMove[2]) == 16):
+        lastMoveCol = lastMove[3] % 8
+        lastMoveRow = lastMove[3] // 8
+        if (currPiece.get_position()[0] == lastMoveRow and abs(currPiece.get_position()[1] - lastMoveCol) == 1):
+            if (currPiece.get_color() == "white" and lastMove[1] == "black" and currPiece.get_position()[0] == 3):
+                legalMoves.append((2, lastMoveCol))
+            elif (currPiece.get_color() == "black" and lastMove[1] == "white" and currPiece.get_position()[0] == 4):
+                legalMoves.append((5, lastMoveCol))
+            enPassantCheck = not enPassantCheck
+    
+
+
 
 def hideLegalMoves():
     for move in legalMoves:
@@ -333,8 +386,10 @@ for row in range(8):
             td.style.backgroundColor = "#e68a00"
         else:
             td.style.backgroundColor = "#ffd699"
-        # print("Current Square: (" + str(row) + ", " + str(col) + ")")
         
+        # Creates the HTML for the piece on the current square, if there is one, 
+        # and adds it to the td element. Also adds a button for legal moves on each square.
+
         if (currArr[row][col] != None and currArr[row][col].get_name() != None):
             piece = currArr[row][col]
 
@@ -368,7 +423,9 @@ for row in range(8):
 
         tr <= td
     board <= tr
-document <= board
+document <= board # Displays the board on the webpage
+
+# Adds the OnClick event listeners to each piece and legal move button, and renders the initial chess board with pieces in their starting positions.
 
 Template("rookb0", [selectPiece]).render(id="rookb0")
 Template("knightb1", [selectPiece]).render(id="knightb1")
