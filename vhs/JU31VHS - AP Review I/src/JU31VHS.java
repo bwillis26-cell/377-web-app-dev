@@ -7,6 +7,33 @@
 
 public class JU31VHS
 {
+
+  # 1. Write a method that takes an array of ints and returns a new array where every 4 is followed by a 5. You may assume that every 4 in the original array is followed by a number that is not a 4, and that the array contains the same number of 4s and 5s.
+  public static int[] putFivesAfterFours(int[] nums)
+  {
+    int[] result = new int[nums.length];
+    System.arraycopy(nums, 0, result, 0, nums.length);
+
+    for (int i = 0; i < result.length - 1; i++)
+    {
+      if (result[i] == 4 && result[i + 1] != 5)
+      {
+        for (int j = i + 1; j < result.length; j++)
+        {
+          if (result[j] == 5 && (j == 0 || result[j - 1] != 4))
+          {
+            int temp = result[i + 1];
+            result[i + 1] = result[j];
+            result[j] = temp;
+            break;
+          }
+        }
+      }
+    }
+    return result;
+  }
+
+
   public static String centralThree(String letters)
   {
     int len = letters.length();
