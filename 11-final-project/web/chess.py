@@ -75,22 +75,22 @@ def displayLegalMoves(id):
         
         legalMoves = []
         
-        if (currPiece.get_name() == "pawn" and not isPawnBlocked(currPiece.get_position()[0], currPiece.get_position()[1])):
+        if (currPiece.get_name() == "pawn"):
             if (moveCount > 0):
                 enPassant()
             if (currPiece.get_color() == "white"):
-                if (currPiece.get_position()[0] > 0 and currArr[currPiece.get_position()[0] - 1][currPiece.get_position()[1]] == None):
+                if (currPiece.get_position()[0] > 0 and currArr[currPiece.get_position()[0] - 1][currPiece.get_position()[1]] == None and not isPawnBlocked(currPiece.get_position()[0], currPiece.get_position()[1])):
                     legalMoves.append((currPiece.get_position()[0] - 1, currPiece.get_position()[1]))
-                if (currPiece.get_position()[0] == 6 and currArr[currPiece.get_position()[0] - 2][currPiece.get_position()[1]] == None):
+                if (currPiece.get_position()[0] == 6 and currArr[currPiece.get_position()[0] - 2][currPiece.get_position()[1]] == None and not isPawnBlocked(currPiece.get_position()[0], currPiece.get_position()[1])):
                     legalMoves.append((currPiece.get_position()[0] - 2, currPiece.get_position()[1]))
                 if (currPiece.get_position()[0] > 0 and currPiece.get_position()[1] > 0 and currArr[currPiece.get_position()[0] - 1][currPiece.get_position()[1] - 1] != None and currArr[currPiece.get_position()[0] - 1][currPiece.get_position()[1] - 1].get_color() == "black"):
                     legalMoves.append((currPiece.get_position()[0] - 1, currPiece.get_position()[1] - 1))
                 if (currPiece.get_position()[0] > 0 and currPiece.get_position()[1] < 7 and currArr[currPiece.get_position()[0] - 1][currPiece.get_position()[1] + 1] != None and currArr[currPiece.get_position()[0] - 1][currPiece.get_position()[1] + 1].get_color() == "black"):
                     legalMoves.append((currPiece.get_position()[0] - 1, currPiece.get_position()[1] + 1))
             else:
-                if (currPiece.get_position()[0] < 7 and currArr[currPiece.get_position()[0] + 1][currPiece.get_position()[1]] == None):
+                if (currPiece.get_position()[0] < 7 and currArr[currPiece.get_position()[0] + 1][currPiece.get_position()[1]] == None and not isPawnBlocked(currPiece.get_position()[0], currPiece.get_position()[1])):
                     legalMoves.append((currPiece.get_position()[0] + 1, currPiece.get_position()[1]))
-                if (currPiece.get_position()[0] == 1 and currArr[currPiece.get_position()[0] + 2][currPiece.get_position()[1]] == None):
+                if (currPiece.get_position()[0] == 1 and currArr[currPiece.get_position()[0] + 2][currPiece.get_position()[1]] == None and not isPawnBlocked(currPiece.get_position()[0], currPiece.get_position()[1])):
                     legalMoves.append((currPiece.get_position()[0] + 2, currPiece.get_position()[1]))
                 if (currPiece.get_position()[0] < 7 and currPiece.get_position()[1] > 0 and currArr[currPiece.get_position()[0] + 1][currPiece.get_position()[1] - 1] != None and currArr[currPiece.get_position()[0] + 1][currPiece.get_position()[1] - 1].get_color() == "white"):
                     legalMoves.append((currPiece.get_position()[0] + 1, currPiece.get_position()[1] - 1))
