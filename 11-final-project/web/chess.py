@@ -5,6 +5,7 @@ turn = True #True for white's turn, False for black
 moveCount = 0
 moves = []
 enPassantCheck = False
+castleCheck = False
 
 # Class to represent a chess piece, with attributes for color, type, position, and HTML element ID.
 
@@ -56,6 +57,7 @@ legalMoves = []
 
 def displayLegalMoves(id):
     global currPiece, legalMoves, turn, moves, moveCount
+    
     for row in currArr:
         for piece in row:
             if (piece != None):
@@ -90,7 +92,7 @@ def displayLegalMoves(id):
                     legalMoves.append((currPiece.get_position()[0] + 1, currPiece.get_position()[1]))
                 if (currPiece.get_position()[0] == 1 and currArr[currPiece.get_position()[0] + 2][currPiece.get_position()[1]] == None):
                     legalMoves.append((currPiece.get_position()[0] + 2, currPiece.get_position()[1]))
-                if (currPiece.get_position)()[0] < 7 and currPiece.get_position()[1] > 0 and currArr[currPiece.get_position()[0] + 1][currPiece.get_position()[1] - 1] != None and currArr[currPiece.get_position()[0] + 1][currPiece.get_position()[1] - 1].get_color() == "white":
+                if (currPiece.get_position()[0] < 7 and currPiece.get_position()[1] > 0 and currArr[currPiece.get_position()[0] + 1][currPiece.get_position()[1] - 1] != None and currArr[currPiece.get_position()[0] + 1][currPiece.get_position()[1] - 1].get_color() == "white"):
                     legalMoves.append((currPiece.get_position()[0] + 1, currPiece.get_position()[1] - 1))
                 if (currPiece.get_position()[0] < 7 and currPiece.get_position()[1] < 7 and currArr[currPiece.get_position()[0] + 1][currPiece.get_position()[1] + 1] != None and currArr[currPiece.get_position()[0] + 1][currPiece.get_position()[1] + 1].get_color() == "white"):
                     legalMoves.append((currPiece.get_position()[0] + 1, currPiece.get_position()[1] + 1))
@@ -241,6 +243,7 @@ def displayLegalMoves(id):
     #Track Legal Moves for King
         elif (currPiece.get_name() == "king"):
             kingMoves = [(1, 0), (1, 1), (0, 1), (-1, 1), (-1, 0), (-1, -1), (0, -1), (1, -1)]
+            castle()
             for move in kingMoves:
                 newRow = currPiece.get_position()[0] + move[0]
                 newCol = currPiece.get_position()[1] + move[1]
@@ -256,7 +259,7 @@ def displayLegalMoves(id):
 # Resets legal moves shown, adds to moveCount, and keeps track of moves made
 
 def legalMoveClicked(event, element):
-    global turn, moveCount, moves, enPassantCheck
+    global turn, moveCount, moves, enPassantCheck, castleCheck
 
     moveCount += 1
 
@@ -307,7 +310,41 @@ def legalMoveClicked(event, element):
                 currArr[newRow - 1][newCol] = None
                 document[takenPieceID].innerHTML = "<div id='empty" + str((newRow - 1) * 8 + newCol) + "'></div>"
             enPassantCheck = not enPassantCheck
-        
+        elif (castleCheck):
+            if (newCol == 6):
+                rook = currArr[newRow][7]
+                currArr[newRow][5] = rook
+                currArr[newRow][7] = None
+                rook.set_row(newRow)
+                rook.set_col(5)
+                oldSquareNum = newRow * 8 + 7
+                originalSquare = document[rook.get_id()]
+                document[originalSquare.id].id = "empty" + str(oldSquareNum)
+                document[originalSquare.id].innerHTML = ""
+                # originalSquare.html = "<div id='empty" + str(oldSquareNum) + "'></div>"
+                document["empty" + str(newRow * 8 + 5)].innerHTML = "<button class='" + rook.get_name() + rook.get_color()[0] + "' b-on='click:selectPiece'></button></div>"
+                document["empty" + str(newRow * 8 + 5)].id = rook.get_name() + rook.get_color()[0] + str(newRow * 8 + 5)
+                # newSquare.html = "<div id='" + rook.get_id() + "'><button class='" + rook.get_name() + rook.get_color()[0] + "' b-on='click:selectPiece'></button></div>"
+                rook.set_id(rook.get_name() + rook.get_color()[0] + str(newRow * 8 + 5))
+                Template(rook.get_id(), [selectPiece]).render(id=rook.get_id())
+            else:                
+                rook = currArr[newRow][0]
+                currArr[newRow][3] = rook
+                currArr[newRow][0] = None
+                rook.set_row(newRow)
+                rook.set_col(3)
+                oldSquareNum = newRow * 8 + 0
+                originalSquare = document[rook.get_id()]
+                document[originalSquare.id].id = "empty" + str(oldSquareNum)
+                document[originalSquare.id].innerHTML = ""
+                # originalSquare.html = "<div id='empty" + str(oldSquareNum) + "'></div>"
+                document["empty" + str(newRow * 8 + 3)].innerHTML = "<button class='" + rook.get_name() + rook.get_color()[0] + "' b-on='click:selectPiece'></button></div>"
+                document["empty" + str(newRow * 8 + 3)].id = rook.get_name() + rook.get_color()[0] + str(newRow * 8 + 3)
+                # newSquare.html = "<div id='" + rook.get_id() + "'><button class='" + rook.get_name() + rook.get_color()[0] + "' b-on='click:selectPiece'></button></div>"
+                rook.set_id(rook.get_name() + rook.get_color()[0] + str(newRow * 8 + 3))
+                Template(rook.get_id(), [selectPiece]).render(id=rook.get_id())
+            castleCheck = False
+
         currArr[newRow][newCol] = currPiece
         currArr[currPiece.get_row()][currPiece.get_col()] = None
         currPiece.set_row(newRow)
@@ -358,13 +395,58 @@ def enPassant():
             enPassantCheck = not enPassantCheck
     
 
+def castle():
+    global legalMoves, moves, moveCount, castleCheck
+    if (currPiece.get_name() == "king"):
+        for move in moves:
+            if (move[0] == "king" and move[1] == currPiece.get_color()):
+                return
+            if (move[0] == "rook" and move[1] == currPiece.get_color()):
+                if (currPiece.get_color() == "white"):
+                    if (move[2] == 56):
+                        return
+                    elif (move[2] == 63):
+                        return
+                else:
+                    if (move[2] == 0):
+                        return
+                    elif (move[2] == 7):
+                        return
+
+        if (currPiece.get_color() == "white" and currPiece.get_position() == (7, 4)):
+            if (currArr[7][6] == None and currArr[7][5] == None and currArr[7][7].get_color() == "white" and currArr[7][7].get_name() == "rook"):
+                legalMoves.append((7, 6))
+                castleCheck = True
+            if (currArr[7][2] == None and currArr[7][3] == None and currArr[7][0].get_color() == "white" and currArr[7][0].get_name() == "rook"):
+                legalMoves.append((7, 2))
+                castleCheck = True
+        elif (currPiece.get_color() == "black" and currPiece.get_position() == (0, 4)):
+            if (currArr[0][6] == None and currArr[0][5] == None and currArr[0][7].get_color() == "black" and currArr[0][7].get_name() == "rook"):
+                legalMoves.append((0, 6))
+                castleCheck = True
+            if (currArr[0][1] == None and currArr[0][2] == None and currArr[0][0].get_color() == "black" and currArr[0][0].get_name() == "rook"):
+                legalMoves.append((0, 2))
+                castleCheck = True
+
+def isInCheck(color):
+    kingPosition = None
+    for row in currArr:
+        for piece in row:
+            if (piece != None and piece.get_name() == "king" and piece.get_color() == color):
+                kingPosition = piece.get_position()
+                break
+    for row in currArr:
+        for piece in row:
+            if (piece != None and piece.get_color() != color):
+                displayLegalMoves(str(piece.get_name()) + str(piece.get_color()[0]) + str(piece.get_position()[0] * 8 + piece.get_position()[1]))
+                if (kingPosition in legalMoves):
+                    return True
+    return False
 
 
 def hideLegalMoves():
     for move in legalMoves:
         document["r" + str(move[0] * 8 + move[1])].style.display = "none"
-
-
 
 def selectPiece(event, element):
     elementID = element.data.id
