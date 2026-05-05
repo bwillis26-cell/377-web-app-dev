@@ -7,6 +7,30 @@ $date = "";
 $elo = "";
 $totalGames = "";
 
+if (isset($id)) {
+    $sql =<<<SQL
+    SELECT *
+    FROM chess
+    WHERE pla_id = $id
+    SQL;
+
+    $connection = get_connection();
+
+    // Run the query on the database
+    $result = $connection->query($sql);
+    // Store the ONE result in an associative array
+    $row = $result->fetch_assoc();
+    $id = $row['pla_id'];
+    $username = $row['pla_username'];
+    $password = $row['pla_password'];
+    $date = $row['pla_date_created'];
+    $elo = $row['pla_elo'];
+    $totalGames = $row['pla_games_played'];
+} else {
+    $id = "";
+}
+
+
 ?>
 
 <div class='detail'>
@@ -28,12 +52,6 @@ $totalGames = "";
     <br>
 
     <button type="button" onclick="save()" class="save">Save</button>
-    <?php 
-    if ($id != "") { ?>
-    <a href='delete.php?id=<?php echo $id; ?>' class='delete' role='button' >Delete</a>
-    <?php }?>
-
-    <a href="index.php?nav=review" class="cancel" role="button">Cancel</a>
 </div>
 </form>
 
@@ -59,8 +77,7 @@ $totalGames = "";
             if ($('#id').val() == "") {
                 $('#id').val(response);
             }
-            $('#header').html($('#first').val() + " " + $('#last').val() + "'s review:");
-        }).fail(function() {
+            }).fail(function() {
             showAlert('danger', 'Error!', 'Error saving player.');
         })
     }
