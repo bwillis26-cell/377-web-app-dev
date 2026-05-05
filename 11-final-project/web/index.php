@@ -44,6 +44,11 @@
             <?php
             extract($_REQUEST);
 
+            $playerOneUsername = "";
+            $playerTwoUsername = "";
+
+
+
             if (!isset($nav)) {
                 $nav = "login";
             }
