@@ -10,9 +10,9 @@ $totalGames = "";
 ?>
 
 <div class='detail'>
-<h2 id="header">Login Here</h2>
+<h2 id="header">Register Here</h2>
 
-<form action="save-login.php" method="POST">
+<form action="save-register.php" method="POST">
     <input type="hidden" class="form-control" name="id" id="id" value="<?php echo $id; ?>">
 
     <div class="mb-3">
@@ -61,6 +61,3 @@ $totalGames = "";
 
 
 </script>
-
-
-
