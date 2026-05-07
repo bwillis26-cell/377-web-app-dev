@@ -11,47 +11,29 @@ $connection = get_connection();
 
 $username = $connection->real_escape_string($username);
 $password = $connection->real_escape_string($password);
-$date = $connection->real_escape_string($date);
-$elo = $connection->real_escape_string($elo);
-$totalGames = $connection->real_escape_string($totalGames);
+$date = date("Y-m-d");
+$elo = 600;
+$totalGames = 0;
 
-
-
-
-
-$result = $connection->query("SELECT * FROM reviews WHERE pla_username = '$username'");
+$result = $connection->query("SELECT * FROM users WHERE username='$username'");
 $update = "";
-if ($id == "") {
-    if ($result->num_rows > 0) {
-        http_response_code(400);
-        exit();
-    } else {
-        $playerOneUsername = $username;
-        $update =<<<SQL
-        INSERT INTO reviews (pla_username, pla_password, pla_date_created, pla_elo, pla_games_played)
-        VALUES ('$username', '$password', '$date', $elo, $totalGames)
-        SQL;
-    }
-} else {
-    $row = $result->fetch_assoc();
-    if ($row['pla_password'] != $password) {
-        http_response_code(400);
-        exit();
-    } else {
-        $playerOneUsername = $username;
-    }
-}
-
-try {
-    if ($connection->query($update)) {
-        // http_response_code(200);
-        $id = $connection->insert_id;
-        print($id);
-
-
-    } else {
-        http_response_code(400);
-    }
-} catch(Exception $e) {
+if ($result->num_rows > 0) {
     http_response_code(400);
+} else {
+    $update =<<<SQL
+    INSERT INTO users (pla_username, pla_password, pla_date_created, pla_elo, pla_games_played)
+    VALUES ('$username', '$password', '$date', $elo, $totalGames)
+    SQL;
+
+    try {
+        if ($connection->query($update)) {
+            // http_response_code(200);
+            $id = $connection->insert_id;
+            print($id);
+        } else {
+            http_response_code(400);
+        }
+    } catch(Exception $e) {
+        http_response_code(400);
+    }
 }

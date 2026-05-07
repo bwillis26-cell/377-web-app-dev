@@ -15,32 +15,19 @@ $date = $connection->real_escape_string($date);
 $elo = $connection->real_escape_string($elo);
 $totalGames = $connection->real_escape_string($totalGames);
 
-
-
-
-
-$result = $connection->query("SELECT * FROM reviews WHERE pla_username = '$username'");
-$update = "";
-if ($id == "") {
-    if ($result->num_rows > 0) {
-        http_response_code(400);
-        exit();
-    } else {
-        $playerOneUsername = $username;
-        $update =<<<SQL
-        INSERT INTO reviews (pla_username, pla_password, pla_date_created, pla_elo, pla_games_played)
-        VALUES ('$username', '$password', '$date', $elo, $totalGames)
-        SQL;
-    }
-} else {
+$result = $connection->query("SELECT * FROM users WHERE username='$username' AND password='$password'");
+if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
-    if ($row['pla_password'] != $password) {
-        http_response_code(400);
-        exit();
-    } else {
-        $playerOneUsername = $username;
-    }
+    $id = $row['pla_id'];
+    $playerOneUsername = $row['pla_username'];
+    print($id);
+} else {
+    http_response_code(400);
 }
+
+
+
+
 
 try {
     if ($connection->query($update)) {
