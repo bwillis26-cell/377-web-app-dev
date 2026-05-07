@@ -27,15 +27,15 @@ $totalGames = "";
 
     <br>
 
-    <button type="button" onclick="save()" class="save">Save</button>
+    <button type="button" onclick="saveRegister()" class="save">Save</button>
 </div>
 </form>
 
 <script>
-    function save() {
+    function saveRegister() {
         var settings = {
             'async': true,
-            'url': 'save.php?id='           + $('#id').val() +
+            'url': 'save-register.php?id='           + $('#id').val() +
                             '&username='    + $('#username').val() + 
                             '&password='    + $('#password').val() +
                             '&date='        + $('#date').val() +

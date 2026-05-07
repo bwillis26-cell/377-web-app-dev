@@ -24,16 +24,15 @@ if ($result->num_rows > 0) {
     INSERT INTO users (pla_username, pla_password, pla_date_created, pla_elo, pla_games_played)
     VALUES ('$username', '$password', '$date', $elo, $totalGames)
     SQL;
-
-    try {
-        if ($connection->query($update)) {
-            // http_response_code(200);
-            $id = $connection->insert_id;
-            print($id);
-        } else {
-            http_response_code(400);
-        }
-    } catch(Exception $e) {
+}
+try {
+    if ($connection->query($update)) {
+        // http_response_code(200);
+        $id = $connection->insert_id;
+        print($id);
+    } else {
         http_response_code(400);
     }
+} catch(Exception $e) {
+        http_response_code(400);
 }
