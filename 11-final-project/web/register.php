@@ -35,12 +35,8 @@ $totalGames = "";
     function saveRegister() {
         var settings = {
             'async': true,
-            'url': 'save-register.php?id='           + $('#id').val() +
-                            '&username='    + $('#username').val() + 
-                            '&password='    + $('#password').val() +
-                            '&date='        + $('#date').val() +
-                            '&elo='         + $('#elo').val() +
-                            '&totalGames='  + $('#totalGames').val(),
+            'url': 'save-register.php?username='      + $('#username').val() +
+                                     '&password='     + $('#password').val(),
             'method': 'POST',
             'headers': {
                 'Cache-Control': 'no-cache'
@@ -54,7 +50,7 @@ $totalGames = "";
                 $('#id').val(response);
             }
             }).fail(function() {
-            showAlert('danger', 'Error!', 'Error saving player.');
+            showAlert('danger', 'Error!', 'Error saving player. Username may already exist.');
         })
     }
 

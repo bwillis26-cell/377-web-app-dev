@@ -15,16 +15,17 @@ $date = date("Y-m-d");
 $elo = 600;
 $totalGames = 0;
 
-$result = $connection->query("SELECT * FROM users WHERE username='$username'");
+$result = $connection->query("SELECT * FROM players WHERE pla_username='$username'");
 $update = "";
 if ($result->num_rows > 0) {
     http_response_code(400);
 } else {
     $update =<<<SQL
-    INSERT INTO users (pla_username, pla_password, pla_date_created, pla_elo, pla_games_played)
+    INSERT INTO players (pla_username, pla_password, pla_date_created, pla_elo, pla_games_played)
     VALUES ('$username', '$password', '$date', $elo, $totalGames)
     SQL;
 }
+
 try {
     if ($connection->query($update)) {
         // http_response_code(200);
@@ -35,4 +36,4 @@ try {
     }
 } catch(Exception $e) {
         http_response_code(400);
-}
+}   

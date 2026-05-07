@@ -15,7 +15,7 @@ $date = $connection->real_escape_string($date);
 $elo = $connection->real_escape_string($elo);
 $totalGames = $connection->real_escape_string($totalGames);
 
-$result = $connection->query("SELECT * FROM users WHERE username='$username' AND password='$password'");
+$result = $connection->query("SELECT * FROM players WHERE pla_username='$username' AND pla_password='$password'");
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
     $id = $row['pla_id'];

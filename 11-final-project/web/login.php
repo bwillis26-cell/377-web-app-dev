@@ -37,10 +37,7 @@ $totalGames = "";
             'async': true,
             'url': 'save-login.php?id='           + $('#id').val() +
                             '&username='    + $('#username').val() + 
-                            '&password='    + $('#password').val() +
-                            '&date='        + $('#date').val() +
-                            '&elo='         + $('#elo').val() +
-                            '&totalGames='  + $('#totalGames').val(),
+                            '&password='    + $('#password').val(),
             'method': 'POST',
             'headers': {
                 'Cache-Control': 'no-cache'
@@ -54,7 +51,7 @@ $totalGames = "";
                 $('#id').val(response);
             }
             }).fail(function() {
-            showAlert('danger', 'Error!', 'Error saving player.');
+            showAlert('danger', 'Error!', 'Error saving player. Username or password may be incorrect.');
         })
     }
 

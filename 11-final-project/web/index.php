@@ -25,6 +25,10 @@
     </head>
 
     <body onload="brython()">
+        <div id="alert" class="alert alert-position alert-success">
+            <a class="close" onclick="$('#alert').fadeOut()"><span aria-hidden="true">&times;</span></a>
+            <strong id="alertTitle">Success!</strong> <span id="alertMessage">Success message.</span>
+        </div>
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <a class="navbar-brand" href="?nav=game">Chess</a>
