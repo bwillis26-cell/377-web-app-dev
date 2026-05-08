@@ -7,6 +7,7 @@ $date = "";
 $elo = "";
 $totalGames = "";
 
+
 ?>
 
 <div class='detail'>
@@ -46,13 +47,17 @@ $totalGames = "";
 
         $.ajax(settings).done(function(response) {
             console.log(response);
-            showAlert('success', 'Success!', 'Player saved successfully!');
+            showAlert('success', 'Success!', 'Successfully logged in.');
             if ($('#id').val() == "") {
                 $('#id').val(response);
             }
             }).fail(function() {
-            showAlert('danger', 'Error!', 'Error saving player. Username or password may be incorrect.');
+            showAlert('danger', 'Error!', 'Error logging in. Username or password may be incorrect.');
         })
+        // Redirect to chess game page after successful login
+        .done(function() {
+            window.location.href = "http://localhost/webappdev/11-final-project/web/index.php?nav=game";
+        });
     }
 
 

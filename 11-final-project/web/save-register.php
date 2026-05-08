@@ -10,7 +10,7 @@ include("library.php");
 $connection = get_connection();
 
 $username = $connection->real_escape_string($username);
-$password = $connection->real_escape_string($password);
+$password = password_hash($connection->real_escape_string($password), PASSWORD_DEFAULT);
 $date = date("Y-m-d");
 $elo = 600;
 $totalGames = 0;

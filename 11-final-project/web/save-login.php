@@ -10,7 +10,7 @@ include("library.php");
 $connection = get_connection();
 
 $username = $connection->real_escape_string($username);
-$password = $connection->real_escape_string($password);
+$password = password_hash($connection->real_escape_string($password), PASSWORD_DEFAULT);
 $date = $connection->real_escape_string($date);
 $elo = $connection->real_escape_string($elo);
 $totalGames = $connection->real_escape_string($totalGames);
@@ -24,7 +24,6 @@ if ($result->num_rows > 0) {
 } else {
     http_response_code(400);
 }
-
 
 
 

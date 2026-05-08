@@ -258,6 +258,10 @@ def displayLegalMoves(id):
 # Added to the =displayed moves to register what move the user wants to make
 # Resets legal moves shown, adds to moveCount, and keeps track of moves made
 
+
+
+
+
 def legalMoveClicked(event, element):
     global turn, moveCount, moves, enPassantCheck, castleCheck
 
@@ -417,14 +421,14 @@ def castle():
             if (currArr[7][6] == None and currArr[7][5] == None and currArr[7][7].get_color() == "white" and currArr[7][7].get_name() == "rook"):
                 legalMoves.append((7, 6))
                 castleCheck = True
-            if (currArr[7][2] == None and currArr[7][3] == None and currArr[7][0].get_color() == "white" and currArr[7][0].get_name() == "rook"):
+            if (currArr[7][1] == None and currArr[7][2] == None and currArr[7][3] == None and currArr[7][0].get_color() == "white" and currArr[7][0].get_name() == "rook"):
                 legalMoves.append((7, 2))
                 castleCheck = True
         elif (currPiece.get_color() == "black" and currPiece.get_position() == (0, 4)):
             if (currArr[0][6] == None and currArr[0][5] == None and currArr[0][7].get_color() == "black" and currArr[0][7].get_name() == "rook"):
                 legalMoves.append((0, 6))
                 castleCheck = True
-            if (currArr[0][1] == None and currArr[0][2] == None and currArr[0][0].get_color() == "black" and currArr[0][0].get_name() == "rook"):
+            if (currArr[0][1] == None and currArr[0][2] == None and currArr[0][3] == None and currArr[0][0].get_color() == "black" and currArr[0][0].get_name() == "rook"):
                 legalMoves.append((0, 2))
                 castleCheck = True
 
