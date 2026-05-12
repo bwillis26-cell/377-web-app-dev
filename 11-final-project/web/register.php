@@ -49,8 +49,8 @@ $totalGames = "";
             if ($('#id').val() == "") {
                 $('#id').val(response);
             }
-            }).fail(function() {
-            showAlert('danger', 'Error!', 'Error saving player. Username may already exist.');
+            }).fail(function(response) {
+            showAlert('danger', 'Error!', 'Error saving player. Username may already exist.' + response.responseText);
         })
     }
 

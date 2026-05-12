@@ -24,6 +24,7 @@ if ($result->num_rows > 0) {
     INSERT INTO players (pla_username, pla_password, pla_date_created, pla_elo, pla_games_played)
     VALUES ('$username', '$password', '$date', $elo, $totalGames)
     SQL;
+    print($update);
 }
 
 try {

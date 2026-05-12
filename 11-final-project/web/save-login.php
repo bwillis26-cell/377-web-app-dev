@@ -11,9 +11,9 @@ $connection = get_connection();
 
 $username = $connection->real_escape_string($username);
 $password = password_hash($connection->real_escape_string($password), PASSWORD_DEFAULT);
-$date = $connection->real_escape_string($date);
-$elo = $connection->real_escape_string($elo);
-$totalGames = $connection->real_escape_string($totalGames);
+// $date = $connection->real_escape_string($date);
+// $elo = $connection->real_escape_string($elo);
+// $totalGames = $connection->real_escape_string($totalGames);
 
 $result = $connection->query("SELECT * FROM players WHERE pla_username='$username' AND pla_password='$password'");
 if ($result->num_rows > 0) {
